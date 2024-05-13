@@ -37,12 +37,14 @@ class ApplicantDetails extends Applicant{
     private Date birthdate;
     private int age;
     private String nationality;
+    private ApplicantSummary ptrToSummary;
     ApplicantDetails(String applicantName, Date birthdate, int age, String nationality){
         super();
         this.applicantName = applicantName;
         this.birthdate = birthdate;
         this.age = age;
         this.nationality = nationality;
+        this.ptrToSummary = null;
     }
     //Simplify getters and setters, some may be redundant
     public String getApplicantName() {
@@ -75,6 +77,13 @@ class ApplicantDetails extends Applicant{
 
     public void setNationality(String nationality) {
         this.nationality = nationality;
+    }
+
+    public ApplicantSummary getPtrToSummary() {
+        return ptrToSummary;
+    }
+    public void setPtrToSummary(ApplicantSummary ptrToSummary) {
+        this.ptrToSummary = ptrToSummary;
     }
 }
 
