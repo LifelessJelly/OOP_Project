@@ -27,8 +27,14 @@ public class Applicant {
         return applicantionDate;
     }
 
-    public boolean isShortlisted() {
+    private boolean isShortlisted() {
         return isShortlisted;
+    }
+    @Override
+    public String toString() {
+        return "Applicant ID: " + applicantID + "\n" +
+                "Applicant Date: " + applicantionDate + "\n" +
+                "Shortlisted?: " + isShortlisted + "\n";
     }
 }
 
@@ -37,6 +43,8 @@ class ApplicantDetails extends Applicant{
     private Date birthdate;
     private int age;
     private String nationality;
+    private String gender;
+    private String nric_Fin_Passport;
     private ApplicantSummary ptrToSummary;
     ApplicantDetails(String applicantName, Date birthdate, int age, String nationality){
         super();
@@ -71,6 +79,22 @@ class ApplicantDetails extends Applicant{
         this.age = age;
     }
 
+    public String getNric_Fin_Passport() {
+        return nric_Fin_Passport;
+    }
+
+    public void setNric_Fin_Passport(String nric_Fin_Passport) {
+        this.nric_Fin_Passport = nric_Fin_Passport;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     public String getNationality() {
         return nationality;
     }
@@ -84,6 +108,15 @@ class ApplicantDetails extends Applicant{
     }
     public void setPtrToSummary(ApplicantSummary ptrToSummary) {
         this.ptrToSummary = ptrToSummary;
+    }
+    @Override
+    public String toString() {
+        return "Applicant Name: " + applicantName + '\n' +
+                "Date of Birth: " + birthdate + '\n' +
+                "Age: " + age + '\n' +
+                "nationality: " + nationality + '\n' +
+                "Gender: " + gender + '\n' +
+                "NRIC / FIN / Passport: " + nric_Fin_Passport + '\n';
     }
 }
 
@@ -125,6 +158,15 @@ class ApplicantSummary extends Applicant{
     public void setRecentJobExperience(JobExperience[] recentJobExperience) {
         this.recentJobExperience = recentJobExperience;
     }
+    @Override
+    public String toString() {
+        StringBuilder jobExperienceString = new StringBuilder();
+        for (var jobExperience : recentJobExperience) {
+            jobExperienceString.append(jobExperience.toString()).append('\n');
+        }
+        return "Resume Transcript: " + resume + "\n\n" +
+                "Skills" + String.join(" ", skills) + "\n\n" + "Job Experience: " + jobExperienceString;
+    }
 }
 
 class JobExperience {
@@ -163,4 +205,12 @@ class JobExperience {
     public void setYearEnd(int yearEnd) {
         this.yearEnd = yearEnd;
     }
+
+    @Override
+    public String toString(){
+        return "Previous Company: " + previousCompanyName + '\n' +
+                "Previous Job Title: " + previousJobTitle + '\n' +
+                "From: " + yearBegin + "to " + yearEnd + '\n';
+    }
 }
+
