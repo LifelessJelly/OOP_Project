@@ -1,4 +1,4 @@
-package org.example;
+package deprecate;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -9,6 +9,8 @@ public class Applicant {
     private final Date applicantionDate;
     private boolean isShortlisted;
     private static int applicantIDCounter;
+    private ApplicantSummary applicantSummary;
+    private ApplicantDetails applicantDetails;
     Applicant(){
         applicantID = ++applicantIDCounter;
         applicantionDate = new Date();
@@ -38,23 +40,23 @@ public class Applicant {
     }
 }
 
-class ApplicantDetails extends Applicant{
+class ApplicantDetails {
     private String applicantName;
     private Date birthdate;
     private int age;
     private String nationality;
     private String gender;
     private String nric_Fin_Passport;
-    private ApplicantSummary ptrToSummary;
-    ApplicantDetails(String applicantName, Date birthdate, int age, String nationality){
-        super();
+    ApplicantDetails(String applicantName, Date birthdate, int age, String nationality, String gender, String nric_Fin_Passport){
         this.applicantName = applicantName;
         this.birthdate = birthdate;
         this.age = age;
         this.nationality = nationality;
-        this.ptrToSummary = null;
+        this.gender = gender;
+        this.nric_Fin_Passport = nric_Fin_Passport;
     }
     //Simplify getters and setters, some may be redundant
+
     public String getApplicantName() {
         return applicantName;
     }
@@ -103,12 +105,6 @@ class ApplicantDetails extends Applicant{
         this.nationality = nationality;
     }
 
-    public ApplicantSummary getPtrToSummary() {
-        return ptrToSummary;
-    }
-    public void setPtrToSummary(ApplicantSummary ptrToSummary) {
-        this.ptrToSummary = ptrToSummary;
-    }
     @Override
     public String toString() {
         return "Applicant Name: " + applicantName + '\n' +
@@ -120,7 +116,7 @@ class ApplicantDetails extends Applicant{
     }
 }
 
-class ApplicantSummary extends Applicant{
+class ApplicantSummary {
     // consider replacing with custom classes
     String resume;
     String[] skills;
@@ -129,7 +125,6 @@ class ApplicantSummary extends Applicant{
         this(null, null, null);
     }
     ApplicantSummary(String resume, String[] skills, JobExperience[] recentJobExperience){
-        super();
         this.resume = resume;
         this.skills = skills;
         this.recentJobExperience = recentJobExperience;

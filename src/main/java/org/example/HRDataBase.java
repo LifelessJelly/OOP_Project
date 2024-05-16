@@ -3,10 +3,10 @@ package org.example;
 import java.util.Objects;
 import java.util.Vector;
 
-public class SimpleDataBase {
+public class HRDataBase {
     private final Vector<Encryptor> encryptedUsernames;
     private final Vector<Encryptor> encryptedPasswords;
-    public SimpleDataBase() {
+    public HRDataBase() {
         encryptedUsernames = new Vector<>();
         encryptedPasswords = new Vector<>();
     }
