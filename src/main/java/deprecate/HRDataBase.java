@@ -1,10 +1,12 @@
-package org.example;
+package deprecate;
 
 import Subsystems.Encryptor;
 
 import java.util.Objects;
 import java.util.Vector;
 
+// I plan to remove this class
+@Deprecated
 public class HRDataBase {
     private final Vector<Encryptor> encryptedUsernames;
     private final Vector<Encryptor> encryptedPasswords;
