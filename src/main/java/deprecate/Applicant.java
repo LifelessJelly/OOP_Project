@@ -4,6 +4,7 @@ package deprecate;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 import java.util.Date;
 
+@Deprecated
 public class Applicant {
     private final int applicantID;
     private final Date applicantionDate;
@@ -39,7 +40,7 @@ public class Applicant {
                 "Shortlisted?: " + isShortlisted + "\n";
     }
 }
-
+@Deprecated
 class ApplicantDetails {
     private String applicantName;
     private Date birthdate;
@@ -115,7 +116,7 @@ class ApplicantDetails {
                 "NRIC / FIN / Passport: " + nric_Fin_Passport + '\n';
     }
 }
-
+@Deprecated
 class ApplicantSummary {
     // consider replacing with custom classes
     String resume;
@@ -163,7 +164,7 @@ class ApplicantSummary {
                 "Skills" + String.join(" ", skills) + "\n\n" + "Job Experience: " + jobExperienceString;
     }
 }
-
+@Deprecated
 class JobExperience {
     private String previousCompanyName;
     private final String previousJobTitle;
