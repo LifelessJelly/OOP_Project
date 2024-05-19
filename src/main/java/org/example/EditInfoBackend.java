@@ -1,6 +1,7 @@
 package org.example;
 
 public class EditInfoBackend {
-    private StringBuilder tokens;
+    // Edits one applicant at a time
+
 
 }
