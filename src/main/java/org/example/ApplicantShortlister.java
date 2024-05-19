@@ -3,9 +3,15 @@ package org.example;
 
 import Subsystems.Models;
 
-public class ApplicantShortlister {
-    Models.ApplicantModel applicant;
+import java.util.ArrayList;
 
-    ApplicantShortlister(Models.ApplicantModel applicant) {
+public class ApplicantShortlister {
+    //Shortlists multiple applicants at once
+    ArrayList<Models.ApplicantModel.Applicant> applicantShortlistToBeChanged;
+    public ApplicantShortlister(int[] applicantIndices, Models.ApplicantModel applicants){
+        applicantShortlistToBeChanged = applicants.getApplicantsByIndex(applicantIndices);
+        for (var a : applicantShortlistToBeChanged) {
+            a.toggleApplicantShortlist();
+        }
     }
 }
