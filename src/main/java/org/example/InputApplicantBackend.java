@@ -1,5 +1,6 @@
 package org.example;
 
+import Subsystems.ApplicantModel;
 import Subsystems.Models;
 import Subsystems.jsonReaderWriter;
 
@@ -9,14 +10,14 @@ import java.util.Date;
 
 public class InputApplicantBackend {
 
-    final Models.ApplicantModel ptrToArray;
-    final ArrayList<Models.ApplicantModel.Applicant> applicants;
+    final ApplicantModel ptrToArray;
+    final ArrayList<ApplicantModel.Applicant> applicants;
 
-    InputApplicantBackend(Models.ApplicantModel applicantModel) {
+    InputApplicantBackend(ApplicantModel applicantModel) {
         applicants = new ArrayList<>();
         ptrToArray = applicantModel;
     }
-    public void addApplicant(Models.ApplicantModel.Applicant applicant) {
+    public void addApplicant(ApplicantModel.Applicant applicant) {
         applicants.add(applicant);
     }
 
@@ -28,7 +29,7 @@ public class InputApplicantBackend {
                              String NRIC_Fin_Passport,
                              Image applicantImage,
                              String resume,
-                             ArrayList<Models.ApplicantModel.ApplicantPreviousJobExperience> jobExperience){
+                             ArrayList<ApplicantModel.Applicant.ApplicantPrevExp> jobExperience){
 
         addApplicant(name, birthdate.getTime(), age, nationality, gender, NRIC_Fin_Passport, applicantImage, resume, jobExperience);
     }
@@ -41,16 +42,18 @@ public class InputApplicantBackend {
                              String NRIC_Fin_Passport,
                              Image applicantImage,
                              String resume,
-                             ArrayList<Models.ApplicantModel.ApplicantPreviousJobExperience> jobExperience) {
+                             ArrayList<ApplicantModel.Applicant.ApplicantPrevExp> jobExperience) {
 
-        Models.ApplicantModel.Applicant applicant = new Models.ApplicantModel.Applicant();
+        ApplicantModel.Applicant applicant = new ApplicantModel.Applicant();
         applicant.setApplicantDetails(name, birthdate, age, nationality, gender, NRIC_Fin_Passport, applicantImage);
         applicant.setResume(resume);
+        applicant.addJobExperience(jobExperience);
         applicants.add(applicant);
+
     }
 
     public void addApplicantFromJson(String applicantJson) {
-        applicants.add(jsonReaderWriter.jsonToModel(applicantJson, Models.ApplicantModel.Applicant.class));
+        applicants.add(jsonReaderWriter.jsonToModel(applicantJson, ApplicantModel.Applicant.class));
     }
 
     public void commitAndPushAllApplicants(){
