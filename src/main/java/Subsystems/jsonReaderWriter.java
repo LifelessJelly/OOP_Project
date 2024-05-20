@@ -8,7 +8,7 @@ public class jsonReaderWriter {
     public static <T> T jsonToModel(String json, Class<T> userType){
         return gson.fromJson(json, userType);
     }
-    public static <T> String modelToJson(Class<T> userType){
+    public static <T> String modelToJson(T userType){
         return gson.toJson(userType);
     }
 }
