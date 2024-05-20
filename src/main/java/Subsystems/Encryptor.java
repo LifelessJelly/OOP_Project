@@ -5,19 +5,37 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+
+/**
+ * Encryptor class
+ * The encryptor class provides a simple interface for encoding any single string of characters, using SHA-256 to hash
+ * the string. For use case in passwords and usernames, it's not too robust to brute force password crackers, but it's
+ * good enough for this project
+ * <p>
+ * Usage:
+ * <p>
+ * String mySecretPassword = password123;
+ * <p>
+ * String hashedPassword = new Encryptor(mySecretPassword).getEncodedStr();
+ */
 public class Encryptor {
     private final String encodedStr;
-    public Encryptor(String string) throws NoSuchAlgorithmException {
+    public Encryptor(String string){
         this(string, 69420);
     }
-    public Encryptor(String string, int iterations) throws NoSuchAlgorithmException {
+    public Encryptor(String string, int iterations){
         encodedStr = encrypt(string, iterations);
     }
-    private static byte[] getSHAOutput(String string) throws NoSuchAlgorithmException {
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+    private static byte[] getSHAOutput(String string)  {
+        MessageDigest digest;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
         return digest.digest(string.getBytes(StandardCharsets.UTF_8));
     }
-    private String encrypt(String string, int iterations) throws NoSuchAlgorithmException {
+    private String encrypt(String string, int iterations){
         String currentString = string;
         for (int i = 0; i < iterations; i++) {
             byte[] hashHolder;
