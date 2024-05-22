@@ -1,8 +1,6 @@
 package Subsystems;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -28,11 +26,5 @@ public class jsonReaderWriter {
     }
 }
 
-class Reflector<T> {
-    private final Class<T> reflection;
-    public Reflector(Class<T> reflection) {
-        this.reflection = reflection;
-    }
-}
 
 
