@@ -27,6 +27,9 @@ public class ApplicantModel {
         return newApplicants;
     }
 
+    public ApplicantModel(){
+        List<Applicant> applicants = new ArrayList<>();
+    }
 
     public static class Applicant {
         public ApplicantSummary applicantSummary;
@@ -41,14 +44,20 @@ public class ApplicantModel {
             applicantMetadata = new ApplicantMetadata();
         }
 
-        public void setApplicantDetails(String applicantName, long birthdate, int age, String nationality, String gender, String NRIC_Fin_Passport, Image applicantImage){
+        public void setApplicantDetails(String applicantName,
+                                        long birthdate,
+                                        int age,
+                                        String nationality,
+                                        String gender,
+                                        String NRIC_Fin_Passport,
+                                        String pathToImage){
             applicantDetails.name = applicantName;
             applicantDetails.birthdate = birthdate;
             applicantDetails.age = age;
             applicantDetails.nationality = nationality;
             applicantDetails.gender = gender;
             applicantDetails.NRIC_Fin_Passport = NRIC_Fin_Passport;
-            applicantDetails.pathToImage = Models.storeImage(applicantImage);
+            applicantDetails.pathToImage = pathToImage;
         }
 
         public static class compareJobDates implements Comparator<ApplicantPrevExp> {
