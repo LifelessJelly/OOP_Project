@@ -2,6 +2,7 @@ package org.example;
 
 import Subsystems.ApplicantModel;
 import Subsystems.Models;
+import Subsystems.Pointer;
 import Subsystems.jsonReaderWriter;
 
 import java.awt.*;
@@ -10,10 +11,10 @@ import java.util.Date;
 
 public class InputApplicantBackend {
 
-    final ApplicantModel ptrToArray;
+    final Pointer<ApplicantModel> ptrToArray;
     final ArrayList<ApplicantModel.Applicant> applicants;
 
-    InputApplicantBackend(ApplicantModel applicantModel) {
+    InputApplicantBackend(Pointer<ApplicantModel> applicantModel) {
         applicants = new ArrayList<>();
         ptrToArray = applicantModel;
     }
@@ -27,11 +28,11 @@ public class InputApplicantBackend {
                              String nationality,
                              String gender,
                              String NRIC_Fin_Passport,
-                             Image applicantImage,
+                             String pathToImage,
                              String resume,
                              ArrayList<ApplicantModel.Applicant.ApplicantPrevExp> jobExperience){
 
-        addApplicant(name, birthdate.getTime(), age, nationality, gender, NRIC_Fin_Passport, applicantImage, resume, jobExperience);
+        addApplicant(name, birthdate.getTime(), age, nationality, gender, NRIC_Fin_Passport, pathToImage, resume, jobExperience);
     }
 
     public void addApplicant(String name,
@@ -40,12 +41,12 @@ public class InputApplicantBackend {
                              String nationality,
                              String gender,
                              String NRIC_Fin_Passport,
-                             Image applicantImage,
+                             String pathToImage,
                              String resume,
                              ArrayList<ApplicantModel.Applicant.ApplicantPrevExp> jobExperience) {
 
         ApplicantModel.Applicant applicant = new ApplicantModel.Applicant();
-        applicant.setApplicantDetails(name, birthdate, age, nationality, gender, NRIC_Fin_Passport, applicantImage);
+        applicant.setApplicantDetails(name, birthdate, age, nationality, gender, NRIC_Fin_Passport, pathToImage);
         applicant.setResume(resume);
         applicant.addJobExperience(jobExperience);
         applicants.add(applicant);
@@ -57,7 +58,7 @@ public class InputApplicantBackend {
     }
 
     public void commitAndPushAllApplicants(){
-        ptrToArray.addApplicant(applicants);
+        ptrToArray.get().addApplicant(applicants);
         System.gc(); // Calls garbage collector
     }
 
