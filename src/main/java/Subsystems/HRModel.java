@@ -6,6 +6,13 @@ import java.util.List;
 public class HRModel {
     private final List<HR> HRs = new ArrayList<>();
 
+    public void addHR(HR hr) {
+        HRs.add(hr);
+    }
+    public List<HR> getHRs() {
+        return HRs;
+    }
+
     public static class HR {
 
         HR.HRCredentials HRCredentials;
@@ -16,12 +23,12 @@ public class HRModel {
             HRDetails = new HRDetails();
         }
 
-        void updateCredentials(String usernameHash, String passwordHash) {
+        public void updateCredentials(String usernameHash, String passwordHash) {
             HRCredentials.encryptedUsername = usernameHash;
             HRCredentials.encryptedPassword = passwordHash;
         }
 
-        boolean checkCredentials(String usernamePlainText, String passwordPlainText) {
+        public boolean checkCredentials(String usernamePlainText, String passwordPlainText) {
             String usernameEncrypted = new Encryptor(usernamePlainText).getEncodedStr();
             String passwordEncrypted = new Encryptor(passwordPlainText).getEncodedStr();
             return usernameEncrypted.equals(HRCredentials.encryptedUsername) && passwordEncrypted.equals(HRCredentials.encryptedPassword);

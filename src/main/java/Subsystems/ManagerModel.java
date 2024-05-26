@@ -8,6 +8,13 @@ import java.util.List;
 public class ManagerModel {
     private final List<Manager> managers = new ArrayList<>();
 
+    public void addManager(Manager manager){
+        managers.add(manager);
+    }
+    public List<Manager> getManagers(){
+        return managers;
+    }
+
     public static class Manager {
 
         public Manager.ManagerCredentials managerCredentials;
@@ -18,12 +25,12 @@ public class ManagerModel {
             managerDetails = new Manager.ManagerDetails();
         }
 
-        void updateCredentials(String usernameHash, String passwordHash) {
+        public void updateCredentials(String usernameHash, String passwordHash) {
             managerCredentials.encryptedUsername = usernameHash;
             managerCredentials.encryptedPassword = passwordHash;
         }
 
-        boolean checkCredentials(String usernamePlainText, String passwordPlainText) {
+        public boolean checkCredentials(String usernamePlainText, String passwordPlainText) {
             String usernameEncrypted = new Encryptor(usernamePlainText).getEncodedStr();
             String passwordEncrypted = new Encryptor(passwordPlainText).getEncodedStr();
             return usernameEncrypted.equals(managerCredentials.encryptedUsername) && passwordEncrypted.equals(managerCredentials.encryptedPassword);

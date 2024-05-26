@@ -1,9 +1,14 @@
 package org.example;
 
-import Subsystems.Encryptor;
+import Subsystems.*;
 import deprecate.HRDataBase;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -18,14 +23,28 @@ import java.security.NoSuchAlgorithmException;
 // Redo this class
 public class LoginRequest {
     public boolean loginSuccess;
-    LoginRequest(String username, String password, String domain) throws NoSuchAlgorithmException {
+    LoginRequest(String username, String password, String domain) throws IOException {
         // Fetches the encrypted passwords
         switch (domain) {
             case "HR":
-                //code
+                HRModel hrmodel = jsonReaderWriter.jsonToModel(Files.readString(Paths.get("./HR_Data.json")), HRModel.class);
+                var hrList = hrmodel.getHRs();
+                for (HRModel.HR hr : hrList) {
+                    if (hr.checkCredentials(username, password)){
+                        loginSuccess = true;
+                        break;
+                    }
+                }
                 break;
             case "MANAGER":
-                // more code
+                ManagerModel managerModel = jsonReaderWriter.jsonToModel(Files.readString(Paths.get("./Manager_Data.json")), ManagerModel.class);
+                var managerList = managerModel.getManagers();
+                for (ManagerModel.Manager manager : managerList) {
+                    if (manager.checkCredentials(username, password)){
+                        loginSuccess = true;
+                        break;
+                    }
+                }
                 break;
 
 
