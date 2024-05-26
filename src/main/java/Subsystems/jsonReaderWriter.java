@@ -7,22 +7,34 @@ import java.lang.reflect.InvocationTargetException;
 public class jsonReaderWriter {
     private static final Gson gson = new Gson();
 
-    public static <T> T jsonToModel(String json, Class<T> userType) {
+    /**
+     * Constructs an instance of a class model from the given input json string. If an invalid json string is given,
+     * a default object of the passed in class will be created.
+     * @param json The string in json format
+     * @param classType the class that the json input will model to
+     * @return the class generated from the json string
+     */
+    public static <T> T jsonToModel(String json, Class<T> classType) {
         T t;
-        t = gson.fromJson(json, userType);
+        t = gson.fromJson(json, classType);
         if (t == null){
             try {
-                t = userType.getDeclaredConstructor().newInstance();
+                t = classType.getDeclaredConstructor().newInstance();
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
                      NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }
         }
-
         return t;
     }
-    public static <T> String modelToJson(T userType){
-        return gson.toJson(userType);
+
+    /**
+     * Generates a json string from an instance of a class model object
+     * @param classModel the class object model
+     * @return a generated json string based off the class model
+     */
+    public static <T> String modelToJson(T classModel){
+        return gson.toJson(classModel);
     }
 }
 

@@ -1,11 +1,9 @@
 package org.example;
 
 import Subsystems.ApplicantModel;
-import Subsystems.Models;
 import Subsystems.Pointer;
 import Subsystems.jsonReaderWriter;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -46,7 +44,7 @@ public class InputApplicantBackend {
                              ArrayList<ApplicantModel.Applicant.ApplicantPrevExp> jobExperience) {
 
         ApplicantModel.Applicant applicant = new ApplicantModel.Applicant();
-        applicant.setApplicantDetails(name, birthdate, age, nationality, gender, NRIC_Fin_Passport, pathToImage);
+        applicant.setDetails(name, birthdate, age, nationality, gender, NRIC_Fin_Passport, pathToImage);
         applicant.setResume(resume);
         applicant.addJobExperience(jobExperience);
         applicants.add(applicant);
