@@ -56,13 +56,13 @@ public class ApplicantModel implements Models {
             applicantMetadata = new ApplicantMetadata();
         }
 
-        public void setApplicantDetails(String applicantName,
-                                        long birthdate,
-                                        int age,
-                                        String nationality,
-                                        String gender,
-                                        String NRIC_Fin_Passport,
-                                        String pathToImage){
+        public void setDetails(String applicantName,
+                               long birthdate,
+                               int age,
+                               String nationality,
+                               String gender,
+                               String NRIC_Fin_Passport,
+                               String pathToImage){
             applicantDetails.name = applicantName;
             applicantDetails.birthdate = birthdate;
             applicantDetails.age = age;

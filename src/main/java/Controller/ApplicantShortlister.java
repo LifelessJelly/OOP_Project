@@ -5,6 +5,8 @@ import Data.ApplicantModel;
 
 import java.util.List;
 
+
+
 public class ApplicantShortlister {
     //Shortlists multiple applicants at once
     List<ApplicantModel.Applicant> applicantShortlistToBeChanged;
