@@ -1,11 +1,11 @@
-package Subsystems;
+package Data;
 
-import java.awt.*;
+import Subsystems.Encryptor;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class ManagerModel {
+public class ManagerModel implements Models{
     private final List<Manager> managers = new ArrayList<>();
 
     public void addManager(Manager manager){
@@ -13,6 +13,11 @@ public class ManagerModel {
     }
     public List<Manager> getManagers(){
         return managers;
+    }
+
+    @Override
+    public void showContent() {
+
     }
 
     public static class Manager {
@@ -39,17 +44,13 @@ public class ManagerModel {
         public static class ManagerCredentials extends Models.ModelCredentials {
 
         }
-        public static class ManagerDetails extends Models.ModelDetails implements Models.ContentPrinter {
+        public static class ManagerDetails extends Models.ModelDetails {
 
             @Override
             public String toString() {
                 return super.toString();
             }
 
-            @Override
-            public void showContent() {
-
-            }
         }
     }
 }

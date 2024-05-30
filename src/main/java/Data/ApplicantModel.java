@@ -1,12 +1,13 @@
-package Subsystems;
+package Data;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-public class ApplicantModel {
+//Class model implementation for applicants
+
+public class ApplicantModel implements Models {
     private final List<Applicant> applicants = new ArrayList<>();
 
     @Override
@@ -16,9 +17,18 @@ public class ApplicantModel {
                 '}';
     }
 
+    @Override
+    public void showContent() {
+
+    }
+
     public void addApplicant(List<Applicant> applicant) {
         applicants.addAll(applicant);
     }
+    public List<Applicant> getApplicants() {
+        return applicants;
+    }
+
     public List<Applicant> getApplicantsByIndex(int[] indices) {
         List<Applicant> newApplicants = new ArrayList<>();
         for (int i : indices){
@@ -30,6 +40,8 @@ public class ApplicantModel {
     public ApplicantModel(){
         List<Applicant> applicants = new ArrayList<>();
     }
+
+
 
     public static class Applicant {
         public ApplicantSummary applicantSummary;
@@ -97,20 +109,15 @@ public class ApplicantModel {
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static class ApplicantDetails extends Models.ModelDetails implements Models.ContentPrinter {
-
+        public static class ApplicantDetails extends Models.ModelDetails {
             @Override
             public String toString() {
                 return super.toString();
             }
 
-            @Override
-            public void showContent() {
-
-            }
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static class ApplicantSummary implements Models.ContentPrinter {
+        public static class ApplicantSummary {
             private String resume;
             private final List<String> skills = new ArrayList<>();
 
@@ -122,13 +129,9 @@ public class ApplicantModel {
                         '}';
             }
 
-            @Override
-            public void showContent() {
-
-            }
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static class ApplicantPrevExp implements Models.ContentPrinter {
+        public static class ApplicantPrevExp {
             private final String previousCompanyName;
             private final String previousJobTitle;
             private final int yearBegin;
@@ -150,15 +153,9 @@ public class ApplicantModel {
                         ", yearEnd=" + yearEnd +
                         '}';
             }
-
-
-            @Override
-            public void showContent() {
-
-            }
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static class ApplicantMetadata implements Models.ContentPrinter {
+        public static class ApplicantMetadata {
             private final int applicantID;
             private final long applicationDate;
             private boolean isShortlisted;
@@ -177,12 +174,6 @@ public class ApplicantModel {
                         ", applicationDate=" + new Date(applicationDate) +
                         ", isShortlisted=" + isShortlisted +
                         '}';
-            }
-
-
-            @Override
-            public void showContent() {
-
             }
         }
     }

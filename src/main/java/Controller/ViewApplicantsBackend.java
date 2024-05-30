@@ -1,14 +1,10 @@
-package org.example;
+package Controller;
 
 
-import Subsystems.ApplicantModel;
-import Subsystems.Models;
+import Data.ApplicantModel;
 import Subsystems.jsonReaderWriter;
 
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -18,7 +14,6 @@ public class ViewApplicantsBackend {
 
     ViewApplicantsBackend(String pathToApplicantsFile) throws IOException {
         data = jsonReaderWriter.jsonToModel(Files.readString(Paths.get(pathToApplicantsFile)), ApplicantModel.class);
-
 
     }
 

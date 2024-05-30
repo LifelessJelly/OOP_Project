@@ -1,11 +1,9 @@
-package org.example;
+package Controller;
 
-import Subsystems.ApplicantModel;
-import Subsystems.Models;
+import Data.ApplicantModel;
 import Subsystems.Pointer;
 import Subsystems.jsonReaderWriter;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Date;
 

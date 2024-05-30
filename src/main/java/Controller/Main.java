@@ -1,6 +1,6 @@
-package org.example;
+package Controller;
 
-import Subsystems.ApplicantModel;
+import Data.ApplicantModel;
 import Subsystems.Pointer;
 import Subsystems.jsonReaderWriter;
 

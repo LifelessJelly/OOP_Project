@@ -1,8 +1,7 @@
-package org.example;
+package Controller;
 
 
-import Subsystems.ApplicantModel;
-import Subsystems.Models;
+import Data.ApplicantModel;
 
 import java.util.List;
 

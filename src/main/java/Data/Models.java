@@ -1,22 +1,15 @@
-package Subsystems;
+package Data;
 
-import java.awt.*;
 import java.util.Date;
 
-public abstract class Models {
+public interface Models {
 
-    public static String storeImage(Image image){
-        return "work in progress";
-    }
-
-
-    public interface ContentPrinter {
         @Override
         String toString(); // Debug usage only, don't use for frontend
         void showContent(); //some Swing UI stuff here
-    }
 
-    public abstract static class ModelDetails {
+
+    abstract class ModelDetails {
         String name;
         long birthdate;
         int age;
@@ -37,11 +30,10 @@ public abstract class Models {
                     '}';
         }
     }
-    public abstract static class ModelCredentials {
+    abstract class ModelCredentials {
         String encryptedUsername;
         String encryptedPassword;
-
-
     }
+    
 
 }

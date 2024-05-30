@@ -1,9 +1,11 @@
-package Subsystems;
+package Data;
+
+import Subsystems.Encryptor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HRModel {
+public class HRModel implements Models{
     private final List<HR> HRs = new ArrayList<>();
 
     public void addHR(HR hr) {
@@ -11,6 +13,11 @@ public class HRModel {
     }
     public List<HR> getHRs() {
         return HRs;
+    }
+
+    @Override
+    public void showContent() {
+
     }
 
     public static class HR {
@@ -37,12 +44,8 @@ public class HRModel {
         public static class HRCredentials extends Models.ModelCredentials {
 
         }
-        public static class HRDetails extends Models.ModelDetails implements Models.ContentPrinter{
+        public static class HRDetails extends Models.ModelDetails{
 
-            @Override
-            public void showContent() {
-
-            }
         }
     }
 }
