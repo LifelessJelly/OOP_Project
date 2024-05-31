@@ -18,12 +18,12 @@ import java.security.NoSuchAlgorithmException;
  * <p>
  * String hashedPassword = new Encryptor(mySecretPassword).getEncodedStr();
  */
-public class Encryptor {
+public class PasswordHasher {
     private final String encodedStr;
-    public Encryptor(String string){
+    public PasswordHasher(String string){
         this(string, 69420);
     }
-    public Encryptor(String string, int iterations){
+    public PasswordHasher(String string, int iterations){
         encodedStr = encrypt(string, iterations);
     }
     private static byte[] getSHAOutput(String string)  {
