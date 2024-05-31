@@ -16,7 +16,8 @@ public interface Models {
         String nationality;
         String gender;
         String NRIC_Fin_Passport;
-        String pathToImage;
+        String imageBase64;
+        String email;
 
         @Override
         public String toString() {
@@ -27,6 +28,8 @@ public interface Models {
                     ", nationality='" + this.nationality + '\'' +
                     ", gender='" + this.gender + '\'' +
                     ", NRIC/Fin/Passport='" + this.NRIC_Fin_Passport + '\'' +
+                    ", pathToImage='" + this.imageBase64 + '\'' +
+                    ", email='" + this.email + '\'' +
                     '}';
         }
     }
