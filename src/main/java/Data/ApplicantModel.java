@@ -1,5 +1,8 @@
 package Data;
 
+import Subsystems.ImageToBase64;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -62,14 +65,20 @@ public class ApplicantModel implements Models {
                                String nationality,
                                String gender,
                                String NRIC_Fin_Passport,
-                               String pathToImage){
+                               String pathToImage,
+                               String email){
             applicantDetails.name = applicantName;
             applicantDetails.birthdate = birthdate;
             applicantDetails.age = age;
             applicantDetails.nationality = nationality;
             applicantDetails.gender = gender;
             applicantDetails.NRIC_Fin_Passport = NRIC_Fin_Passport;
-            applicantDetails.pathToImage = pathToImage;
+            applicantDetails.imageBase64 = ImageToBase64.imageToBase64(pathToImage);
+            applicantDetails.email = email;
+        }
+
+        public int getId() {
+            return applicantMetadata.applicantID;
         }
 
         public static class compareJobDates implements Comparator<ApplicantPrevExp> {
@@ -165,6 +174,7 @@ public class ApplicantModel implements Models {
                 applicantID = applicantIDCounter++;
                 applicationDate = System.currentTimeMillis();
                 isShortlisted = false;
+
             }
 
             @Override
