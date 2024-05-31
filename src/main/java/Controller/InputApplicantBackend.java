@@ -2,15 +2,16 @@ package Controller;
 
 import Data.ApplicantModel;
 import Subsystems.Pointer;
-import Subsystems.jsonReaderWriter;
+import Subsystems.JsonReaderWriter;
+
 
 import java.util.ArrayList;
 import java.util.Date;
 
 public class InputApplicantBackend {
 
-    final Pointer<ApplicantModel> ptrToArray;
-    final ArrayList<ApplicantModel.Applicant> applicants;
+    private final Pointer<ApplicantModel> ptrToArray;
+    private final ArrayList<ApplicantModel.Applicant> applicants;
 
     InputApplicantBackend(Pointer<ApplicantModel> applicantModel) {
         applicants = new ArrayList<>();
@@ -28,9 +29,10 @@ public class InputApplicantBackend {
                              String NRIC_Fin_Passport,
                              String pathToImage,
                              String resume,
+                             String email,
                              ArrayList<ApplicantModel.Applicant.ApplicantPrevExp> jobExperience){
 
-        addApplicant(name, birthdate.getTime(), age, nationality, gender, NRIC_Fin_Passport, pathToImage, resume, jobExperience);
+        addApplicant(name, birthdate.getTime(), age, nationality, gender, NRIC_Fin_Passport, pathToImage, resume, email, jobExperience);
     }
 
     public void addApplicant(String name,
@@ -41,10 +43,11 @@ public class InputApplicantBackend {
                              String NRIC_Fin_Passport,
                              String pathToImage,
                              String resume,
+                             String email,
                              ArrayList<ApplicantModel.Applicant.ApplicantPrevExp> jobExperience) {
 
         ApplicantModel.Applicant applicant = new ApplicantModel.Applicant();
-        applicant.setApplicantDetails(name, birthdate, age, nationality, gender, NRIC_Fin_Passport, pathToImage);
+        applicant.setDetails(name, birthdate, age, nationality, gender, NRIC_Fin_Passport, pathToImage, email);
         applicant.setResume(resume);
         applicant.addJobExperience(jobExperience);
         applicants.add(applicant);
@@ -52,7 +55,7 @@ public class InputApplicantBackend {
     }
 
     public void addApplicantFromJson(String applicantJson) {
-        applicants.add(jsonReaderWriter.jsonToModel(applicantJson, ApplicantModel.Applicant.class));
+        applicants.add(JsonReaderWriter.jsonToModel(applicantJson, ApplicantModel.Applicant.class));
     }
 
     public void commitAndPushAllApplicants(){
