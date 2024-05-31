@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 
 import java.lang.reflect.InvocationTargetException;
 
-public class jsonReaderWriter {
+public class JsonReaderWriter {
     private static final Gson gson = new Gson();
 
     /**
