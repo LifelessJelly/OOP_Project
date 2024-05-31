@@ -25,7 +25,7 @@ public class LoginRequest {
         // Fetches the encrypted passwords
         switch (domain) {
             case "HR":
-                HRModel hrmodel = jsonReaderWriter.jsonToModel(Files.readString(Paths.get("./HR_Data.json")), HRModel.class);
+                HRModel hrmodel = JsonReaderWriter.jsonToModel(Files.readString(Paths.get("./HR_Data.json")), HRModel.class);
                 var hrList = hrmodel.getHRs();
                 for (HRModel.HR hr : hrList) {
                     if (hr.checkCredentials(username, password)){
@@ -35,7 +35,7 @@ public class LoginRequest {
                 }
                 break;
             case "MANAGER":
-                ManagerModel managerModel = jsonReaderWriter.jsonToModel(Files.readString(Paths.get("./Manager_Data.json")), ManagerModel.class);
+                ManagerModel managerModel = JsonReaderWriter.jsonToModel(Files.readString(Paths.get("./Manager_Data.json")), ManagerModel.class);
                 var managerList = managerModel.getManagers();
                 for (ManagerModel.Manager manager : managerList) {
                     if (manager.checkCredentials(username, password)){
