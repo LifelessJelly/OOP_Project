@@ -2,17 +2,17 @@ package Controller;
 
 
 import Data.ApplicantModel;
+import Subsystems.Pointer;
 
 import java.util.List;
 
 
 
 public class ApplicantShortlister {
-    //Shortlists multiple applicants at once
-    List<ApplicantModel.Applicant> applicantShortlistToBeChanged;
-    public ApplicantShortlister(int[] applicantIndices, ApplicantModel applicants){
-        applicantShortlistToBeChanged = applicants.getApplicantsByIndex(applicantIndices);
-        for (var a : applicantShortlistToBeChanged) {
+    Pointer<ApplicantModel> ptrToApplicantModel;
+    public ApplicantShortlister(int[] applicantIndices, Pointer<ApplicantModel> applicants){
+        ptrToApplicantModel = applicants;
+        for (var a : ptrToApplicantModel.get().getApplicantsByIndex(applicantIndices)) {
             a.toggleApplicantShortlist();
         }
     }
