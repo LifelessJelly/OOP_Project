@@ -1,18 +1,36 @@
 package Controller;
 
 import Data.ApplicantModel;
+import GUI.MainApplication;
+import GUI.PersonalInfoBox;
 import Subsystems.JsonReaderWriter;
 import Subsystems.PasswordHasher;
 
 import javax.swing.*;
 
 
+import java.awt.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
 
 
 public class Main extends JFrame {
+
+    public Main(ApplicantModel.Applicant applicant){
+        this.add(new PersonalInfoBox(applicant));
+        this.add(new JSeparator());
+        this.add(new PersonalInfoBox(applicant));
+        this.add(new JSeparator());
+        this.add(new PersonalInfoBox(applicant));
+        this.setVisible(true);
+        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setMinimumSize(new Dimension(480, 240));
+        pack();
+        setLocationRelativeTo(getOwner());
+    }
+
     public static void main(String[] args) {
         ApplicantModel.Applicant littleJohn = new ApplicantModel.Applicant();
         littleJohn.setDetails("Little John",
@@ -21,14 +39,9 @@ public class Main extends JFrame {
                 "littleJohn@student.tp.edu.sg");
         littleJohn.setResume("I love eating galvanised steel bars");
         String json = JsonReaderWriter.modelToJson(littleJohn);
-        try {
-            try (FileWriter fileWriter = new FileWriter(System.getProperty("user.dir") + "\\" + new PasswordHasher(String.valueOf(littleJohn.getId())).getEncodedStr() + ".json")) {
-                fileWriter.write(json);
-            }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        new Main(littleJohn);
+
     }
 }
 

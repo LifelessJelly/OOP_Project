@@ -1,8 +1,7 @@
 package Data;
 
-import Subsystems.ImageToBase64;
+import Subsystems.ImageBase64;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -11,23 +10,16 @@ import java.util.List;
 //Class model implementation for applicants
 
 public class ApplicantModel implements Models {
+    public ApplicantModel(){
+        List<Applicant> applicants = new ArrayList<>();
+    }
+
     private final List<Applicant> applicants = new ArrayList<>();
-
-    @Override
-    public String toString() {
-        return "ApplicantList{" +
-                "applicants=" + applicants +
-                '}';
-    }
-
-    @Override
-    public void showContent() {
-
-    }
 
     public void addApplicant(List<Applicant> applicant) {
         applicants.addAll(applicant);
     }
+
     public List<Applicant> getApplicants() {
         return applicants;
     }
@@ -40,8 +32,16 @@ public class ApplicantModel implements Models {
         return newApplicants;
     }
 
-    public ApplicantModel(){
-        List<Applicant> applicants = new ArrayList<>();
+    @Override
+    public void showContent() {
+
+    }
+
+    @Override
+    public String toString() {
+        return "ApplicantList{" +
+                "applicants=" + applicants +
+                '}';
     }
 
 
@@ -73,12 +73,17 @@ public class ApplicantModel implements Models {
             applicantDetails.nationality = nationality;
             applicantDetails.gender = gender;
             applicantDetails.NRIC_Fin_Passport = NRIC_Fin_Passport;
-            applicantDetails.imageBase64 = ImageToBase64.imageToBase64(pathToImage);
+            applicantDetails.imageBase64 = ImageBase64.imageToBase64(pathToImage);
             applicantDetails.email = email;
         }
 
+
         public int getId() {
             return applicantMetadata.applicantID;
+        }
+
+        public String getName() {
+            return applicantDetails.name;
         }
 
         public static class compareJobDates implements Comparator<ApplicantPrevExp> {
@@ -88,8 +93,6 @@ public class ApplicantModel implements Models {
                 return o1.yearBegin - o2.yearBegin;
             }
         }
-
-
 
         public void generatePreviousJobExperience(String company, String jobTitle, int startYear, int endYear) {
             applicantPrevExps.add(new ApplicantPrevExp(company, jobTitle, startYear, endYear));
@@ -116,9 +119,18 @@ public class ApplicantModel implements Models {
             applicantSummary.skills.add(skill);
         }
 
+        public String getPathToImage(){
+            return applicantDetails.imageBase64;
+        }
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public static class ApplicantDetails extends Models.ModelDetails {
+
+            public ApplicantDetails() {
+                super();
+            }
+
             @Override
             public String toString() {
                 return super.toString();

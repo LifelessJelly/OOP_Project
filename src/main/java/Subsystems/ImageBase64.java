@@ -1,17 +1,15 @@
 package Subsystems;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.beans.Encoder;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Base64;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 
-public class ImageToBase64 {
+public class ImageBase64 {
     public static String imageToBase64(String pathToImage) {
         BufferedImage image = null;
         try {
@@ -40,5 +38,14 @@ public class ImageToBase64 {
         }
         byte[] bytes = baos.toByteArray();
         return Base64.getEncoder().encodeToString(bytes);
+    }
+
+    public static BufferedImage base64ToImage(String base64) {
+        byte[] bytes = Base64.getDecoder().decode(base64);
+        try {
+            return ImageIO.read(new ByteArrayInputStream(bytes));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
