@@ -28,7 +28,7 @@ public interface Models {
                     ", nationality='" + this.nationality + '\'' +
                     ", gender='" + this.gender + '\'' +
                     ", NRIC/Fin/Passport='" + this.NRIC_Fin_Passport + '\'' +
-                    ", pathToImage='" + this.imageBase64 + '\'' +
+                    ", imageBase64='" + this.imageBase64 + '\'' +
                     ", email='" + this.email + '\'' +
                     '}';
         }
