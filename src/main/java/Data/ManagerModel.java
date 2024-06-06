@@ -1,6 +1,6 @@
 package Data;
 
-import Subsystems.PasswordHasher;
+import Subsystems.SHA256;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +36,8 @@ public class ManagerModel implements Models{
         }
 
         public boolean checkCredentials(String usernamePlainText, String passwordPlainText) {
-            String usernameEncrypted = new PasswordHasher(usernamePlainText).getEncodedStr();
-            String passwordEncrypted = new PasswordHasher(passwordPlainText).getEncodedStr();
+            String usernameEncrypted = new String(SHA256.getHasherHex().hashString(usernamePlainText));
+            String passwordEncrypted = new String(SHA256.getHasherHex().hashString(passwordPlainText));
             return usernameEncrypted.equals(managerCredentials.encryptedUsername) && passwordEncrypted.equals(managerCredentials.encryptedPassword);
         }
 
