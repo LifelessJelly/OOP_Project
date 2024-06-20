@@ -1,4 +1,4 @@
-JFDML JFormDesigner: "8.2.3.0.386" Java: "17.0.10" encoding: "UTF-8"
+JFDML JFormDesigner: "8.2.3.0.386" Java: "21.0.3" encoding: "UTF-8"
 
 new FormModel {
 	contentType: "form/swing"
@@ -34,17 +34,17 @@ new FormModel {
 					name: "panel3"
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label2"
-						"text": "GAY ASS BITCH"
+						"text": "Filler"
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label3"
-						"text": "Automatic Estrogen generator"
+						"text": "Honda civic 2023"
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 						"gridy": 1
 					} )
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label4"
-						"text": "Jewish people"
+						"text": "Dog food"
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 						"gridy": 2
 					} )

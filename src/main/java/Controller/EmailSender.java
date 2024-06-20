@@ -10,10 +10,8 @@ import java.util.Scanner;
 public class EmailSender {
 
     public EmailSender(String toEmail, String subject, String body){
-        final String fromEmail = "joseph_chiu@outlook.com";
-        System.out.print("Enter email password: ");
-        Scanner typedPassword = new Scanner(System.in);
-        final String password = typedPassword.nextLine();
+        final String fromEmail = "joseph_chiu@Outlook.com";
+        final String password = "manthe12";
         System.out.println("TLSEmail Start");
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.office365.com"); //SMTP Host

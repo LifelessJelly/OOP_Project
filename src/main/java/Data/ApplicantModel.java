@@ -119,7 +119,7 @@ public class ApplicantModel implements Models {
             applicantSummary.skills.add(skill);
         }
 
-        public String getPathToImage(){
+        public String getImageBase64(){
             return applicantDetails.imageBase64;
         }
 

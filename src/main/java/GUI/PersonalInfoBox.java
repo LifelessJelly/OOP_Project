@@ -9,6 +9,8 @@ import java.awt.*;
 public class PersonalInfoBox extends JPanel {
     public PersonalInfoBox(ApplicantModel.Applicant applicant) {
 
+
+
         this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
         this.setMinimumSize(new Dimension(Integer.MAX_VALUE, 100));
         this.setPreferredSize(new Dimension(Integer.MAX_VALUE, 100));
@@ -18,7 +20,7 @@ public class PersonalInfoBox extends JPanel {
         ((GridBagLayout)this.getLayout()).columnWeights = new double[] {0.0, 0.0, 1.0E-4};
         ((GridBagLayout)this.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 1.0E-4};
 
-        Image img = ImageBase64.base64ToImage(applicant.getPathToImage());
+        Image img = ImageBase64.base64ToImage(applicant.getImageBase64());
 
         var picLabel = new JLabel(new ImageIcon(img.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
         picLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
@@ -50,9 +52,8 @@ public class PersonalInfoBox extends JPanel {
                         new Insets(0, 0, 2, 2), 0, 0));
 
 
-
 //        var divider = new JSeparator();
-//        this.add(divider, new GridBagConstraints(0, 1, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 5, 5), 0, 0));
+//        this.add(divider, new GridBagConstraints(0, 3, -1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 5, 5), 0, 0));
 
 
     }

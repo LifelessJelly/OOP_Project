@@ -59,19 +59,19 @@ public class MainApplication extends JFrame {
                 ((GridBagLayout)panel3.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
                 //---- label2 ----
-                label2.setText("GAY ASS BITCH");
+                label2.setText("Filler");
                 panel3.add(label2, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 2, 2), 0, 0));
 
                 //---- label3 ----
-                label3.setText("Automatic Estrogen generator");
+                label3.setText("Honda civic 2023");
                 panel3.add(label3, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 2, 2), 0, 0));
 
                 //---- label4 ----
-                label4.setText("Jewish people");
+                label4.setText("Dog food");
                 panel3.add(label4, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 2, 2), 0, 0));
