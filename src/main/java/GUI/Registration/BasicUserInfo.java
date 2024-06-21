@@ -47,6 +47,7 @@ public class BasicUserInfo extends SlidingPanel {
     private GridBagConstraints nameConstraints;
     private GridBagConstraints headerConstraints;
     private JPanel dateStuffPanel;
+    private JButton nextButton;
 
     BasicUserInfo(Mainframe mainframe, ApplicantRegistrator applicantRegistratorInstance) {
         this.mainframe = mainframe;
@@ -247,15 +248,15 @@ public class BasicUserInfo extends SlidingPanel {
                 new Insets(0, 0, 5, 0), 0, 0);
 
 
-        errorMessageLabel = new JLabel("Please fill in all fields ");
-        errorMessageLabel.setForeground(getBackground());
+        errorMessageLabel = new JLabel("");
         errorMessageLabel.setPreferredSize(new Dimension(400, 20));
         errorMessageLabel.setMinimumSize(new Dimension(400, 20));
         errorMessageLabel.setHorizontalAlignment(SwingConstants.LEFT);
         errorMessageLabel.setFont(errorMessageLabel.getFont().deriveFont(18f));
         confirmInfoStuffPanel.add(errorMessageLabel, errorMessageConstraints);
 
-        JButton nextButton = new JButton("Next");
+        nextButton = new JButton("Next");
+        nextButton.setEnabled(false);
         nextButton.setHorizontalAlignment(SwingConstants.LEFT);
         nextButton.setFont(nextButton.getFont().deriveFont(18f));
         confirmInfoStuffPanel.add(nextButton, nextButtonConstraints);
@@ -300,6 +301,7 @@ public class BasicUserInfo extends SlidingPanel {
                             nricFinField.getText(),
                             emailField.getText(),
                             (String) Objects.requireNonNull(genderComboBox.getSelectedItem()));
+                    nextButton.setEnabled(false);
                     mainframe.panelOutroRight();
                 }
             }
@@ -369,12 +371,7 @@ public class BasicUserInfo extends SlidingPanel {
 
     @Override
     public void slideInLeft() {
-        int startPos = 0;
-        for (int i = 0; i < 40; ++i ){
-            startPos = (int) pow(startPos + 1.5, 1.05);
-        }
-
-        movingInsets.right = startPos;
+        movingInsets.right = getStartPos();
         this.setVisible(true);
         updateAnimation();
         loopCycles = 0;
@@ -393,6 +390,7 @@ public class BasicUserInfo extends SlidingPanel {
                 monthBox.setEditable(true);
                 yearBox.setEditable(true);
                 genderComboBox.setEditable(true);
+                nextButton.setEnabled(true);
             }
         }).start();
     }
@@ -416,6 +414,28 @@ public class BasicUserInfo extends SlidingPanel {
 
     @Override
     public void slideInRight() {
+        movingInsets.left = getStartPos();
+        this.setVisible(true);
+        updateAnimation();
+        loopCycles = 0;
+        new Timer(10, e -> {
+            if (loopCycles < 40){
+                movingInsets.left = (int) round(pow(movingInsets.left, (1/1.05))-1.5);
+                if (movingInsets.left < 0){
+                    movingInsets.left = 0;
+                }
+                updateAnimation();
+                ++loopCycles;
+            }
+            else {
+                ((Timer)e.getSource()).stop();
+                dayBox.setEditable(true);
+                monthBox.setEditable(true);
+                yearBox.setEditable(true);
+                genderComboBox.setEditable(true);
+                nextButton.setEnabled(true);
+            }
+        }).start();
 
     }
     @Override
@@ -427,7 +447,7 @@ public class BasicUserInfo extends SlidingPanel {
         loopCycles = 0;
         new Timer(10, e -> {
             if (loopCycles < 40){
-                movingInsets.left = (int) round(pow(movingInsets.left + 1.5, 1.05));
+                movingInsets.left = (int) pow(movingInsets.left + 1.5, 1.05);
                 updateAnimation();
                 ++loopCycles;
             }
@@ -438,5 +458,13 @@ public class BasicUserInfo extends SlidingPanel {
             }
         }).start();
 
+    }
+
+    private int getStartPos(){
+        int startPos = 0;
+        for (int i = 0; i < 40; ++i ){
+            startPos = (int) pow(startPos + 1.5, 1.05);
+        }
+        return startPos;
     }
 }

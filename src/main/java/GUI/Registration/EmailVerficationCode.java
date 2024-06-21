@@ -2,12 +2,10 @@ package GUI.Registration;
 
 import Controller.ApplicantRegistrator;
 import Controller.EmailSender;
-import Controller.Main;
 
 import javax.swing.*;
+import javax.swing.text.PlainDocument;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -31,6 +29,14 @@ public class EmailVerficationCode extends SlidingPanel{
     private GridBagConstraints otpSubConstraints;
     private GridBagConstraints otpPanelConstraints;
     private GridBagConstraints confirmInfoStuffConstraints;
+    private JTextField otpDigit1;
+    private JTextField otpDigit2;
+    private JTextField otpDigit3;
+    private JTextField otpDigit4;
+    private JTextField otpDigit5;
+    private JTextField otpDigit6;
+    private JButton nextButton;
+    private JButton backButton;
 
 
     public EmailVerficationCode(Mainframe mainframe, ApplicantRegistrator registrator) {
@@ -91,18 +97,24 @@ public class EmailVerficationCode extends SlidingPanel{
                 new Insets(0, 0, 0, 10), 0, 0);
 
 
-        JTextField OTPDigit1 = new JTextField();
-        JTextField OTPDigit2 = new JTextField();
-        JTextField OTPDigit3 = new JTextField();
-        JTextField OTPDigit4 = new JTextField();
-        JTextField OTPDigit5 = new JTextField();
-        JTextField OTPDigit6 = new JTextField();
-        addOTPDigit(OTPDigit1, OTPDigit1Constraints);
-        addOTPDigit(OTPDigit2, OTPDigit2Constraints);
-        addOTPDigit(OTPDigit3, OTPDigit3Constraints);
-        addOTPDigit(OTPDigit4, OTPDigit4Constraints);
-        addOTPDigit(OTPDigit5, OTPDigit5Constraints);
-        addOTPDigit(OTPDigit6, OTPDigit6Constraints);
+        otpDigit1 = new JTextField();
+        otpDigit2 = new JTextField();
+        otpDigit3 = new JTextField();
+        otpDigit4 = new JTextField();
+        otpDigit5 = new JTextField();
+        otpDigit6 = new JTextField();
+        addOTPDigit(otpDigit1, OTPDigit1Constraints);
+        addOTPDigit(otpDigit2, OTPDigit2Constraints);
+        addOTPDigit(otpDigit3, OTPDigit3Constraints);
+        addOTPDigit(otpDigit4, OTPDigit4Constraints);
+        addOTPDigit(otpDigit5, OTPDigit5Constraints);
+        addOTPDigit(otpDigit6, OTPDigit6Constraints);
+        initOTPBoxSettings(otpDigit1);
+        initOTPBoxSettings(otpDigit2);
+        initOTPBoxSettings(otpDigit3);
+        initOTPBoxSettings(otpDigit4);
+        initOTPBoxSettings(otpDigit5);
+        initOTPBoxSettings(otpDigit6);
         this.add(OTPPanel, otpPanelConstraints);
 
         confirmInfoStuffPanel = new JPanel();
@@ -114,37 +126,56 @@ public class EmailVerficationCode extends SlidingPanel{
         GridBagConstraints nextButtonConstraints = new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 5, 0), 0, 0);
+        GridBagConstraints backButtonConstraints = new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 0, 0), 0, 0);
 
 
-        errorMessageLabel = new JLabel();
-        errorMessageLabel.setForeground(errorMessageLabel.getBackground());
+        errorMessageLabel = new JLabel("");
         errorMessageLabel.setPreferredSize(new Dimension(400, 20));
         errorMessageLabel.setMinimumSize(new Dimension(400, 20));
-        errorMessageLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        errorMessageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         errorMessageLabel.setFont(errorMessageLabel.getFont().deriveFont(18f));
         confirmInfoStuffPanel.add(errorMessageLabel, errorMessageConstraints);
 
-        JButton nextButton = new JButton("Next");
-        nextButton.setHorizontalAlignment(SwingConstants.LEFT);
+        nextButton = new JButton("Next");
+        nextButton.setEnabled(false);
+        nextButton.setHorizontalAlignment(SwingConstants.CENTER);
         nextButton.setFont(nextButton.getFont().deriveFont(18f));
         confirmInfoStuffPanel.add(nextButton, nextButtonConstraints);
+
+        backButton = new JButton("Back");
+        backButton.setEnabled(false);
+        backButton.setHorizontalAlignment(SwingConstants.CENTER);
+        backButton.setFont(backButton.getFont().deriveFont(18f));
+        confirmInfoStuffPanel.add(backButton, backButtonConstraints);
 
         this.add(confirmInfoStuffPanel, confirmInfoStuffConstraints);
 
         this.setVisible(true);
 
         nextButton.addActionListener(e -> {
+
+            if (
+                    otpDigit1.getText().isEmpty() || otpDigit2.getText().isEmpty() ||
+                    otpDigit3.getText().isEmpty() || otpDigit4.getText().isEmpty() ||
+                    otpDigit5.getText().isEmpty() || otpDigit6.getText().isEmpty())
+            {
+                errorMessageLabel.setText("Please fill in all missing digits");
+            }
+
             int[] userInputOTP = new int[]{
-                    Integer.parseInt(OTPDigit1.getText()),
-                    Integer.parseInt(OTPDigit2.getText()),
-                    Integer.parseInt(OTPDigit3.getText()),
-                    Integer.parseInt(OTPDigit4.getText()),
-                    Integer.parseInt(OTPDigit5.getText()),
-                    Integer.parseInt(OTPDigit6.getText())
+                    Integer.parseInt(otpDigit1.getText()),
+                    Integer.parseInt(otpDigit2.getText()),
+                    Integer.parseInt(otpDigit3.getText()),
+                    Integer.parseInt(otpDigit4.getText()),
+                    Integer.parseInt(otpDigit5.getText()),
+                    Integer.parseInt(otpDigit6.getText())
             };
             if (Arrays.equals(userInputOTP, OTP)){
-                errorMessageLabel.setText("Your OTP is correct!");
-                errorMessageLabel.setForeground(new Color(58, 227, 24));
+                errorMessageLabel.setText("");
+                System.out.println("Correct OTP");
+                mainframe.panelOutroRight();
             }
             else {
                 if (--triesLeft == 0){
@@ -155,6 +186,23 @@ public class EmailVerficationCode extends SlidingPanel{
             }
         });
 
+        backButton.addActionListener(e ->{
+            nextButton.setEnabled(false);
+            backButton.setEnabled(false);
+            mainframe.panelOutroLeft();
+        });
+        otpDigit1.getDocument().addDocumentListener(new TextSequenceListener(null, otpDigit2));
+        otpDigit2.getDocument().addDocumentListener(new TextSequenceListener(otpDigit1, otpDigit3));
+        otpDigit3.getDocument().addDocumentListener(new TextSequenceListener(otpDigit2, otpDigit4));
+        otpDigit4.getDocument().addDocumentListener(new TextSequenceListener(otpDigit3, otpDigit5));
+        otpDigit5.getDocument().addDocumentListener(new TextSequenceListener(otpDigit4, otpDigit6));
+        otpDigit6.getDocument().addDocumentListener(new TextSequenceListener(otpDigit5, null));
+
+    }
+
+    private void initOTPBoxSettings(JTextField OTPField){
+        PlainDocument doc = (PlainDocument) OTPField.getDocument();
+        doc.setDocumentFilter(new OTPDigitFilter());
     }
 
     private void addOTPDigit(JTextField OTPDigit, GridBagConstraints OTPConstraints){
@@ -188,6 +236,14 @@ public class EmailVerficationCode extends SlidingPanel{
         for (int i = 0; i < 40; ++i) {
             startPos = (int) pow(startPos + 1.5, 1.05);
         }
+        otpDigit1.setText("");
+        otpDigit2.setText("");
+        otpDigit3.setText("");
+        otpDigit4.setText("");
+        otpDigit5.setText("");
+        otpDigit6.setText("");
+        errorMessageLabel.setText("");
+
         movingInsets.right = startPos;
         this.setVisible(true);
         updateAnimation();
@@ -202,8 +258,44 @@ public class EmailVerficationCode extends SlidingPanel{
                 ++loopCycles;
             } else {
                 ((Timer) e.getSource()).stop();
+                nextButton.setEnabled(true);
+                backButton.setEnabled(true);
                 OTP = generateOTPNumber();
                 sendOTPToEmail(OTP);
+            }
+        }).start();
+    }
+
+    @Override
+    public void slideOutLeft() {
+        loopCycles = 0;
+        new Timer(10, e -> {
+            if (loopCycles < 40){
+                movingInsets.right = (int) pow(movingInsets.right + 1.5, 1.05);
+                updateAnimation();
+                ++loopCycles;
+            }
+            else {
+                ((Timer)e.getSource()).stop();
+                setVisible(false);
+                mainframe.panelIntroRight();
+            }
+        }).start();
+    }
+
+    @Override
+    public void slideOutRight() {
+        loopCycles = 0;
+        new Timer(10, e -> {
+            if (loopCycles < 40){
+                movingInsets.left = (int) pow(movingInsets.left + 1.5, 1.05);
+                updateAnimation();
+                ++loopCycles;
+            }
+            else {
+                ((Timer)e.getSource()).stop();
+                setVisible(false);
+                mainframe.panelIntroLeft();
             }
         }).start();
     }

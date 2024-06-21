@@ -9,8 +9,6 @@ public class Welcome extends SlidingPanel {
     private int loopCycles = 0;
     private float alpha = 0;
     GUI.Registration.Mainframe mainframe;
-    Timer timer;
-    Timer textTimer;
     private JLabel welcomeLabel;
     private JLabel getYouStartedLabel;
     private JButton kaiShiButton;
@@ -48,12 +46,12 @@ public class Welcome extends SlidingPanel {
         this.add(welcomeLabel, welcomeConstraints);
 
 
-        getYouStartedLabel = new JLabel("让我们帮您入门");
+        getYouStartedLabel = new JLabel("Let's get you started");
         getYouStartedLabel.setHorizontalAlignment(SwingConstants.CENTER);
         getYouStartedLabel.setFont(new Font("KaiTi", Font.PLAIN, 18));
         this.add(getYouStartedLabel, getYouStartedConstraints);
 
-        kaiShiButton = new JButton(">开始<");
+        kaiShiButton = new JButton("Let's go!");
         kaiShiButton.setHorizontalAlignment(SwingConstants.CENTER);
         kaiShiButton.setFont(new Font("KaiTi", Font.PLAIN, 18));
         this.add(kaiShiButton, kaiShiConstraints);
@@ -84,9 +82,10 @@ public class Welcome extends SlidingPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        Composite composite = g2d.getComposite();
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+        super.paintComponent(g);
     }
+
 
     @Override
     public void slideOutRight(){
