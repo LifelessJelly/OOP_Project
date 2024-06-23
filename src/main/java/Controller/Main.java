@@ -1,6 +1,6 @@
 package Controller;
 
-import Data.ApplicantModel;
+import Data.Applicant;
 import GUI.Registration.Mainframe;
 
 
@@ -12,7 +12,7 @@ import javax.swing.*;
 
 public class Main {
 
-    public Main(ApplicantModel.Applicant applicant){
+    public Main(Applicant applicant){
         new Mainframe();
     }
 
@@ -24,7 +24,7 @@ public class Main {
         } catch (UnsupportedLookAndFeelException e) {
             throw new RuntimeException(e);
         }
-        new Main(new ApplicantModel.Applicant());
+        new Main(new Applicant());
     }
 }
 

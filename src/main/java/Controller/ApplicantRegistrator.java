@@ -1,14 +1,13 @@
 package Controller;
 
-import Data.ApplicantModel;
+import Data.Applicant;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Locale;
 
 public class ApplicantRegistrator {
-    ApplicantModel.Applicant applicant;
+    Applicant applicant;
     String name;
     int age;
     long date;
@@ -16,7 +15,7 @@ public class ApplicantRegistrator {
     String email;
     String gender;
 
-    public void setBasicInfo(String name, int day, String month, int year, String nricFin, String email, String gender) {
+    public void registerBasicInfo(String name, int day, String month, int year, String nricFin, String email, String gender) {
         this.name = name;
         String dateString = String.valueOf(day) + ' ' + month + ' ' + String.valueOf(year);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH);

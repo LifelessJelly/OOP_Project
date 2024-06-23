@@ -1,7 +1,8 @@
 package GUI.Registration;
 
-import Controller.ApplicantRegistrator;
 import Controller.EmailSender;
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
 import javax.swing.text.PlainDocument;
@@ -14,7 +15,6 @@ import static java.lang.Math.round;
 
 public class EmailVerficationCode extends SlidingPanel{
     Mainframe mainframe;
-    ApplicantRegistrator registrator;
     JLabel enterOTPLabel;
     JLabel OTPSubLabel;
     JPanel OTPPanel;
@@ -39,9 +39,8 @@ public class EmailVerficationCode extends SlidingPanel{
     private JButton backButton;
 
 
-    public EmailVerficationCode(Mainframe mainframe, ApplicantRegistrator registrator) {
+    public EmailVerficationCode(Mainframe mainframe) {
         this.mainframe = mainframe;
-        this.registrator = registrator;
         initComponents();
     }
 
@@ -206,7 +205,7 @@ public class EmailVerficationCode extends SlidingPanel{
     }
 
     private void addOTPDigit(JTextField OTPDigit, GridBagConstraints OTPConstraints){
-        OTPDigit.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.WHITE));
+
         OTPDigit.setBackground(OTPPanel.getBackground());
         OTPDigit.setHorizontalAlignment(SwingConstants.CENTER);
         OTPDigit.setPreferredSize(new Dimension(30, 40));
@@ -224,7 +223,7 @@ public class EmailVerficationCode extends SlidingPanel{
         return secretOTP;
     }
     private void sendOTPToEmail(int[] OTP){
-        String email = registrator.getEmail();
+        String email = mainframe.getRegistrator().getEmail();
         String header = "Verification Code";
         String body = "Your OTP is " + Arrays.toString(OTP) + ". If you did not request this, please ignore this email. Do not share your OTP number with anyone.";
         new EmailSender(email, header, body);
@@ -258,10 +257,19 @@ public class EmailVerficationCode extends SlidingPanel{
                 ++loopCycles;
             } else {
                 ((Timer) e.getSource()).stop();
+
+                Color borderColor = null;
+                if (UIManager.getLookAndFeel() instanceof FlatDarkLaf){
+                    borderColor = Color.white;
+                }
+                else if (UIManager.getLookAndFeel() instanceof FlatLightLaf){
+                    borderColor = Color.black;
+                }
                 nextButton.setEnabled(true);
                 backButton.setEnabled(true);
                 OTP = generateOTPNumber();
-                sendOTPToEmail(OTP);
+//                sendOTPToEmail(OTP);
+                System.out.println(Arrays.toString(OTP));
             }
         }).start();
     }
@@ -305,7 +313,6 @@ public class EmailVerficationCode extends SlidingPanel{
         layout.setConstraints(OTPSubLabel, otpSubConstraints);
         layout.setConstraints(OTPPanel, otpPanelConstraints);
         layout.setConstraints(confirmInfoStuffPanel, confirmInfoStuffConstraints);
-        System.out.println(movingInsets.right);
         this.revalidate();
         this.repaint();
     }

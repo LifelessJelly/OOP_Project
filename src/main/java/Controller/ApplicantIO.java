@@ -1,7 +1,7 @@
 package Controller;
 
 
-import Data.ApplicantModel;
+import Data.Applicant;
 import Subsystems.FileContentEncryptor;
 import Subsystems.JsonReaderWriter;
 import Subsystems.SHA256;
@@ -18,13 +18,13 @@ import java.nio.file.Paths;
 //store every applicant's data discretely
 public class ApplicantIO {
 
-    public static ApplicantModel.Applicant readApplicant(File pathToApplicantsFile) {
+    public static Applicant readApplicant(File pathToApplicantsFile) {
         String fileDir = pathToApplicantsFile.getPath();
         String parentDir = pathToApplicantsFile.getParent();
-        return JsonReaderWriter.jsonToModel(FileContentEncryptor.decrypt(readFile(fileDir), parentDir), ApplicantModel.Applicant.class);
+        return JsonReaderWriter.jsonToModel(FileContentEncryptor.decrypt(readFile(fileDir), parentDir), Applicant.class);
 
     }
-    public static void writeApplicant(ApplicantModel.Applicant applicant, String pathToDirectory) {
+    public static void writeApplicant(Applicant applicant, String pathToDirectory) {
         try {
             try (FileWriter newFile = new FileWriter(pathToDirectory + "\\" + new String(SHA256.getHasherHex().hashString(String.valueOf(applicant.getId()))) + ".oop")) {
                 newFile.write(FileContentEncryptor.encrypt(JsonReaderWriter.modelToJson(applicant), pathToDirectory));

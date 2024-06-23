@@ -1,13 +1,13 @@
 package GUI;
 
-import Data.ApplicantModel;
+import Data.Applicant;
 import Subsystems.ImageBase64;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class PersonalInfoBox extends JPanel {
-    public PersonalInfoBox(ApplicantModel.Applicant applicant) {
+    public PersonalInfoBox(Applicant applicant) {
 
 
 

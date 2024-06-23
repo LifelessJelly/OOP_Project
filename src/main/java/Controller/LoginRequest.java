@@ -1,7 +1,7 @@
 package Controller;
 
-import Data.HRModel;
-import Data.ManagerModel;
+import Data.HR;
+import Data.Manager;
 import Subsystems.*;
 
 import java.io.IOException;
@@ -23,31 +23,7 @@ public class LoginRequest {
     public boolean loginSuccess;
     LoginRequest(String username, String password, String domain) throws IOException {
         // Fetches the encrypted passwords
-        switch (domain) {
-            case "HR":
-                HRModel hrmodel = JsonReaderWriter.jsonToModel(Files.readString(Paths.get("./HR_Data.json")), HRModel.class);
-                var hrList = hrmodel.getHRs();
-                for (HRModel.HR hr : hrList) {
-                    if (hr.checkCredentials(username, password)){
-                        loginSuccess = true;
-                        break;
-                    }
-                }
-                break;
-            case "MANAGER":
-                ManagerModel managerModel = JsonReaderWriter.jsonToModel(Files.readString(Paths.get("./Manager_Data.json")), ManagerModel.class);
-                var managerList = managerModel.getManagers();
-                for (ManagerModel.Manager manager : managerList) {
-                    if (manager.checkCredentials(username, password)){
-                        loginSuccess = true;
-                        break;
-                    }
-                }
-                break;
 
-
-
-        }
     }
 
     public boolean isLoginSuccessful() {

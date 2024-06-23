@@ -1,7 +1,5 @@
 package GUI.Registration;
 
-import Controller.ApplicantRegistrator;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 
@@ -14,7 +12,6 @@ import static java.lang.Math.*;
 
 public class BasicUserInfo extends SlidingPanel {
     Mainframe mainframe;
-    ApplicantRegistrator applicantRegistratorInstance;
     private int loopCycles = 0;
     JComboBox<Integer> dayBox;
     JComboBox<String> monthBox;
@@ -49,9 +46,9 @@ public class BasicUserInfo extends SlidingPanel {
     private JPanel dateStuffPanel;
     private JButton nextButton;
 
-    BasicUserInfo(Mainframe mainframe, ApplicantRegistrator applicantRegistratorInstance) {
+    BasicUserInfo(Mainframe mainframe) {
         this.mainframe = mainframe;
-        this.applicantRegistratorInstance = applicantRegistratorInstance;
+
 
         intiComponents();
     }
@@ -249,6 +246,7 @@ public class BasicUserInfo extends SlidingPanel {
 
 
         errorMessageLabel = new JLabel("");
+        errorMessageLabel.setForeground(new Color(173, 74, 59));
         errorMessageLabel.setPreferredSize(new Dimension(400, 20));
         errorMessageLabel.setMinimumSize(new Dimension(400, 20));
         errorMessageLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -279,21 +277,17 @@ public class BasicUserInfo extends SlidingPanel {
             }
             if (fieldIsMissing){
                 errorMessageLabel.setText("Please fill in all fields ");
-                errorMessageLabel.setForeground(new Color(173, 74, 59));
-                errorMessageLabel.setVisible(true);
             }
             else {
-                errorMessageLabel.setForeground(getBackground());
+                errorMessageLabel.setText("");
                 if (!isNRICFINValid(nricFinField.getText())) {
                     errorMessageLabel.setText("Invalid NRIC/FIN number ");
-                    errorMessageLabel.setForeground(new Color(173, 74, 59));
-                    errorMessageLabel.setVisible(true);
                     nricFinField.setBorder(errorBorder);
                 }
                 else {
                     nricFinField.setBorder(defaultBorder);
-                    errorMessageLabel.setForeground(getBackground());
-                    applicantRegistratorInstance.setBasicInfo(
+                    errorMessageLabel.setText("");
+                    mainframe.getRegistrator().registerBasicInfo(
                             nameField.getText(),
                             (Integer) Objects.requireNonNull(dayBox.getSelectedItem()),
                             (String) Objects.requireNonNull(monthBox.getSelectedItem()),
