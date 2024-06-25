@@ -85,7 +85,7 @@ public class Mainframe extends JFrame {
                 throw new RuntimeException(ex);
             }
         });
-        panels = Arrays.asList(new SkillsInfo(this));
+        panels = Arrays.asList(new Welcome(this), new BasicUserInfo(this), new EmailVerification(this), new SkillsInfo(this));
         panels.get(0).setVisible(true);
         this.add(panels.get(0), BorderLayout.CENTER);
         this.setVisible(true);
