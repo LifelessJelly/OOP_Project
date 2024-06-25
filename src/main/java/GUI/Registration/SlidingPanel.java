@@ -17,4 +17,7 @@ public abstract class SlidingPanel extends JPanel {
     void slideOutRight() {
 
     }
+    protected void updateAnimation(){
+
+    }
 }
