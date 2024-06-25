@@ -22,14 +22,14 @@ public class PersonalInfoBox extends JPanel {
 
         Image img = ImageBase64.base64ToImage(applicant.getImageBase64());
 
-        var picLabel = new JLabel(new ImageIcon(img.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+        JLabel picLabel = new JLabel(new ImageIcon(img.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
         picLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
         this.add(picLabel, new GridBagConstraints(0, 0, 1, 1, 0, 0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 5, 5), 0, 0));
 
 
-        var textHolder = new JPanel();
+        JPanel textHolder = new JPanel();
         textHolder.setLayout(new GridBagLayout());
         this.add(textHolder, new GridBagConstraints(1, 0, 1, 3, 0, 0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,

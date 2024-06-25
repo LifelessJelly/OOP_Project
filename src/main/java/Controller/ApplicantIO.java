@@ -36,7 +36,7 @@ public class ApplicantIO {
     }
     private static String readFile(String pathToFile) {
         try {
-            return Files.readString(Paths.get(pathToFile));
+            return new String(Files.readAllBytes(Paths.get(pathToFile)));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

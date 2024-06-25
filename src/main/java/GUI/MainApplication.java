@@ -31,7 +31,7 @@ public class MainApplication extends JFrame {
 
         //======== this ========
         setMinimumSize(new Dimension(480, 240));
-        var contentPane = getContentPane();
+        Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
         //======== panel1 ========

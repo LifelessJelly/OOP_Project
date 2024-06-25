@@ -354,13 +354,25 @@ public class BasicUserInfo extends SlidingPanel {
     }
 
     private static char[] getChars(String nricFin) {
-        return switch (nricFin.charAt(0)) {
-            case 'T' -> new char[]{'G', 'F', 'E', 'D', 'C', 'B', 'A', 'J', 'Z', 'I', 'H'};
-            case 'S' -> new char[]{'J', 'Z', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'};
-            case 'G' -> new char[]{'R', 'Q', 'P', 'N', 'M', 'L', 'K', 'X', 'W', 'U', 'T'};
-            case 'F' -> new char[]{'X', 'W', 'U', 'T', 'R', 'Q', 'P', 'N', 'M', 'L', 'K'};
-            default -> null;
-        };
+//        return switch (nricFin.charAt(0)) {
+//            case 'T' -> new char[]{'G', 'F', 'E', 'D', 'C', 'B', 'A', 'J', 'Z', 'I', 'H'};
+//            case 'S' -> new char[]{'J', 'Z', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'};
+//            case 'G' -> new char[]{'R', 'Q', 'P', 'N', 'M', 'L', 'K', 'X', 'W', 'U', 'T'};
+//            case 'F' -> new char[]{'X', 'W', 'U', 'T', 'R', 'Q', 'P', 'N', 'M', 'L', 'K'};
+//            default -> null;
+//        };
+        switch (nricFin.charAt(0)){
+            case 'T':
+                return new char[]{'G', 'F', 'E', 'D', 'C', 'B', 'A', 'J', 'Z', 'I', 'H'};
+            case 'S':
+                return new char[]{'J', 'Z', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'};
+            case 'G':
+                return new char[]{'R', 'Q', 'P', 'N', 'M', 'L', 'K', 'X', 'W', 'U', 'T'};
+            case 'F':
+                return new char[]{'X', 'W', 'U', 'T', 'R', 'Q', 'P', 'N', 'M', 'L', 'K'};
+        }
+        //should never reach here
+    return null;
     }
 
     @Override
