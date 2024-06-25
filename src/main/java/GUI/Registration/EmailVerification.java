@@ -298,7 +298,8 @@ public class EmailVerification extends SlidingPanel{
         }).start();
     }
 
-    private void updateAnimation() {
+    @Override
+    protected void updateAnimation() {
         layout.setConstraints(enterOTPLabel, enterOTPConstraints);
         layout.setConstraints(OTPSubLabel, otpSubConstraints);
         layout.setConstraints(OTPPanel, otpPanelConstraints);

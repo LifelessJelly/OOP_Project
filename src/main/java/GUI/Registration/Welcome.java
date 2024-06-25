@@ -104,7 +104,8 @@ public class Welcome extends SlidingPanel {
         }).start();
     }
 
-    private void updateAnimation() {
+    @Override
+    protected void updateAnimation() {
         layout.setConstraints(welcomeLabel, welcomeConstraints);
         layout.setConstraints(getYouStartedLabel, getYouStartedConstraints);
         layout.setConstraints(kaiShiButton, kaiShiConstraints);

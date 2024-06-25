@@ -153,7 +153,8 @@ public class SkillsInfo extends SlidingPanel{
 
     }
 
-    private void updateAnimation(){
+    @Override
+    protected void updateAnimation(){
         layout.setConstraints(enterSkillsLabel, enterSKillsConstraints);
         layout.setConstraints(skillsSubLabel, skillsSubsConstraints);
         layout.setConstraints(skillsScrollPane, skillsScrollConstraints);

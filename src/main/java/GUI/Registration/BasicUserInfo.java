@@ -401,7 +401,8 @@ public class BasicUserInfo extends SlidingPanel {
         }).start();
     }
 
-    private void updateAnimation() {
+    @Override
+    protected void updateAnimation() {
         layout.setConstraints(headerLabel, headerConstraints);
         layout.setConstraints(nameLabel, nameConstraints);
         layout.setConstraints(nameField, nameFieldConstraints);
