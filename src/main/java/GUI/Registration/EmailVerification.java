@@ -1,8 +1,6 @@
 package GUI.Registration;
 
 import Controller.EmailSender;
-import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
 import javax.swing.text.PlainDocument;
@@ -13,7 +11,7 @@ import java.util.Random;
 import static java.lang.Math.pow;
 import static java.lang.Math.round;
 
-public class EmailVerficationCode extends SlidingPanel{
+public class EmailVerification extends SlidingPanel{
     Mainframe mainframe;
     JLabel enterOTPLabel;
     JLabel OTPSubLabel;
@@ -39,7 +37,7 @@ public class EmailVerficationCode extends SlidingPanel{
     private JButton backButton;
 
 
-    public EmailVerficationCode(Mainframe mainframe) {
+    public EmailVerification(Mainframe mainframe) {
         this.mainframe = mainframe;
         initComponents();
     }
@@ -257,14 +255,6 @@ public class EmailVerficationCode extends SlidingPanel{
                 ++loopCycles;
             } else {
                 ((Timer) e.getSource()).stop();
-
-                Color borderColor = null;
-                if (UIManager.getLookAndFeel() instanceof FlatDarkLaf){
-                    borderColor = Color.white;
-                }
-                else if (UIManager.getLookAndFeel() instanceof FlatLightLaf){
-                    borderColor = Color.black;
-                }
                 nextButton.setEnabled(true);
                 backButton.setEnabled(true);
                 OTP = generateOTPNumber();
