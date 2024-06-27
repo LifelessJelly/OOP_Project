@@ -1,7 +1,6 @@
 package GUI.Registration;
 
 import Controller.Controller;
-import Controller.ApplicantRegistrator;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 
@@ -17,7 +16,7 @@ public class Mainframe extends JFrame {
     JPanel radioButtonsPanel;
     JRadioButton darkModeButton;
     JRadioButton lightModeButton;
-    Controller controller;
+    private final Controller controller;
 
 
     public Mainframe() {
@@ -26,7 +25,6 @@ public class Mainframe extends JFrame {
     }
 
     private void initComponents() {
-        Component contentPane = getContentPane();
         this.setMinimumSize(new Dimension(1080, 720));
         this.setLayout(new BorderLayout());
 
@@ -93,35 +91,41 @@ public class Mainframe extends JFrame {
         this.setLocationRelativeTo(getOwner());
     }
 
+    public Controller getController(){
+        return controller;
+    }
+
 
 
     public void panelOutroRight() { //go forward one page
         panels.get(panelIndex).slideOutRight();
-        panelIndex++;
-
+        ++panelIndex;
     }
     public void panelIntroLeft() { // next page
         if (panelIndex >= panels.size()) {
             this.dispose();
         }
         else {
-            this.add(panels.get(panelIndex));
+            this.getContentPane().add(panels.get(panelIndex));
             SwingUtilities.updateComponentTreeUI(this);
+            this.getContentPane().remove(panels.get(panelIndex - 1));
             panels.get(panelIndex).slideInLeft();
+            System.out.println(this.getContentPane().getComponent(4));
         }
     }
     public void panelOutroLeft() { //go back one page
         panels.get(panelIndex).slideOutLeft();
-        panelIndex--;
+        --panelIndex;
     }
     public void panelIntroRight() {
-        this.remove(panels.get(panelIndex+1));
+        this.getContentPane().add(panels.get(panelIndex));
+        SwingUtilities.updateComponentTreeUI(this);
+        this.getContentPane().remove(panels.get(panelIndex+1));
         panels.get(panelIndex).slideInRight();
+        System.out.println(this.getContentPane().getComponent(4));
     }
 
-    public ApplicantRegistrator getRegistrator() {
-        return controller.getRegistrator();
-    }
+
 
 }
 
