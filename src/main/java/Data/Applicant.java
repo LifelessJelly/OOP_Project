@@ -4,18 +4,16 @@ import Subsystems.ImageBase64;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 //Class model implementation for applicants
 
-public class Applicant implements Models {
+public class Applicant{
 
-
-    public ApplicantSummary applicantSummary;
-    public ApplicantDetails applicantDetails;
-    public List<ApplicantPrevExp> applicantPrevExps;
-    public ApplicantMetadata applicantMetadata;
+    private final ApplicantSummary applicantSummary;
+    private final ApplicantDetails applicantDetails;
+    private final List<ApplicantExperience> applicantPrevExps;
+    private final ApplicantMetadata applicantMetadata;
 
     public Applicant() {
         applicantSummary = new ApplicantSummary();
@@ -31,7 +29,8 @@ public class Applicant implements Models {
                            String gender,
                            String NRIC_Fin_Passport,
                            String pathToImage,
-                           String email){
+                           String email)
+    {
         applicantDetails.name = applicantName;
         applicantDetails.birthdate = birthdate;
         applicantDetails.age = age;
@@ -42,34 +41,24 @@ public class Applicant implements Models {
         applicantDetails.email = email;
     }
 
-
     public int getId() {
         return applicantMetadata.applicantID;
     }
 
-    public String getName() {
-        return applicantDetails.name;
-    }
-
-    @Override
-    public void showContent() {
-
-    }
-
-    public static class compareJobDates implements Comparator<ApplicantPrevExp> {
+    private static class compareJobDates implements Comparator<ApplicantExperience> {
 
         @Override
-        public int compare(ApplicantPrevExp o1, ApplicantPrevExp o2) {
-            return o1.yearBegin - o2.yearBegin;
+        public int compare(ApplicantExperience o1, ApplicantExperience o2) {
+            return o1.getYearBegin() - o2.getYearBegin();
         }
     }
 
     public void generatePreviousJobExperience(String company, String jobTitle, int startYear, int endYear) {
-        applicantPrevExps.add(new ApplicantPrevExp(company, jobTitle, startYear, endYear));
+        applicantPrevExps.add(new ApplicantExperience(company, jobTitle, startYear, endYear));
         applicantPrevExps.sort(new Applicant.compareJobDates());
     }
 
-    public void addJobExperience(List<ApplicantPrevExp> jobExperienceList){
+    public void addJobExperience(List<ApplicantExperience> jobExperienceList){
         applicantPrevExps.addAll(jobExperienceList);
     }
 
@@ -95,77 +84,38 @@ public class Applicant implements Models {
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public static class ApplicantDetails extends Models.ModelDetails {
-
-        public ApplicantDetails() {
-            super();
-        }
-
-        @Override
-        public String toString() {
-            return super.toString();
-        }
-
+    private static class ApplicantDetails {
+        private String name;
+        private long birthdate;
+        private int age;
+        private String nationality;
+        private String gender;
+        private String NRIC_Fin_Passport;
+        private String imageBase64;
+        private String email;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public static class ApplicantSummary {
+    private static class ApplicantSummary {
         private String resume;
         private final List<String> skills = new ArrayList<>();
-
-        @Override
-        public String toString() {
-            return "ApplicantSummary{" +
-                    "resume=" + resume +
-                    ", skills=" + skills +
-                    '}';
-        }
-
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public static class ApplicantPrevExp {
-        private final String previousCompanyName;
-        private final String previousJobTitle;
-        private final int yearBegin;
-        private final int yearEnd;
 
-        public ApplicantPrevExp(String companyName, String jobTitle, int yearBegin, int yearEnd) {
-            previousCompanyName = companyName;
-            previousJobTitle = jobTitle;
-            this.yearBegin = yearBegin;
-            this.yearEnd = yearEnd;
-        }
-
-        @Override
-        public String toString() {
-            return "ApplicantPreviousJobExperience{" +
-                    "previousCompanyName='" + previousCompanyName + '\'' +
-                    ", previousJobTitle='" + previousJobTitle + '\'' +
-                    ", yearBegin=" + yearBegin +
-                    ", yearEnd=" + yearEnd +
-                    '}';
-        }
-    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public static class ApplicantMetadata {
+    private static class ApplicantMetadata {
         private final int applicantID;
         private final long applicationDate;
         private boolean isShortlisted;
+        private boolean isAccepted;
         private static int applicantIDCounter;
+        private long interviewDate;
 
         public ApplicantMetadata() {
             applicantID = applicantIDCounter++;
             applicationDate = System.currentTimeMillis();
             isShortlisted = false;
-
-        }
-
-        @Override
-        public String toString() {
-            return "ApplicantMetadata{" +
-                    "applicantID=" + applicantID +
-                    ", applicationDate=" + new Date(applicationDate) +
-                    ", isShortlisted=" + isShortlisted +
-                    '}';
+            isAccepted = false;
+            interviewDate = -1;
         }
     }
 }
