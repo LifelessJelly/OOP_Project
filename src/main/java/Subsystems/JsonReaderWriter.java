@@ -11,13 +11,14 @@ public class JsonReaderWriter {
      * Constructs an instance of a class model from the given input json string. If an invalid json string is given,
      * a default object of the passed in class will be created.
      * @param json The string in json format
-     * @param classType the class that the json input will model to
+     * @param classType the class that the json text will model against
      * @return the class generated from the json string
      */
     public static <T> T jsonToModel(String json, Class<T> classType) {
         T t;
         t = gson.fromJson(json, classType);
         if (t == null){
+            System.out.println("Bad JSON Text");
             try {
                 t = classType.getDeclaredConstructor().newInstance();
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
