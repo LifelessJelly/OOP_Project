@@ -116,7 +116,7 @@ public class Mainframe extends JFrame {
                 new Welcome(this),
                 new BasicUserInfo(this),
                 new EmailVerification(this),
-                new NewSkillsInfo(this),
+                new SkillsInfo(this),
                 new JobExperiences(this));
         panels.get(0).setVisible(true);
         this.add(panels.get(0), mainPanelConstraints);
