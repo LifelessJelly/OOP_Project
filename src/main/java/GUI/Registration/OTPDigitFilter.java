@@ -18,11 +18,12 @@ public class OTPDigitFilter extends DocumentFilter {
     }
 
     private boolean checkSingleDigit(String string){
-        try {
-            Integer.parseInt(string);
-        }
-        catch (NumberFormatException e){
-            return false;
+        if (!string.isEmpty()) {
+            try {
+                Integer.parseInt(string);
+            } catch (NumberFormatException e) {
+                return false;
+            }
         }
         return string.length() <= 1;
     }
