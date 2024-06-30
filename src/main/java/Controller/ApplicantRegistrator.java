@@ -1,23 +1,27 @@
 package Controller;
 
-import Data.Applicant;
+import Data.ApplicantExperience;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Locale;
 
 public class ApplicantRegistrator {
-    Applicant applicant;
-    String name;
-    int age;
-    long date;
-    String nricFin;
-    String email;
-    String gender;
+    private String name;
+    private int age;
+    private long date;
+    private String nricFin;
+    private String email;
+    private String gender;
+    private String[] defaultSkills;
+    private String[] userDefinedSkills;
+    private ApplicantExperience[] applicantExperiences;
+
 
     public void registerBasicInfo(String name, int day, String month, int year, String nricFin, String email, String gender) {
         this.name = name;
-        String dateString = String.valueOf(day) + ' ' + month + ' ' + String.valueOf(year);
+        String dateString = String.valueOf(day) + ' ' + month + ' ' + year;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH);
         LocalDate localDate = LocalDate.parse(dateString, formatter);
         this.date = localDate.toEpochDay();
@@ -28,5 +32,18 @@ public class ApplicantRegistrator {
     }
     public String getEmail(){
         return email;
+    }
+
+    public void registerUserDefinedSkills(String[] skills) {
+        userDefinedSkills = skills;
+        System.out.println(Arrays.toString(userDefinedSkills));
+    }
+
+    public void registerDefaultSkills(String[] skills) {
+        defaultSkills = skills;
+        System.out.println(Arrays.toString(defaultSkills));
+    }
+    public void registerApplicantExperiences(ApplicantExperience[] experiences) {
+        applicantExperiences = experiences;
     }
 }
