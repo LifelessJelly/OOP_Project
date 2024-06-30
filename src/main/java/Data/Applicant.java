@@ -10,72 +10,38 @@ import java.util.List;
 
 public class Applicant{
 
-    private final ApplicantSummary applicantSummary;
     private final ApplicantDetails applicantDetails;
-    private final List<ApplicantExperience> applicantPrevExps;
     private final ApplicantMetadata applicantMetadata;
+    private ApplicantExperience[] applicantPrevExps;
+    private String[] skills;
 
     public Applicant() {
-        applicantSummary = new ApplicantSummary();
+
         applicantDetails = new ApplicantDetails();
-        applicantPrevExps = new ArrayList<>();
         applicantMetadata = new ApplicantMetadata();
     }
-
-    public void setDetails(String applicantName,
-                           long birthdate,
-                           int age,
-                           String nationality,
-                           String gender,
-                           String NRIC_Fin_Passport,
-                           String pathToImage,
-                           String email)
-    {
-        applicantDetails.name = applicantName;
-        applicantDetails.birthdate = birthdate;
-        applicantDetails.age = age;
-        applicantDetails.nationality = nationality;
-        applicantDetails.gender = gender;
-        applicantDetails.NRIC_Fin_Passport = NRIC_Fin_Passport;
-        applicantDetails.imageBase64 = ImageBase64.imageToBase64(pathToImage);
-        applicantDetails.email = email;
-    }
+//
+//    public void setDetails(String applicantName,
+//                           long birthdate,
+//                           int age,
+//                           String nationality,
+//                           String gender,
+//                           String NRIC_Fin_Passport,
+//                           String pathToImage,
+//                           String email)
+//    {
+//        applicantDetails.name = applicantName;
+//        applicantDetails.birthdate = birthdate;
+//        applicantDetails.age = age;
+//        applicantDetails.nationality = nationality;
+//        applicantDetails.gender = gender;
+//        applicantDetails.NRIC_Fin_Passport = NRIC_Fin_Passport;
+//        applicantDetails.imageBase64 = ImageBase64.imageToBase64(pathToImage);
+//        applicantDetails.email = email;
+//    }
 
     public int getId() {
         return applicantMetadata.applicantID;
-    }
-
-    private static class compareJobDates implements Comparator<ApplicantExperience> {
-
-        @Override
-        public int compare(ApplicantExperience o1, ApplicantExperience o2) {
-            return o1.getYearBegin() - o2.getYearBegin();
-        }
-    }
-
-    public void generatePreviousJobExperience(String company, String jobTitle, int startYear, int endYear) {
-        applicantPrevExps.add(new ApplicantExperience(company, jobTitle, startYear, endYear));
-        applicantPrevExps.sort(new Applicant.compareJobDates());
-    }
-
-    public void addJobExperience(List<ApplicantExperience> jobExperienceList){
-        applicantPrevExps.addAll(jobExperienceList);
-    }
-
-    public void setResume(String resume){
-        applicantSummary.resume = resume;
-    }
-
-    public void toggleApplicantShortlist(){
-        applicantMetadata.isShortlisted = !applicantMetadata.isShortlisted;
-    }
-
-    public void removeSkill(int index){
-        applicantSummary.skills.remove(index);
-    }
-
-    public void addSkill(String skill){
-        applicantSummary.skills.add(skill);
     }
 
     public String getImageBase64(){
@@ -93,11 +59,6 @@ public class Applicant{
         private String NRIC_Fin_Passport;
         private String imageBase64;
         private String email;
-    }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private static class ApplicantSummary {
-        private String resume;
-        private final List<String> skills = new ArrayList<>();
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
