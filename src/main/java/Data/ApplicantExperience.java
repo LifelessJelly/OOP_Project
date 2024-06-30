@@ -45,4 +45,9 @@ public class ApplicantExperience {
     public void setYearBegin(int yearBegin) {
         this.yearBegin = yearBegin;
     }
+
+    @Override
+    public String toString() {
+        return previousCompanyName + ", " + previousJobTitle + ", " + yearBegin + ", " + yearEnd;
+    }
 }
