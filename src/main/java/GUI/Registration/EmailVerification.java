@@ -1,6 +1,7 @@
 package GUI.Registration;
 
 import Controller.EmailSender;
+import Controller.ParallelEmailSequnce;
 
 import javax.swing.*;
 import javax.swing.text.PlainDocument;
@@ -12,7 +13,6 @@ import static java.lang.Math.pow;
 import static java.lang.Math.round;
 
 public class EmailVerification extends SlidingPanel{
-    Mainframe mainframe;
     JLabel enterOTPLabel;
     JLabel OTPSubLabel;
     JPanel OTPPanel;
@@ -20,7 +20,6 @@ public class EmailVerification extends SlidingPanel{
     private JLabel errorMessageLabel;
     private int triesLeft = 4;
     private int[] OTP;
-    private Insets movingInsets;
     private int loopCycles = 0;
     private GridBagLayout layout;
     private GridBagConstraints enterOTPConstraints;
@@ -47,16 +46,16 @@ public class EmailVerification extends SlidingPanel{
         layout = new GridBagLayout();
         this.setLayout(layout);
 
-        enterOTPConstraints = new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+        enterOTPConstraints = new GridBagConstraints(0, 0, 1, 1, 0, 0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 movingInsets, 0, 0);
-        otpSubConstraints = new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+        otpSubConstraints = new GridBagConstraints(0, 1, 1, 1, 0, 0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 movingInsets, 0, 0);
-        otpPanelConstraints = new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+        otpPanelConstraints = new GridBagConstraints(0, 2, 1, 1, 0, 0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 movingInsets, 0, 0);
-        confirmInfoStuffConstraints = new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
+        confirmInfoStuffConstraints = new GridBagConstraints(0, 3, 1, 1, 0, 0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 movingInsets, 0, 0);
 
@@ -170,6 +169,7 @@ public class EmailVerification extends SlidingPanel{
                     Integer.parseInt(otpDigit6.getText())
             };
             if (Arrays.equals(userInputOTP, OTP)){
+                setButtonsActivated(false);
                 errorMessageLabel.setText("");
                 System.out.println("Correct OTP");
                 mainframe.panelOutroRight();
@@ -184,8 +184,7 @@ public class EmailVerification extends SlidingPanel{
         });
 
         backButton.addActionListener(e ->{
-            nextButton.setEnabled(false);
-            backButton.setEnabled(false);
+            setButtonsActivated(false);
             mainframe.panelOutroLeft();
         });
         otpDigit1.getDocument().addDocumentListener(new TextSequenceListener(null, otpDigit2));
@@ -221,18 +220,14 @@ public class EmailVerification extends SlidingPanel{
         return secretOTP;
     }
     private void sendOTPToEmail(int[] OTP){
-        String email = mainframe.getRegistrator().getEmail();
+        String email = mainframe.getController().getEmail();
         String header = "Verification Code";
         String body = "Your OTP is " + Arrays.toString(OTP) + ". If you did not request this, please ignore this email. Do not share your OTP number with anyone.";
-        new EmailSender(email, header, body);
+        new Thread(new ParallelEmailSequnce(email, header, body)).start();
     }
 
     @Override
     public void slideInLeft() {
-        int startPos = 0;
-        for (int i = 0; i < 40; ++i) {
-            startPos = (int) pow(startPos + 1.5, 1.05);
-        }
         otpDigit1.setText("");
         otpDigit2.setText("");
         otpDigit3.setText("");
@@ -240,62 +235,16 @@ public class EmailVerification extends SlidingPanel{
         otpDigit5.setText("");
         otpDigit6.setText("");
         errorMessageLabel.setText("");
-
-        movingInsets.right = startPos;
-        this.setVisible(true);
-        updateAnimation();
-        loopCycles = 0;
-        new Timer(10, e -> {
-            if (loopCycles < 40) {
-                movingInsets.right = (int) round(pow(movingInsets.right, (1 / 1.05)) - 1.5);
-                if (movingInsets.right < 0) {
-                    movingInsets.right = 0;
-                }
-                updateAnimation();
-                ++loopCycles;
-            } else {
-                ((Timer) e.getSource()).stop();
-                nextButton.setEnabled(true);
-                backButton.setEnabled(true);
-                OTP = generateOTPNumber();
-//                sendOTPToEmail(OTP);
-                System.out.println(Arrays.toString(OTP));
-            }
-        }).start();
+        super.slideInLeft();
+        OTP = generateOTPNumber();
+        System.out.println(Arrays.toString(OTP));
     }
 
     @Override
-    public void slideOutLeft() {
-        loopCycles = 0;
-        new Timer(10, e -> {
-            if (loopCycles < 40){
-                movingInsets.right = (int) pow(movingInsets.right + 1.5, 1.05);
-                updateAnimation();
-                ++loopCycles;
-            }
-            else {
-                ((Timer)e.getSource()).stop();
-                setVisible(false);
-                mainframe.panelIntroRight();
-            }
-        }).start();
-    }
-
-    @Override
-    public void slideOutRight() {
-        loopCycles = 0;
-        new Timer(10, e -> {
-            if (loopCycles < 40){
-                movingInsets.left = (int) pow(movingInsets.left + 1.5, 1.05);
-                updateAnimation();
-                ++loopCycles;
-            }
-            else {
-                ((Timer)e.getSource()).stop();
-                setVisible(false);
-                mainframe.panelIntroLeft();
-            }
-        }).start();
+    public void slideInRight(){
+        movingInsets.left = 0;
+        this.setVisible(false);
+        mainframe.panelOutroLeft();
     }
 
     @Override
@@ -308,4 +257,9 @@ public class EmailVerification extends SlidingPanel{
         this.repaint();
     }
 
+    @Override
+    protected void setButtonsActivated(boolean activated) {
+        nextButton.setEnabled(activated);
+        backButton.setEnabled(activated);
+    }
 }

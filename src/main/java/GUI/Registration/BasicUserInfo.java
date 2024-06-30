@@ -11,13 +11,11 @@ import java.util.Objects;
 import static java.lang.Math.*;
 
 public class BasicUserInfo extends SlidingPanel {
-    Mainframe mainframe;
     private int loopCycles = 0;
     JComboBox<Integer> dayBox;
     JComboBox<String> monthBox;
     JComboBox<Integer> yearBox;
     GridBagLayout layout;
-    Insets movingInsets;
     Insets fixedInsets;
     private JLabel nricFinLabel;
     private JTextField nricFinField;
@@ -48,8 +46,6 @@ public class BasicUserInfo extends SlidingPanel {
 
     BasicUserInfo(Mainframe mainframe) {
         this.mainframe = mainframe;
-
-
         intiComponents();
     }
 
@@ -59,40 +55,40 @@ public class BasicUserInfo extends SlidingPanel {
         fixedInsets = new Insets(0, 0, 5, 0);
         
         layout = new GridBagLayout();
-        headerConstraints = new GridBagConstraints(0, 0, 3, 1, 0.0, 0.0,
+        headerConstraints = new GridBagConstraints(0, 0, 3, 1, 1, 1,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 movingInsets, 0, 0);
-        nameConstraints = new GridBagConstraints(0, 1, 3, 1, 0.0, 0.0,
+        nameConstraints = new GridBagConstraints(0, 1, 3, 1, 1, 1,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 movingInsets, 0, 0);
-        nameFieldConstraints = new GridBagConstraints(0, 2, 3, 1, 0.0, 0.0,
+        nameFieldConstraints = new GridBagConstraints(0, 2, 3, 1, 1, 1,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 movingInsets, 0, 0);
-        dateOfBirthConstraints = new GridBagConstraints(0, 3, 3, 1, 0.0, 0.0,
+        dateOfBirthConstraints = new GridBagConstraints(0, 3, 3, 1, 1, 1,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 movingInsets, 0, 0);
-        dateStuffConstraints = new GridBagConstraints(0, 4, 3, 1, 0.0, 0.0,
+        dateStuffConstraints = new GridBagConstraints(0, 4, 3, 1, 1, 1,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 movingInsets, 0, 0);
-        nricFinConstraints = new GridBagConstraints(0, 5, 3, 1, 0.0, 0.0,
+        nricFinConstraints = new GridBagConstraints(0, 5, 3, 1, 1, 1,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 movingInsets, 0, 0);
-        nricFinFieldConstraints = new GridBagConstraints(0, 6, 3, 1, 0.0, 0.0,
+        nricFinFieldConstraints = new GridBagConstraints(0, 6, 3, 1, 1, 1,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 movingInsets, 0, 0);
-        emailConstraints = new GridBagConstraints(0, 7, 3, 1, 0.0, 0.0,
+        emailConstraints = new GridBagConstraints(0, 7, 3, 1, 1, 1,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 movingInsets, 0, 0);
-        emailFieldConstraints = new GridBagConstraints(0, 8, 3, 1, 0.0, 0.0,
+        emailFieldConstraints = new GridBagConstraints(0, 8, 3, 1, 1, 1,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 movingInsets, 0, 0);
-        genderConstraints = new GridBagConstraints(0, 9, 3, 1, 0.0, 0.0,
+        genderConstraints = new GridBagConstraints(0, 9, 3, 1, 1, 1,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 movingInsets, 0, 0);
-        genderBoxConstraints = new GridBagConstraints(0, 10, 3, 1, 0.0, 0.0,
+        genderBoxConstraints = new GridBagConstraints(0, 10, 3, 1, 1, 1,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 movingInsets, 0, 0);
-        confirmInfoStuffConstraints = new GridBagConstraints(0, 11, 3, 1, 0.0, 0.0,
+        confirmInfoStuffConstraints = new GridBagConstraints(0, 11, 3, 1, 1, 1,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 movingInsets, 0,0);
 
@@ -113,6 +109,7 @@ public class BasicUserInfo extends SlidingPanel {
         nameField.setHorizontalAlignment(SwingConstants.LEFT);
         nameField.setFont(nameField.getFont().deriveFont(18f));
         nameField.setEditable(true);
+
         this.add(nameField, nameFieldConstraints);
 
         dateOfBirthLabel = new JLabel("Date of Birth:");
@@ -121,13 +118,13 @@ public class BasicUserInfo extends SlidingPanel {
         this.add(dateOfBirthLabel, dateOfBirthConstraints);
 
         dateStuffPanel = new JPanel();
-        GridBagConstraints dayBoxConstraints = new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+        GridBagConstraints dayBoxConstraints = new GridBagConstraints(0, 0, 1, 1, 1, 1,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 fixedInsets, 0, 0);
-        GridBagConstraints monthBoxConstraints = new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+        GridBagConstraints monthBoxConstraints = new GridBagConstraints(1, 0, 1, 1, 1, 1,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 fixedInsets, 0, 0);
-        GridBagConstraints yearBoxConstraints = new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+        GridBagConstraints yearBoxConstraints = new GridBagConstraints(2, 0, 1, 1, 1, 1,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 fixedInsets, 0, 0);
         dateStuffPanel.setLayout(new GridBagLayout());
@@ -136,12 +133,10 @@ public class BasicUserInfo extends SlidingPanel {
         dayBox = new JComboBox<>(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31});
         dayBox.setAlignmentX(Component.LEFT_ALIGNMENT);
         dayBox.setFont(dayBox.getFont().deriveFont(18f));
-        dayBox.setEditable(false);
         dateStuffPanel.add(dayBox, dayBoxConstraints);
         monthBox = new JComboBox<>(new String[] {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"});
         monthBox.setAlignmentX(Component.LEFT_ALIGNMENT);
         monthBox.setFont(monthBox.getFont().deriveFont(18f));
-        monthBox.setEditable(false);
         dateStuffPanel.add(monthBox, monthBoxConstraints);
 
         yearBox = new JComboBox<>();
@@ -150,7 +145,6 @@ public class BasicUserInfo extends SlidingPanel {
         }
         yearBox.setAlignmentX(Component.LEFT_ALIGNMENT);
         yearBox.setFont(yearBox.getFont().deriveFont(18f));
-        yearBox.setEditable(false);
         dateStuffPanel.add(yearBox, yearBoxConstraints);
 
         monthBox.addActionListener(e -> {
@@ -237,10 +231,10 @@ public class BasicUserInfo extends SlidingPanel {
         confirmInfoStuffPanel = new JPanel();
 
         confirmInfoStuffPanel.setLayout(new GridBagLayout());
-        GridBagConstraints errorMessageConstraints = new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+        GridBagConstraints errorMessageConstraints = new GridBagConstraints(1, 0, 1, 1, 1, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 fixedInsets, 0,0);
-        GridBagConstraints nextButtonConstraints = new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+        GridBagConstraints nextButtonConstraints = new GridBagConstraints(2, 0, 1, 1, 0.1, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 5, 0), 0, 0);
 
@@ -254,8 +248,7 @@ public class BasicUserInfo extends SlidingPanel {
         confirmInfoStuffPanel.add(errorMessageLabel, errorMessageConstraints);
 
         nextButton = new JButton("Next");
-        nextButton.setEnabled(false);
-        nextButton.setHorizontalAlignment(SwingConstants.LEFT);
+        nextButton.setHorizontalAlignment(SwingConstants.CENTER);
         nextButton.setFont(nextButton.getFont().deriveFont(18f));
         confirmInfoStuffPanel.add(nextButton, nextButtonConstraints);
 
@@ -287,7 +280,7 @@ public class BasicUserInfo extends SlidingPanel {
                 else {
                     nricFinField.setBorder(defaultBorder);
                     errorMessageLabel.setText("");
-                    mainframe.getRegistrator().registerBasicInfo(
+                    mainframe.getController().registerBasicInfo(
                             nameField.getText(),
                             (Integer) Objects.requireNonNull(dayBox.getSelectedItem()),
                             (String) Objects.requireNonNull(monthBox.getSelectedItem()),
@@ -295,7 +288,7 @@ public class BasicUserInfo extends SlidingPanel {
                             nricFinField.getText(),
                             emailField.getText(),
                             (String) Objects.requireNonNull(genderComboBox.getSelectedItem()));
-                    nextButton.setEnabled(false);
+                    setButtonsActivated(false);
                     mainframe.panelOutroRight();
                 }
             }
@@ -354,13 +347,6 @@ public class BasicUserInfo extends SlidingPanel {
     }
 
     private static char[] getChars(String nricFin) {
-//        return switch (nricFin.charAt(0)) {
-//            case 'T' -> new char[]{'G', 'F', 'E', 'D', 'C', 'B', 'A', 'J', 'Z', 'I', 'H'};
-//            case 'S' -> new char[]{'J', 'Z', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'};
-//            case 'G' -> new char[]{'R', 'Q', 'P', 'N', 'M', 'L', 'K', 'X', 'W', 'U', 'T'};
-//            case 'F' -> new char[]{'X', 'W', 'U', 'T', 'R', 'Q', 'P', 'N', 'M', 'L', 'K'};
-//            default -> null;
-//        };
         switch (nricFin.charAt(0)){
             case 'T':
                 return new char[]{'G', 'F', 'E', 'D', 'C', 'B', 'A', 'J', 'Z', 'I', 'H'};
@@ -373,32 +359,6 @@ public class BasicUserInfo extends SlidingPanel {
         }
         //should never reach here
     return null;
-    }
-
-    @Override
-    public void slideInLeft() {
-        movingInsets.right = getStartPos();
-        this.setVisible(true);
-        updateAnimation();
-        loopCycles = 0;
-        new Timer(10, e -> {
-            if (loopCycles < 40){
-                movingInsets.right = (int) round(pow(movingInsets.right, (1/1.05))-1.5);
-                if (movingInsets.right < 0){
-                    movingInsets.right = 0;
-                }
-                updateAnimation();
-                ++loopCycles;
-            }
-            else {
-                ((Timer)e.getSource()).stop();
-                dayBox.setEditable(true);
-                monthBox.setEditable(true);
-                yearBox.setEditable(true);
-                genderComboBox.setEditable(true);
-                nextButton.setEnabled(true);
-            }
-        }).start();
     }
 
     @Override
@@ -417,61 +377,5 @@ public class BasicUserInfo extends SlidingPanel {
         layout.setConstraints(confirmInfoStuffPanel, confirmInfoStuffConstraints);
         this.revalidate();
         this.repaint();
-    }
-
-    @Override
-    public void slideInRight() {
-        movingInsets.left = getStartPos();
-        this.setVisible(true);
-        updateAnimation();
-        loopCycles = 0;
-        new Timer(10, e -> {
-            if (loopCycles < 40){
-                movingInsets.left = (int) round(pow(movingInsets.left, (1/1.05))-1.5);
-                if (movingInsets.left < 0){
-                    movingInsets.left = 0;
-                }
-                updateAnimation();
-                ++loopCycles;
-            }
-            else {
-                ((Timer)e.getSource()).stop();
-                dayBox.setEditable(true);
-                monthBox.setEditable(true);
-                yearBox.setEditable(true);
-                genderComboBox.setEditable(true);
-                nextButton.setEnabled(true);
-            }
-        }).start();
-
-    }
-    @Override
-    public void slideOutRight(){
-        dayBox.setEditable(false);
-        monthBox.setEditable(false);
-        yearBox.setEditable(false);
-        genderComboBox.setEditable(false);
-        loopCycles = 0;
-        new Timer(10, e -> {
-            if (loopCycles < 40){
-                movingInsets.left = (int) pow(movingInsets.left + 1.5, 1.05);
-                updateAnimation();
-                ++loopCycles;
-            }
-            else {
-                ((Timer)e.getSource()).stop();
-                setVisible(false);
-                mainframe.panelIntroLeft();
-            }
-        }).start();
-
-    }
-
-    private int getStartPos(){
-        int startPos = 0;
-        for (int i = 0; i < 40; ++i ){
-            startPos = (int) pow(startPos + 1.5, 1.05);
-        }
-        return startPos;
     }
 }
