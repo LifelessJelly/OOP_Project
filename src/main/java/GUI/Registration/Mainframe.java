@@ -1,6 +1,6 @@
 package GUI.Registration;
 
-import Controller.Controller;
+import Controller.RegistrationController;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 
@@ -16,45 +16,69 @@ public class Mainframe extends JFrame {
     JPanel radioButtonsPanel;
     JRadioButton darkModeButton;
     JRadioButton lightModeButton;
-    private final Controller controller;
+    private final RegistrationController registrationController;
+    GridBagConstraints mainPanelConstraints;
+    private final boolean BORDER_DEBUG_MODE = true;
 
 
     public Mainframe() {
-        this.controller = new Controller();
+        this.registrationController = new RegistrationController();
+        mainPanelConstraints = new GridBagConstraints(1, 1, 1, 1, 1, 1,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
         initComponents();
     }
 
     private void initComponents() {
         this.setMinimumSize(new Dimension(1080, 720));
-        this.setLayout(new BorderLayout());
+        this.setLayout(new GridBagLayout());
+        this.setTitle("DongHua JinLong Iron Glycine");
 
         JPanel panelWest = new JPanel();
         panelWest.setMinimumSize(new Dimension(120, 0));
         panelWest.setPreferredSize(new Dimension(120, 0));
-        this.add(panelWest, BorderLayout.WEST);
+        GridBagConstraints westPanelConstraints = new GridBagConstraints(0, 1, 1, 1, 0.5, 0.1,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
+        if (BORDER_DEBUG_MODE) {
+            panelWest.setBorder(BorderFactory.createLineBorder(Color.RED));
+        }
+        this.add(panelWest, westPanelConstraints);
 
         JPanel panelEast = new JPanel();
         panelEast.setMinimumSize(new Dimension(120, 0));
         panelEast.setPreferredSize(new Dimension(120, 0));
-        this.add(panelEast, BorderLayout.EAST);
+        GridBagConstraints eastPanelConstraints = new GridBagConstraints(2, 1, 1, 1, 0.5, 0.1,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
+        if (BORDER_DEBUG_MODE) {
+            panelEast.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+        }
+        this.add(panelEast, eastPanelConstraints);
 
         JPanel panelSouth = new JPanel();
         panelSouth.setMinimumSize(new Dimension(0, 60));
         panelSouth.setPreferredSize(new Dimension(0, 60));
-        this.add(panelSouth, BorderLayout.SOUTH);
+        GridBagConstraints southPanelConstraints = new GridBagConstraints(0, 2, 3, 1, 0.1, 0.1,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
+        if (BORDER_DEBUG_MODE) {
+            panelSouth.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+        }
+        this.add(panelSouth, southPanelConstraints);
 
 
         radioButtonsPanel = new JPanel();
         radioButtonsPanel.setLayout(new GridBagLayout());
         ((GridBagLayout) radioButtonsPanel.getLayout()).columnWidths = new int[]{0, 0, 0};
         ((GridBagLayout) radioButtonsPanel.getLayout()).columnWeights = new double[]{0, 0, 1.0E-4};
+        ((GridBagLayout) radioButtonsPanel.getLayout()).rowHeights = new int[]{0, 0};
+        ((GridBagLayout) radioButtonsPanel.getLayout()).rowWeights = new double[]{0, 0, 1.0E-4};
         darkModeButton = new JRadioButton("Dark Mode");
+        darkModeButton.setFont(darkModeButton.getFont().deriveFont(18f));
         darkModeButton.setSelected(true);
-        GridBagConstraints darkModeButtonConstraints = new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+        GridBagConstraints darkModeButtonConstraints = new GridBagConstraints(0, 0, 1, 1, 0.0, 1,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 0, 5), 0, 0);
         lightModeButton = new JRadioButton("Light Mode");
-        GridBagConstraints lightModeButtonConstraints = new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+        lightModeButton.setFont(lightModeButton.getFont().deriveFont(18f));
+        GridBagConstraints lightModeButtonConstraints = new GridBagConstraints(1, 0, 1, 1, 0.0, 1,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 0, 5), 0, 0);
         ButtonGroup buttonGroup = new ButtonGroup();
@@ -64,7 +88,12 @@ public class Mainframe extends JFrame {
         radioButtonsPanel.add(lightModeButton, lightModeButtonConstraints);
         radioButtonsPanel.setMinimumSize(new Dimension(0, 60));
         radioButtonsPanel.setPreferredSize(new Dimension(0, 60));
-        this.add(radioButtonsPanel, BorderLayout.NORTH);
+        GridBagConstraints radioButtonsPanelConstraints = new GridBagConstraints(0, 0, 3, 1, 0, 0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
+        if (BORDER_DEBUG_MODE) {
+            radioButtonsPanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+        }
+        this.add(radioButtonsPanel, radioButtonsPanelConstraints);
 
         darkModeButton.addActionListener(e -> {
             try {
@@ -83,16 +112,21 @@ public class Mainframe extends JFrame {
                 throw new RuntimeException(ex);
             }
         });
-        panels = Arrays.asList(new Welcome(this), new BasicUserInfo(this), new EmailVerification(this), new SkillsInfo(this));
+        panels = Arrays.asList(
+                new Welcome(this),
+                new BasicUserInfo(this),
+                new EmailVerification(this),
+                new NewSkillsInfo(this),
+                new JobExperiences(this));
         panels.get(0).setVisible(true);
-        this.add(panels.get(0), BorderLayout.CENTER);
+        this.add(panels.get(0), mainPanelConstraints);
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(getOwner());
     }
 
-    public Controller getController(){
-        return controller;
+    public RegistrationController getController(){
+        return registrationController;
     }
 
 
@@ -106,23 +140,25 @@ public class Mainframe extends JFrame {
             this.dispose();
         }
         else {
-            this.getContentPane().add(panels.get(panelIndex));
+            this.getContentPane().add(panels.get(panelIndex), mainPanelConstraints);
             SwingUtilities.updateComponentTreeUI(this);
             this.getContentPane().remove(panels.get(panelIndex - 1));
             panels.get(panelIndex).slideInLeft();
-            System.out.println(this.getContentPane().getComponent(4));
+
         }
     }
     public void panelOutroLeft() { //go back one page
+        if (panelIndex >= panels.size()) {
+            System.out.println("Something has gone very wrong. Current panel index: " + panelIndex + ", Current panel size: " + panels.size() + ", Current Panel Objects: " + panels);
+        }
         panels.get(panelIndex).slideOutLeft();
         --panelIndex;
     }
     public void panelIntroRight() {
-        this.getContentPane().add(panels.get(panelIndex));
+        this.getContentPane().add(panels.get(panelIndex), mainPanelConstraints);
         SwingUtilities.updateComponentTreeUI(this);
         this.getContentPane().remove(panels.get(panelIndex+1));
         panels.get(panelIndex).slideInRight();
-        System.out.println(this.getContentPane().getComponent(4));
     }
 
 
