@@ -1,5 +1,6 @@
 package Controller;
 
+import Data.Applicant;
 import Data.ApplicantExperience;
 import Subsystems.ImageBase64;
 
@@ -11,7 +12,7 @@ import java.util.Locale;
 public class ApplicantRegistrator {
     private String name;
     private int age;
-    private long date;
+    private long birthDate;
     private String nricFin;
     private String email;
     private String gender;
@@ -27,7 +28,7 @@ public class ApplicantRegistrator {
         String dateString = String.valueOf(day) + ' ' + month + ' ' + year;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH);
         LocalDate localDate = LocalDate.parse(dateString, formatter);
-        this.date = localDate.toEpochDay();
+        this.birthDate = localDate.toEpochDay();
         this.age = LocalDate.now().getYear() - localDate.getYear();
         this.nricFin = nricFin;
         this.email = email;
@@ -53,7 +54,12 @@ public class ApplicantRegistrator {
     public void registerImageFromFile(String pathToImage) {
         imageBase64 = ImageBase64.imageToBase64(pathToImage);
     }
+
     public void registerImageFromBase64(String imageBase64) {
         this.imageBase64 = imageBase64;
+    }
+
+    public Applicant createApplicant() {
+        return new Applicant(name, birthDate, age, email, nricFin, imageBase64, gender, userDefinedSkills, defaultSkills, applicantExperiences);
     }
 }
