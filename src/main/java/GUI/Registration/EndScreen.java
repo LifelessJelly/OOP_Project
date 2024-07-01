@@ -1,5 +1,8 @@
 package GUI.Registration;
 
+import Data.Applicant;
+import Subsystems.JsonReaderWriter;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -56,6 +59,11 @@ public class EndScreen extends SlidingPanel{
         printJsonButton.setFont(printJsonButton.getFont().deriveFont(20f));
         printJsonButton.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(printJsonButton, printJsonConstraints);
+
+        printJsonButton.addActionListener(e -> {
+            Applicant newApplicant = mainframe.getController().createApplicant();
+            System.out.println(JsonReaderWriter.modelToJson(newApplicant));
+        });
     }
 
     @Override
