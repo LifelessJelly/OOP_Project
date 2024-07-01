@@ -1,9 +1,9 @@
 package Controller;
 
-import Data.Applicant;
 import GUI.Registration.Mainframe;
 
 
+import Subsystems.ImageBase64;
 import com.formdev.flatlaf.FlatDarkLaf;
 
 
@@ -12,9 +12,7 @@ import javax.swing.*;
 
 public class Main {
 
-    public Main(Applicant applicant){
-        new Mainframe();
-    }
+
 
     public static void main(String[] args) {
 
@@ -24,7 +22,8 @@ public class Main {
         } catch (UnsupportedLookAndFeelException e) {
             throw new RuntimeException(e);
         }
-        new Main(new Applicant());
+
+        new Mainframe();
     }
 }
 

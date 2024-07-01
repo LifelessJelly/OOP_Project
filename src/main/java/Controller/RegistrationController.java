@@ -3,8 +3,6 @@ package Controller;
 import Data.ApplicantExperience;
 import Data.DataStorage;
 
-import java.util.Comparator;
-
 public class RegistrationController {
     private final DataStorage datastorage;
     private final ApplicantRegistrator registrator;
@@ -56,11 +54,11 @@ public class RegistrationController {
         return registrator.getEmail();
     }
 
-    private static class compareJobDates implements Comparator<ApplicantExperience> {
+    public void registerImageFromFile(String pathToImage){
+        registrator.registerImageFromFile(pathToImage);
+    }
 
-        @Override
-        public int compare(ApplicantExperience o1, ApplicantExperience o2) {
-            return o1.getYearBegin() - o2.getYearBegin();
-        }
+    public void registerImageBase64(String imageBase64) {
+        registrator.registerImageFromBase64(imageBase64);
     }
 }

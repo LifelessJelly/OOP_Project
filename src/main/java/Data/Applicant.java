@@ -1,11 +1,5 @@
 package Data;
 
-import Subsystems.ImageBase64;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-
 //Class model implementation for applicants
 
 public class Applicant{
@@ -13,12 +7,20 @@ public class Applicant{
     private final ApplicantDetails applicantDetails;
     private final ApplicantMetadata applicantMetadata;
     private ApplicantExperience[] applicantPrevExps;
-    private String[] skills;
+    private String[] userDefinedSkills;
+    private String[] defaultSkills;
 
-    public Applicant() {
-
+    public Applicant(String name, long birthdate, int age, String email, String nric, String imageBase64, String[] userDefinedSkills, String[] defaultSkills) {
+        this.userDefinedSkills = userDefinedSkills;
+        this.defaultSkills = defaultSkills;
         applicantDetails = new ApplicantDetails();
         applicantMetadata = new ApplicantMetadata();
+        applicantDetails.name = name;
+        applicantDetails.birthdate = birthdate;
+        applicantDetails.age = age;
+        applicantDetails.email = email;
+        applicantDetails.nric = nric;
+        applicantDetails.imageBase64 = imageBase64;
     }
 //
 //    public void setDetails(String applicantName,
@@ -33,7 +35,6 @@ public class Applicant{
 //        applicantDetails.name = applicantName;
 //        applicantDetails.birthdate = birthdate;
 //        applicantDetails.age = age;
-//        applicantDetails.nationality = nationality;
 //        applicantDetails.gender = gender;
 //        applicantDetails.NRIC_Fin_Passport = NRIC_Fin_Passport;
 //        applicantDetails.imageBase64 = ImageBase64.imageToBase64(pathToImage);
@@ -54,9 +55,8 @@ public class Applicant{
         private String name;
         private long birthdate;
         private int age;
-        private String nationality;
         private String gender;
-        private String NRIC_Fin_Passport;
+        private String nric;
         private String imageBase64;
         private String email;
     }

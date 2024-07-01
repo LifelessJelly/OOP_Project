@@ -1,6 +1,7 @@
 package Controller;
 
 import Data.ApplicantExperience;
+import Subsystems.ImageBase64;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -14,9 +15,11 @@ public class ApplicantRegistrator {
     private String nricFin;
     private String email;
     private String gender;
+    private String imageBase64;
     private String[] defaultSkills;
     private String[] userDefinedSkills;
     private ApplicantExperience[] applicantExperiences;
+
 
 
     public void registerBasicInfo(String name, int day, String month, int year, String nricFin, String email, String gender) {
@@ -45,5 +48,12 @@ public class ApplicantRegistrator {
     }
     public void registerApplicantExperiences(ApplicantExperience[] experiences) {
         applicantExperiences = experiences;
+    }
+
+    public void registerImageFromFile(String pathToImage) {
+        imageBase64 = ImageBase64.imageToBase64(pathToImage);
+    }
+    public void registerImageFromBase64(String imageBase64) {
+        this.imageBase64 = imageBase64;
     }
 }

@@ -18,7 +18,7 @@ public class Mainframe extends JFrame {
     JRadioButton lightModeButton;
     private final RegistrationController registrationController;
     GridBagConstraints mainPanelConstraints;
-    private final boolean BORDER_DEBUG_MODE = true;
+    private final boolean BORDER_DEBUG_MODE = false;
 
 
     public Mainframe() {

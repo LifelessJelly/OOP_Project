@@ -11,13 +11,13 @@ import javax.imageio.ImageIO;
 
 public class ImageBase64 {
     public static String imageToBase64(String pathToImage) {
-        BufferedImage image = null;
+        BufferedImage image;
+        ImageIO.setUseCache(false);
         try {
             image = ImageIO.read(new File(pathToImage));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Pattern pngPattern = Pattern.compile("png$", Pattern.CASE_INSENSITIVE);
         Pattern jpgPattern = Pattern.compile("jpg$", Pattern.CASE_INSENSITIVE);
         Pattern jpegPattern = Pattern.compile("jpeg$", Pattern.CASE_INSENSITIVE);
@@ -31,6 +31,7 @@ public class ImageBase64 {
         if (jpegPattern.matcher(pathToImage).find()) {
             fileType = "jpeg";
         }
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
             ImageIO.write(image, fileType, baos);
         } catch (IOException e) {
