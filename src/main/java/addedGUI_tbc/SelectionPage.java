@@ -1,137 +1,132 @@
 package addedGUI_tbc;
+
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Controller.MainFrame;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
-public class AdminLogin extends JPanel{
+public class SelectionPage extends JPanel {
     private MainFrame main;
-    private JTextField usernameField;
-    private JTextField passwordField;
-
-    public AdminLogin(MainFrame main){
+    public SelectionPage(MainFrame main) {
         this.main=main;
-        GridBagLayout gridBagLayout = new GridBagLayout();
-        gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-        gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
-        gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-        setLayout(gridBagLayout);
 
-        JButton btnToSelectionPage = new JButton("To selection page");
-        btnToSelectionPage.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                showSelectionPage();
+        GridBagLayout gridBagLayout = new GridBagLayout();
+        gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
+        gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        this.setLayout(gridBagLayout);
+
+        //===lblCompanyName===//
+        JLabel lblCompanyName = new JLabel("COMPANY NAME");
+        GridBagConstraints gbc_lblCompanyName = new GridBagConstraints();
+        gbc_lblCompanyName.insets = new Insets(30, 0, 5, 0);
+        gbc_lblCompanyName.gridx = 0;
+        gbc_lblCompanyName.gridy = 0;
+        gbc_lblCompanyName.gridwidth=11;
+        gbc_lblCompanyName.anchor=GridBagConstraints.CENTER;
+        gbc_lblCompanyName.weightx=1;
+        gbc_lblCompanyName.weighty=1;
+        add(lblCompanyName, gbc_lblCompanyName);
+        //===end===//
+
+		/*////////////////////////GridBagConstraints gbc_lblCompanyName = new GridBagConstraints();
+		gbc_lblCompanyName.gridx = 0;
+		//gbc_lblLoginPage.gridx = 0;
+		gbc_lblCompanyName.gridwidth = 3;
+		gbc_lblCompanyName.insets = new Insets(30, 0, 5, 5);
+		gbc_lblCompanyName.gridy = 0;
+		gbc_lblCompanyName.anchor=GridBagConstraints.CENTER;
+		gbc_lblCompanyName.weightx=1;
+		gbc_lblCompanyName.weighty=1;
+		/////////////////////////add(lblCompanyName,gbc_lblCompanyName);*/
+
+        //===lblLoginAs===//
+        JLabel lblLoginAs = new JLabel("Login as:");
+        GridBagConstraints gbc_lblLoginAs = new GridBagConstraints();
+        gbc_lblLoginAs.gridwidth = 11;
+        gbc_lblLoginAs.insets = new Insets(0, 0, 5, 0);
+        gbc_lblLoginAs.gridx = 0;
+        gbc_lblLoginAs.gridy = 1;
+        gbc_lblLoginAs.weightx=1;
+        gbc_lblLoginAs.weighty=1;
+        add(lblLoginAs, gbc_lblLoginAs);
+        //===end===//
+
+        JButton applicantButton = new JButton("Applicant");
+        applicantButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showApplicantDescriptionPage();
             }
         });
-        
-        //===TO SELECTION PAGE===//
-        GridBagConstraints gbc_btnToSelectionPage = new GridBagConstraints();
-        gbc_btnToSelectionPage.insets = new Insets(0, 0, 5, 5);
-        gbc_btnToSelectionPage.gridx = 3;
-        gbc_btnToSelectionPage.gridy = 0;
-        add(btnToSelectionPage, gbc_btnToSelectionPage);
 
-        //===LOGIN PAGE TEXT===//
-        JLabel lblLoginPage = new JLabel("Login Page (ADMIN):");
-        GridBagConstraints gbc_lblLoginPage = new GridBagConstraints();
-        gbc_lblLoginPage.gridx = 0;                                             //grid
-        gbc_lblLoginPage.gridy = 1;        
-        gbc_lblLoginPage.weightx=1;                                             //weight
-        gbc_lblLoginPage.weighty=1;
-        gbc_lblLoginPage.gridwidth = 4;                                         //width
-        gbc_lblLoginPage.anchor=GridBagConstraints.CENTER;                      //anchor
-        gbc_lblLoginPage.insets = new Insets(30, 0, 5, 5); //insets
-        add(lblLoginPage,gbc_lblLoginPage);                                    //add
+        JButton staffButton = new JButton("Staff");
+        staffButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                showStaffLogin();
+            }
+        });
 
-        //===USERNAME LABEL===//
-        JLabel lblUsername = new JLabel("Username:");
-        GridBagConstraints gbc_lblUsername = new GridBagConstraints();
-        gbc_lblUsername.gridx = 0;
-        gbc_lblUsername.gridy = 2;
-        gbc_lblUsername.weightx=1;
-        gbc_lblUsername.weighty=0.5;
-        gbc_lblUsername.gridwidth = 2;
-        gbc_lblUsername.anchor = GridBagConstraints.EAST;
-        gbc_lblUsername.insets = new Insets(20, 0, 10, 10);
-        add(lblUsername, gbc_lblUsername);
+        JButton adminButton = new JButton("Admin");
+        adminButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                showAdminLogin();
+            }
+        });
 
-        //===USERNAME TEXT FIELD===//
-        usernameField = new JTextField();
-        GridBagConstraints gbc_usernameField = new GridBagConstraints();
-        gbc_usernameField.gridx = 2;
-        //gbc_usernameField.gridx = 2;
-        gbc_usernameField.gridwidth = 4;
-        gbc_usernameField.anchor = GridBagConstraints.WEST;
-        //gbc_usernameField.gridx = 2;
-        gbc_usernameField.insets = new Insets(20, 0, 10, 10);
-        //gbc_usernameField.gridx = 1;
-        gbc_usernameField.gridy = 2;
-        gbc_usernameField.weightx = 1;
-        gbc_usernameField.weighty=0.5;
-        add(usernameField, gbc_usernameField);
-        usernameField.setColumns(10);
+        GridBagConstraints gbc_staffButton = new GridBagConstraints();
+        gbc_staffButton.fill = GridBagConstraints.CENTER;
+        gbc_staffButton.insets = new Insets(0, 0, 5, 5);
+        gbc_staffButton.gridx = 5;
+        gbc_staffButton.gridy = 2;
+        gbc_staffButton.weightx=0.1;
+        gbc_staffButton.weighty=0.2;
+        add(staffButton, gbc_staffButton);
 
-        //===PASSWORD LABEL===//
-        JLabel lblPassword = new JLabel("Password:");
-        GridBagConstraints gbc_lblPassword = new GridBagConstraints();
-        gbc_lblPassword.gridwidth = 2;
-        gbc_lblPassword.gridx = 0;
-        //gbc_lblPassword.gridx = 0;
-        gbc_lblPassword.insets = new Insets(1, 0, 5, 5);
-        gbc_lblPassword.anchor = GridBagConstraints.EAST;
-        gbc_lblPassword.weightx = 1;
-        gbc_lblPassword.weighty=0.5;
-        gbc_lblPassword.gridy = 3;
-        add(lblPassword, gbc_lblPassword);
+        GridBagConstraints gbc_applicantButton = new GridBagConstraints();
+        gbc_applicantButton.insets = new Insets(0, 0, 5, 5);
+        gbc_applicantButton.fill = GridBagConstraints.CENTER;
+        gbc_applicantButton.gridx = 5;
+        gbc_applicantButton.gridy = 3;
+        gbc_applicantButton.weightx=0.1;
+        gbc_applicantButton.weighty=0.2;
+        add(applicantButton, gbc_applicantButton);
 
-        //===PASSWORD TEXT FIELD===//
-        passwordField = new JTextField();
-        GridBagConstraints gbc_passwordField = new GridBagConstraints();
-        gbc_passwordField.gridx = 2;
-        gbc_passwordField.gridwidth = 3;
-        gbc_passwordField.anchor = GridBagConstraints.WEST;
-        //gbc_passwordField.gridx = 2;
-        gbc_passwordField.insets = new Insets(1, 0, 5, 5);
-        gbc_passwordField.weightx = 1;
-        gbc_passwordField.weighty=0.5;
-        gbc_passwordField.gridy = 3;
-        add(passwordField, gbc_passwordField);
-        passwordField.setColumns(10);
 
-        JButton btnLogin = new JButton("Login");
-        GridBagConstraints gbc_btnLogin = new GridBagConstraints();
-        gbc_btnLogin.gridx = 0;
-        gbc_btnLogin.gridwidth = 4;
-        gbc_btnLogin.insets = new Insets(50, 0, 5, 5);
-        gbc_btnLogin.anchor=GridBagConstraints.CENTER;
-        gbc_btnLogin.weightx=1;
-        gbc_btnLogin.weighty=1;
-        //gbc_btnLogin.gridx = 1;
-        gbc_btnLogin.gridy = 5;
-        add(btnLogin, gbc_btnLogin);
 
-        JLabel lblValidTest = new JLabel("TESTTESTTESTTEST");
-        GridBagConstraints gbc_lblValidTest = new GridBagConstraints();
-        gbc_lblValidTest.gridwidth = 4;
-        gbc_lblValidTest.insets = new Insets(0, 0, 5, 5);
-        gbc_lblValidTest.weightx=1;
-        gbc_lblValidTest.weighty=1;
-        gbc_lblValidTest.gridx = 0;
-        gbc_lblValidTest.gridy = 6;
-        add(lblValidTest, gbc_lblValidTest);
-        //gbc_lblLoginPage.
+        GridBagConstraints gbc_adminButton = new GridBagConstraints();
+        gbc_adminButton.fill = GridBagConstraints.CENTER;
+        gbc_adminButton.insets = new Insets(0, 0, 5, 5);
+        gbc_adminButton.gridx = 5;
+        gbc_adminButton.gridy = 4;
+        gbc_adminButton.weightx=0.1;
+        gbc_adminButton.weighty=0.2;
+        add(adminButton, gbc_adminButton);
+        //===end===//
+
+        //===spacer===//
+        JLabel spacer = new JLabel("");
+        GridBagConstraints gbc_spacer = new GridBagConstraints();
+        gbc_spacer.gridheight = 3;
+        gbc_spacer.gridwidth = 11;
+        gbc_spacer.fill=GridBagConstraints.CENTER;
+        gbc_spacer.gridx = 0;
+        gbc_spacer.gridy = 5;
+        gbc_spacer.weightx=2;
+        gbc_spacer.weighty=2;
+        add(spacer, gbc_spacer);
+
+
 
         //===COMPONENT LISTENER (WINDOW)===//
         addComponentListener(new ComponentAdapter() {
@@ -142,24 +137,30 @@ public class AdminLogin extends JPanel{
                 Font bodyFont=new Font("Comic Sans MS", Font.PLAIN, (int)adjustedFontSizeBody);
                 Font smallBodyFont=new Font("Comic Sans MS", Font.PLAIN, (int)(Math.round(adjustedFontSizeBody*0.8)));
 
-                lblLoginPage.setFont(new Font("Comic Sans MS", Font.BOLD, (int)adjustedFontSizeTitle));
-                lblUsername.setFont(bodyFont);
-                lblPassword.setFont(bodyFont);
-                lblValidTest.setFont(smallBodyFont);
-                usernameField.setFont(smallBodyFont);
-                passwordField.setFont(smallBodyFont);
-                btnLogin.setFont(bodyFont);
-                btnToSelectionPage.setFont(new Font("Comic Sans MS", Font.PLAIN, (int)(Math.round(adjustedFontSizeBody*0.5))));
+                lblCompanyName.setFont(new Font("Comic Sans MS", Font.BOLD, (int)adjustedFontSizeTitle));
+                lblLoginAs.setFont(bodyFont);
+                adminButton.setFont(smallBodyFont);
+                applicantButton.setFont(smallBodyFont);
+                staffButton.setFont(smallBodyFont);
+                spacer.setFont(new Font("Comic Sans MS", Font.BOLD, (int)adjustedFontSizeTitle));
+
+					/*lblLoginPage.setFont(new Font("Comic Sans MS", Font.BOLD, (int)adjustedFontSizeTitle));
+					lblUsername.setFont(bodyFont);
+					lblPassword.setFont(bodyFont);
+					lblValidTest.setFont(smallBodyFont);
+					usernameField.setFont(smallBodyFont);
+					passwordField.setFont(smallBodyFont);
+					btnLogin.setFont(bodyFont);*/
 
                 System.out.println(main.getContentPane().getWidth()+"X"+main.getContentPane().getHeight());
             }
         });
 
+    }
 
-    }
-    public void showSelectionPage(){
-        /*this.main.showSelectionPage();*/
-    //...see Reference_MainFrame...//
-    }
+    public void showStaffLogin()				{this.main.showStaffLogin()					;}
+    public void showApplicantDescriptionPage()	{this.main.showApplicantDescriptionPage()	;}
+    public void showAdminLogin()				{this.main.showAdminLogin()					;}
+
 
 }
