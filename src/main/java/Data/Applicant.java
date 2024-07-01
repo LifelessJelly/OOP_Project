@@ -10,16 +10,18 @@ public class Applicant{
     private String[] userDefinedSkills;
     private String[] defaultSkills;
 
-    public Applicant(String name, long birthdate, int age, String email, String nric, String imageBase64, String[] userDefinedSkills, String[] defaultSkills) {
+    public Applicant(String name, long birthdate, int age, String email, String nric, String gender, String imageBase64, String[] userDefinedSkills, String[] defaultSkills, ApplicantExperience[] applicantPrevExps) {
         this.userDefinedSkills = userDefinedSkills;
         this.defaultSkills = defaultSkills;
-        applicantDetails = new ApplicantDetails();
+        this.applicantPrevExps = applicantPrevExps;
         applicantMetadata = new ApplicantMetadata();
+        applicantDetails = new ApplicantDetails();
         applicantDetails.name = name;
         applicantDetails.birthdate = birthdate;
         applicantDetails.age = age;
         applicantDetails.email = email;
         applicantDetails.nric = nric;
+        applicantDetails.gender = gender;
         applicantDetails.imageBase64 = imageBase64;
     }
 //
