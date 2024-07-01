@@ -52,7 +52,7 @@ public class UploadImage extends SlidingPanel {
         uploadImageLabel.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(uploadImageLabel, uploadImageLabelConstraints);
 
-        sizeLimitLabel = new JLabel("Maximum file size limit of 16MB");
+        sizeLimitLabel = new JLabel("Maximum file size limit of 16MiB");
         sizeLimitLabel.setFont(sizeLimitLabel.getFont().deriveFont(18f));
         sizeLimitLabel.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(sizeLimitLabel, sizeLimitLabelConstraints);
@@ -85,7 +85,7 @@ public class UploadImage extends SlidingPanel {
                 new Insets(0, 0, 0, 0), 0, 0);
         nextPrevPagePanel.add(nextButton, nextButtonConstraints);
 
-        JLabel loadingLabel = new JLabel("Loading...");
+        JLabel loadingLabel = new JLabel("");
         loadingLabel.setFont(loadingLabel.getFont().deriveFont(18f));
         loadingLabel.setHorizontalAlignment(SwingConstants.CENTER);
         loadingLabel.setMinimumSize(new Dimension(640, 20));
@@ -110,26 +110,37 @@ public class UploadImage extends SlidingPanel {
             Action details = j.getActionMap().get("viewTypeDetails");
             details.actionPerformed(null);
             int r = j.showOpenDialog(null);
-            loadingLabel.setText("Loading...");
             File selectedFile;
-            if (r == JFileChooser.APPROVE_OPTION) {
-                selectedFile = j.getSelectedFile().getAbsoluteFile();
-                String pathToImage = selectedFile.getAbsolutePath();
-                //huge performance impact here, the file gets read twice
-                imageBase64String = ImageBase64.imageToBase64(pathToImage);
-                profileImage = ImageBase64.base64ToImage(imageBase64String).getScaledInstance(120, 120, Image.SCALE_SMOOTH);
-                imageButton.setIcon(new ImageIcon(profileImage));
-                this.repaint();
-                loadingLabel.setText("");
+            selectedFile = j.getSelectedFile().getAbsoluteFile();
+            if (selectedFile.length() > 16777216) {
+                loadingLabel.setText("Image size exceeds 16MiB");
+            }
+            else {
+                if (r == JFileChooser.APPROVE_OPTION) {
+
+                    loadingLabel.setText("Loading...");
+                    String pathToImage = selectedFile.getAbsolutePath();
+                    nextButton.setEnabled(false);
+                    backButton.setEnabled(false);
+                    //huge performance impact here, the file gets read twice
+                    new Thread(() -> {
+                        imageBase64String = ImageBase64.imageToBase64(pathToImage);
+                        profileImage = ImageBase64.base64ToImage(imageBase64String).getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+                        imageButton.setIcon(new ImageIcon(profileImage));
+                        this.repaint();
+                        loadingLabel.setText("");
+                        nextButton.setEnabled(true);
+                        backButton.setEnabled(true);
+                    }).start();
+                }
             }
         });
 
-        nextButton.addActionListener(e -> {
+            nextButton.addActionListener(e -> {
 
-            mainframe.getController().registerImageBase64(ImageEmbedded.DEFAULT_APPLICANT_IMAGE);
-
-            mainframe.panelOutroRight();
-        });
+                mainframe.getController().registerImageBase64(ImageEmbedded.DEFAULT_APPLICANT_IMAGE);
+                mainframe.panelOutroRight();
+            });
 
         backButton.addActionListener(e -> {
             mainframe.panelOutroLeft();

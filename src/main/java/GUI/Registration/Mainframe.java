@@ -118,7 +118,8 @@ public class Mainframe extends JFrame {
                 new EmailVerification(this),
                 new SkillsInfo(this),
                 new JobExperiences(this),
-                new UploadImage(this));
+                new UploadImage(this),
+                new EndScreen(this));
         panels.get(0).setVisible(true);
         this.add(panels.get(0), mainPanelConstraints);
         this.setVisible(true);
@@ -161,7 +162,6 @@ public class Mainframe extends JFrame {
         this.getContentPane().remove(panels.get(panelIndex+1));
         panels.get(panelIndex).slideInRight();
     }
-
 
 
 }
