@@ -1,5 +1,6 @@
 package Controller;
 
+import Data.Applicant;
 import Data.ApplicantExperience;
 import Data.DataStorage;
 
@@ -60,5 +61,9 @@ public class RegistrationController {
 
     public void registerImageBase64(String imageBase64) {
         registrator.registerImageFromBase64(imageBase64);
+    }
+
+    public Applicant createApplicant() {
+        return registrator.createApplicant();
     }
 }
