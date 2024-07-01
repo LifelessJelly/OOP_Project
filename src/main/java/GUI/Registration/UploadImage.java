@@ -26,6 +26,7 @@ public class UploadImage extends SlidingPanel {
 
     public UploadImage(Mainframe mainframe) {
         this.mainframe = mainframe;
+        imageBase64String = ImageEmbedded.DEFAULT_APPLICANT_IMAGE;
         initComponents();
     }
 
@@ -138,14 +139,17 @@ public class UploadImage extends SlidingPanel {
 
             nextButton.addActionListener(e -> {
 
-                mainframe.getController().registerImageBase64(ImageEmbedded.DEFAULT_APPLICANT_IMAGE);
+                mainframe.getController().registerImageBase64(imageBase64String);
                 mainframe.panelOutroRight();
             });
 
         backButton.addActionListener(e -> {
             mainframe.panelOutroLeft();
         });
-
+        removeButton.addActionListener(e -> {
+            imageBase64String = ImageEmbedded.DEFAULT_APPLICANT_IMAGE;
+            imageButton.setIcon(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.ADD_IMAGE_PICTURE).getScaledInstance(120, 120, Image.SCALE_SMOOTH)));
+        });
 
     }
 
