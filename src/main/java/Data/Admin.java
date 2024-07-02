@@ -5,13 +5,12 @@ import Subsystems.SHA256;
 public class Admin {
 
     //======ACCESS LEVELS======//
-    /*public static final int ROOT = 0;
+    public static final int ROOT = 0;
     public static final int ADMIN = 1;
-    public static final int MANAGER = 2;
-    public static final int HR = 3;*/
 
     private final StaffCredentials staffCredentials;
     private final int securityLevel;
+    private final int securityLevelRequired=1;
 
     //======CHECKS IF ACCESS LEVEL IS RIGHT (admin,root)======//
     public Admin(int securityLevel){
