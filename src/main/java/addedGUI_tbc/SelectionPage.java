@@ -66,7 +66,7 @@ public class SelectionPage extends JPanel {
         JButton applicantButton = new JButton("Applicant");
         applicantButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                showApplicantDescriptionPage();
+                //showApplicantDescriptionPage();
             }
         });
 
@@ -159,7 +159,7 @@ public class SelectionPage extends JPanel {
     }
 
     public void showStaffLogin()				{this.main.showStaffLogin()					;}
-    public void showApplicantDescriptionPage()	{this.main.showApplicantDescriptionPage()	;}
+    //public void showApplicantDescriptionPage()	{this.main.showApplicantDescriptionPage()	;}
     public void showAdminLogin()				{this.main.showAdminLogin()					;}
 
 
