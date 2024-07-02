@@ -24,7 +24,7 @@ public class ManagerDashboard extends JPanel{
         this.main=main;
         setSize(640,360);
         GridBagLayout gridBagLayout = new GridBagLayout();
-        gridBagLayout.columnWidths = new int[]{107, 188, 0, 0, 0, 0, 0, 0, 0};
+        gridBagLayout.columnWidths = new int[]{70, 70, 70, 70, 70, 70, 70, 70, 70};
         gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
         gridBagLayout.columnWeights = new double[]{1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         gridBagLayout.rowWeights = new double[]{0.0, 1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
@@ -44,37 +44,29 @@ public class ManagerDashboard extends JPanel{
         JPanel btnPanel = new JPanel();
         GridBagConstraints gbc_btnPanel = new GridBagConstraints();
         gbc_btnPanel.gridheight = 8;
+        gbc_btnPanel.gridwidth=1;
         gbc_btnPanel.insets = new Insets(0, 0, 0, 0);
         gbc_btnPanel.fill = GridBagConstraints.BOTH;
         gbc_btnPanel.gridx = 0;
         gbc_btnPanel.gridy = 1;
-        gbc_btnPanel.weightx=0.1;
-        gbc_btnPanel.weighty=0.1;
+        gbc_btnPanel.weightx=1;
+        gbc_btnPanel.weighty=1;
         add(btnPanel, gbc_btnPanel);
         btnPanel.setLayout(new GridLayout(0, 1, 0, 0));
 
+        //==BUTTONS==//
         JButton btnShortlist = new JButton("shortlist");
-        btnShortlist.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                ////////////////////////////showSelectionPage();
-            }
-        });
         btnPanel.add(btnShortlist);
-        JButton btnViewShortlist = new JButton("view shortlist");
-        btnViewShortlist.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                /////////////////////////showStaffLogin();
-            }
-        });
-        btnPanel.add(btnViewShortlist);
-        JButton btnGenShortlist = new JButton("generate shortlist");
+        JButton btnViewShortList=new JButton("view shortlist");
+        btnPanel.add(btnViewShortList);
+        JButton btnGenShortlist = new JButton("generate list");
         btnPanel.add(btnGenShortlist);
         JButton btnSettings = new JButton("settings");
         btnPanel.add(btnSettings);
+        //===//
+
 
         JPanel panelPanel = new JPanel();
-        panelPanel.setLayout(card);
-        //panelPanel.setSize((int)(Math.round(main.getWidth()*0.75)),(int)(Math.round(main.getHeight()*0.75)));
         GridBagConstraints gbc_panelPanel = new GridBagConstraints();
         gbc_panelPanel.gridheight = 7;
         gbc_panelPanel.gridwidth = 7;
@@ -96,7 +88,7 @@ public class ManagerDashboard extends JPanel{
                 Font smallBodyFont=new Font("Comic Sans MS", Font.PLAIN, (int)(Math.round(adjustedFontSizeBody*0.8)));
                 lblWelcome.setFont(bodyFont);
                 btnShortlist.setFont(smallBodyFont);
-                btnViewShortlist.setFont(smallBodyFont);
+                btnViewShortList.setFont(smallBodyFont);
                 btnGenShortlist.setFont(smallBodyFont);
                 btnSettings.setFont(smallBodyFont);
                 //panelPanel.setSize((int)(Math.round(main.getWidth()*0.75)),(int)(Math.round(main.getHeight()*0.75)));
