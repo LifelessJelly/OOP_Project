@@ -6,7 +6,7 @@ import java.awt.Insets;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+import GUI.Registration.SlidingPanel;
 import Controller.MainFrame;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -15,7 +15,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class StaffLogin extends JPanel{
+public class StaffLogin extends SlidingPanel{
     private MainFrame main;
     private JTextField usernameField;
     private JTextField passwordField;

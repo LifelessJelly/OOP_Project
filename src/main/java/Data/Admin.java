@@ -5,10 +5,10 @@ import Subsystems.SHA256;
 public class Admin {
 
     //======ACCESS LEVELS======//
-    public static final int ROOT = 0;
+    /*public static final int ROOT = 0;
     public static final int ADMIN = 1;
     public static final int MANAGER = 2;
-    public static final int HR = 3;
+    public static final int HR = 3;*/
 
     private final StaffCredentials staffCredentials;
     private final int securityLevel;
@@ -17,8 +17,6 @@ public class Admin {
     public Admin(int securityLevel){
         switch (securityLevel){
             case ROOT:
-            //case MANAGER:
-            //case HR:
             case ADMIN:
                 break;
             default:
@@ -31,8 +29,6 @@ public class Admin {
     public boolean authorised(int securityLevelRequired){
         switch (securityLevelRequired){
             case ROOT:
-            //case MANAGER:
-            //case HR:
             case ADMIN:
                 break;
             default:
