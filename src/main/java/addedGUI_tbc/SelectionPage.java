@@ -13,11 +13,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import Controller.MainFrame;
+import addedGUI_tbc.MainFrame_other;
 
 public class SelectionPage extends JPanel {
-    private MainFrame main;
-    public SelectionPage(MainFrame main) {
+    private MainFrame_other main;
+    public SelectionPage(MainFrame_other main) {
         this.main=main;
 
         GridBagLayout gridBagLayout = new GridBagLayout();

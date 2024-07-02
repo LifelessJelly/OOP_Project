@@ -7,7 +7,7 @@ import java.awt.Insets;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import GUI.Registration.SlidingPanel;
-import Controller.MainFrame;
+import addedGUI_tbc.MainFrame_other;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import javax.swing.JTextField;
@@ -16,11 +16,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class AdminLogin extends SlidingPanel{
-    private MainFrame main;
+    private MainFrame_other main;
     private JTextField usernameField;
     private JTextField passwordField;
 
-    public AdminLogin(MainFrame main){
+    public AdminLogin(MainFrame_other main){
         this.main=main;
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
