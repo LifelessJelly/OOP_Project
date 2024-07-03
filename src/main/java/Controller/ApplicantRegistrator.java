@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.stream.Stream;
 
 public class ApplicantRegistrator {
     private String name;
@@ -17,8 +18,7 @@ public class ApplicantRegistrator {
     private String email;
     private String gender;
     private String imageBase64;
-    private String[] defaultSkills;
-    private String[] userDefinedSkills;
+    private String[] allSkills;
     private ApplicantExperience[] applicantExperiences;
 
 
@@ -38,15 +38,13 @@ public class ApplicantRegistrator {
         return email;
     }
 
-    public void registerUserDefinedSkills(String[] skills) {
-        userDefinedSkills = skills;
-        System.out.println(Arrays.toString(userDefinedSkills));
+
+    public void registerAllSkills(String[] defaultSkills, String[] userDefinedSkills) {
+        allSkills = Stream.concat(
+                Arrays.stream(defaultSkills), Arrays.stream(userDefinedSkills)
+        ).toArray(String[]::new);
     }
 
-    public void registerDefaultSkills(String[] skills) {
-        defaultSkills = skills;
-        System.out.println(Arrays.toString(defaultSkills));
-    }
     public void registerApplicantExperiences(ApplicantExperience[] experiences) {
         applicantExperiences = experiences;
     }
@@ -60,6 +58,6 @@ public class ApplicantRegistrator {
     }
 
     public Applicant createApplicant() {
-        return new Applicant(name, birthDate, age, email, nricFin, imageBase64, gender, userDefinedSkills, defaultSkills, applicantExperiences);
+        return new Applicant(name, birthDate, age, email, nricFin, gender, imageBase64, allSkills, applicantExperiences);
     }
 }
