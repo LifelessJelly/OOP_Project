@@ -169,6 +169,9 @@ public class SkillsInfo extends SlidingPanel{
         });
 
         addButton.addActionListener(e -> {
+            if (skillsField.getText().isEmpty()){
+                return;
+            }
             mainframe.getController().addSkill(skillsField.getText());
             otherSkillsetsList.setModel(getSkillsListModel());
             skillsField.setText("");
@@ -193,8 +196,7 @@ public class SkillsInfo extends SlidingPanel{
                     }
                 }
             }
-            mainframe.getController().registerDefaultSkills(defaultSkillsArrList.toArray(new String[0]));
-            mainframe.getController().registerUserDefinedSkills(mainframe.getController().getSkills());
+            mainframe.getController().registerAllSkills(defaultSkillsArrList.toArray(new String[0]), mainframe.getController().getSkills());
             mainframe.panelOutroRight();
         });
 
