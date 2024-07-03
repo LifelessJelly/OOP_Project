@@ -8,12 +8,12 @@ import java.security.NoSuchAlgorithmException;
 public class Hasher {
     private final boolean isHexRepresented;
     public Hasher(boolean isHexRepresentation){
-        this.isHexRepresented = isHexRepresentation;
+        this.isHexRepresented = isHexRepresentation;             //setting of hex representation bool?
     }
     public byte[] hashString(String stringBeHashed){
         String currentString = stringBeHashed;
         byte[] hashHolder = new byte[32];
-        for (int i = 0; i < 100000; i++){
+        for (int i = 0; i < 100000; i++){   //100k iterations?
 
             hashHolder = getSHAOutput(currentString);
             BigInteger bigInt = new BigInteger(1, hashHolder);

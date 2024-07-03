@@ -13,11 +13,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import Controller.MainFrame;
+import addedGUI_tbc.MainFrame_other;
 
 public class SelectionPage extends JPanel {
-    private MainFrame main;
-    public SelectionPage(MainFrame main) {
+    private MainFrame_other main;
+    public SelectionPage(MainFrame_other main) {
         this.main=main;
 
         GridBagLayout gridBagLayout = new GridBagLayout();
@@ -66,7 +66,7 @@ public class SelectionPage extends JPanel {
         JButton applicantButton = new JButton("Applicant");
         applicantButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                showApplicantDescriptionPage();
+                //showApplicantDescriptionPage();
             }
         });
 
@@ -159,7 +159,7 @@ public class SelectionPage extends JPanel {
     }
 
     public void showStaffLogin()				{this.main.showStaffLogin()					;}
-    public void showApplicantDescriptionPage()	{this.main.showApplicantDescriptionPage()	;}
+    //public void showApplicantDescriptionPage()	{this.main.showApplicantDescriptionPage()	;}
     public void showAdminLogin()				{this.main.showAdminLogin()					;}
 
 
