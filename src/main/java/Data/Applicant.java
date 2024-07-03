@@ -2,17 +2,20 @@ package Data;
 
 //Class model implementation for applicants
 
+import Subsystems.ImageBase64;
+
+import java.awt.image.BufferedImage;
+
 public class Applicant{
 
     private final ApplicantDetails applicantDetails;
     private final ApplicantMetadata applicantMetadata;
     private ApplicantExperience[] applicantPrevExps;
-    private String[] userDefinedSkills;
-    private String[] defaultSkills;
+    private String[] skills;
 
-    public Applicant(String name, long birthdate, int age, String email, String nric, String gender, String imageBase64, String[] userDefinedSkills, String[] defaultSkills, ApplicantExperience[] applicantPrevExps) {
-        this.userDefinedSkills = userDefinedSkills;
-        this.defaultSkills = defaultSkills;
+
+    public Applicant(String name, long birthdate, int age, String email, String nric, String gender, String imageBase64, String[] skills, ApplicantExperience[] applicantPrevExps) {
+        this.skills = skills;
         this.applicantPrevExps = applicantPrevExps;
         applicantMetadata = new ApplicantMetadata();
         applicantDetails = new ApplicantDetails();
@@ -43,12 +46,28 @@ public class Applicant{
 //        applicantDetails.email = email;
 //    }
 
-    public int getId() {
-        return applicantMetadata.applicantID;
+    public BufferedImage getImage(){
+        return ImageBase64.base64ToImage(applicantDetails.imageBase64);
     }
 
     public String getImageBase64(){
         return applicantDetails.imageBase64;
+    }
+
+    public String getName() {
+        return applicantDetails.name;
+    }
+
+    public String getNRIC() {
+        return applicantDetails.nric;
+    }
+
+    public String getEmail() {
+        return applicantDetails.email;
+    }
+
+    public String[] getSkills() {
+        return skills;
     }
 
 
@@ -66,15 +85,12 @@ public class Applicant{
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private static class ApplicantMetadata {
-        private final int applicantID;
         private final long applicationDate;
         private boolean isShortlisted;
         private boolean isAccepted;
-        private static int applicantIDCounter;
         private long interviewDate;
 
         public ApplicantMetadata() {
-            applicantID = applicantIDCounter++;
             applicationDate = System.currentTimeMillis();
             isShortlisted = false;
             isAccepted = false;
