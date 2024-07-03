@@ -33,18 +33,18 @@ public class ImageBase64 {
         }
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
-            ImageIO.write(image, fileType, baos);
+            ImageIO.write(image, fileType, baos);                   //writing image data to baos
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        byte[] bytes = baos.toByteArray();
+        byte[] bytes = baos.toByteArray();                          //extract data as bytearray
         return Base64.getEncoder().encodeToString(bytes);
     }
 
     public static BufferedImage base64ToImage(String base64) {
-        byte[] bytes = Base64.getDecoder().decode(base64);
+        byte[] bytes = Base64.getDecoder().decode(base64);          //decodes image for usage
         try {
-            return ImageIO.read(new ByteArrayInputStream(bytes));
+            return ImageIO.read(new ByteArrayInputStream(bytes));   //reads the decoded image
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
