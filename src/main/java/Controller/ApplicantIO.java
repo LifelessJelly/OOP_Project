@@ -18,15 +18,23 @@ import java.nio.file.Paths;
 //store every applicant's data discretely
 public class ApplicantIO {
 
+    //still broken don't use
     public static Applicant readApplicant(File pathToApplicantsFile) {
         String fileDir = pathToApplicantsFile.getPath();
         String parentDir = pathToApplicantsFile.getParent();
         return JsonReaderWriter.jsonToModel(FileContentEncryptor.decrypt(readFile(fileDir), parentDir), Applicant.class);
 
     }
+
+
+    /**
+     *
+     * @param applicant
+     * @param pathToDirectory
+     */
     public static void writeApplicant(Applicant applicant, String pathToDirectory) {
         try {
-            try (FileWriter newFile = new FileWriter(pathToDirectory + "\\" + new String(SHA256.getHasherHex().hashString(String.valueOf(applicant.getId()))) + ".oop")) {
+            try (FileWriter newFile = new FileWriter(pathToDirectory + "\\" + new String(SHA256.getHasherHex().hashString(String.valueOf(System.currentTimeMillis()))) + ".oop")) {
                 newFile.write(FileContentEncryptor.encrypt(JsonReaderWriter.modelToJson(applicant), pathToDirectory));
             }
         }
@@ -34,6 +42,8 @@ public class ApplicantIO {
             e.printStackTrace(System.out);
         }
     }
+
+
     private static String readFile(String pathToFile) {
         try {
             return new String(Files.readAllBytes(Paths.get(pathToFile)));
