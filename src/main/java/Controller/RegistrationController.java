@@ -13,12 +13,6 @@ public class RegistrationController {
         datastorage = new DataStorage();
     }
 
-    public void registerUserDefinedSkills(String[] skills) {
-        registrator.registerUserDefinedSkills(skills);
-    }
-
-    public void registerDefaultSkills(String[] skills) {registrator.registerDefaultSkills(skills);}
-
     public void registerBasicInfo(String name, int day, String month, int year, String nricFin, String email, String gender){
         registrator.registerBasicInfo(name, day, month, year, nricFin, email, gender);
     }
