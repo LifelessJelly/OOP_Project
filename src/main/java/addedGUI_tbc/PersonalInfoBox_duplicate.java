@@ -5,6 +5,12 @@ import Subsystems.ImageBase64;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+
 
 public class PersonalInfoBox_duplicate extends JPanel {
 
@@ -63,6 +69,19 @@ public class PersonalInfoBox_duplicate extends JPanel {
 //        this.add(divider, new GridBagConstraints(0, 3, -1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 5, 5), 0, 0));
 
 
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent arg0) {
+            }
+        });
+
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent arg0) {
+            }
+        });
+
     }
+
 }
 
