@@ -66,4 +66,8 @@ public class RegistrationController {
     public Applicant createApplicant() {
         return registrator.createApplicant();
     }
+
+    public void registerAllSkills(String[] defaultSkills, String[] userDefinedSkills) {
+        registrator.registerAllSkills(defaultSkills, userDefinedSkills);
+    }
 }
