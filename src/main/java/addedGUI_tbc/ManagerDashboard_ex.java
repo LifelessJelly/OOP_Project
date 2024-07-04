@@ -16,6 +16,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Controller.MainFrame;
+
+//options are as stands: shortlist, view shortlist, generate list, settings
+
 public class ManagerDashboard_ex extends JPanel{
     private MainFrame main;
     private CardLayout card;
