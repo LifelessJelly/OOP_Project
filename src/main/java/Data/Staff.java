@@ -39,11 +39,14 @@ public class Staff {
         return securityLevelRequired >= this.securityLevel;
     }
 
+    //updates the staff credentials, creating a new String that has the hashed staff credentials
     public void updateCredentials(String username, String password){
         staffCredentials.usernameHash = new String(SHA256.getHasherHex().hashString(username));
         staffCredentials.passwordHash = new String(SHA256.getHasherHex().hashString(password));
     }
 
+    //checks the staff credentials, returns a boolean value that signifies
+    // if the hashed username and password is equal to the stored hash
     public boolean checkCredentials(String username, String password){
         return (new String(SHA256.getHasherHex().hashString(username)).equals(staffCredentials.usernameHash)
                 && new String(SHA256.getHasherHex().hashString(password)).equals(staffCredentials.passwordHash));
