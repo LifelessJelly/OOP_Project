@@ -1,10 +1,12 @@
 package GUI.Registration;
 
+import GUI.SlidingPanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class SkillsInfo extends SlidingPanel{
+public class SkillsInfo extends SlidingPanel {
     JLabel tickSkillsetsLabel;
     JCheckBox programmingCheckBox;
     JCheckBox industrialCheckBox;

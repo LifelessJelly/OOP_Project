@@ -1,5 +1,7 @@
 package GUI.Registration;
 
+import GUI.SlidingPanel;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 
@@ -7,8 +9,6 @@ import java.awt.*;
 import java.time.Year;
 import java.util.Arrays;
 import java.util.Objects;
-
-import static java.lang.Math.*;
 
 public class BasicUserInfo extends SlidingPanel {
     private int loopCycles = 0;

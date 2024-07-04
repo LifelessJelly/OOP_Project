@@ -1,4 +1,6 @@
-package GUI.Registration;
+package GUI;
+
+import GUI.Registration.Mainframe;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,19 +20,19 @@ public abstract class SlidingPanel extends JPanel {
 
 
     //TODO Clean up template the sliding animation codes into each of these functions, additionally, group left and right sliding in/out functions together, or even all four functions together if possible
-    void slideInLeft() {
+    public void slideInLeft() {
         slideAnimation(LEFT, IN);
     }
 
-    void slideInRight() {
+    public void slideInRight() {
         slideAnimation(RIGHT, IN);
     }
 
-    void slideOutLeft() {
+    public void slideOutLeft() {
         slideAnimation(LEFT, OUT);
     }
 
-    void slideOutRight() {
+    public void slideOutRight() {
         slideAnimation(RIGHT, OUT);
     }
 

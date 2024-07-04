@@ -1,6 +1,7 @@
 package GUI.Registration;
 
 import Controller.RegistrationController;
+import GUI.SlidingPanel;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 
@@ -30,6 +31,8 @@ public class Mainframe extends JFrame {
 
     private void initComponents() {
         this.setMinimumSize(new Dimension(1080, 720));
+        this.setPreferredSize(new Dimension(1080, 720));
+        this.setMinimumSize(new Dimension(0, 0));
         this.setLayout(new GridBagLayout());
         this.setTitle("DongHua JinLong Iron Glycine");
 

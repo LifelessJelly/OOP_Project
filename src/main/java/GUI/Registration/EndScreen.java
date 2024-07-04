@@ -1,12 +1,13 @@
 package GUI.Registration;
 
 import Data.Applicant;
+import GUI.SlidingPanel;
 import Subsystems.JsonReaderWriter;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class EndScreen extends SlidingPanel{
+public class EndScreen extends SlidingPanel {
     JLabel endLabel;
     JLabel bestWishesLabel;
     JLabel closeWindowLabel;

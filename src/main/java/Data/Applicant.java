@@ -70,6 +70,10 @@ public class Applicant{
         return skills;
     }
 
+    public ApplicantExperience[] getExperiences() {
+        return applicantPrevExps;
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private static class ApplicantDetails {

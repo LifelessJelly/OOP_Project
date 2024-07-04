@@ -1,13 +1,14 @@
 package GUI.Registration;
 
 import Data.ApplicantExperience;
+import GUI.SlidingPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.Year;
 import java.util.Objects;
 
-public class JobExperiences extends SlidingPanel{
+public class JobExperiences extends SlidingPanel {
     private GridBagLayout layout;
     private JLabel prevExperienceLabel;
     private JLabel noExperienceSkipLabel;

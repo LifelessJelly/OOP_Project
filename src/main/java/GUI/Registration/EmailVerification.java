@@ -1,7 +1,7 @@
 package GUI.Registration;
 
-import Controller.EmailSender;
 import Controller.ParallelEmailSequnce;
+import GUI.SlidingPanel;
 
 import javax.swing.*;
 import javax.swing.text.PlainDocument;
@@ -9,10 +9,9 @@ import java.awt.*;
 import java.util.Arrays;
 import java.util.Random;
 
-import static java.lang.Math.pow;
 import static java.lang.Math.round;
 
-public class EmailVerification extends SlidingPanel{
+public class EmailVerification extends SlidingPanel {
     JLabel enterOTPLabel;
     JLabel OTPSubLabel;
     JPanel OTPPanel;
