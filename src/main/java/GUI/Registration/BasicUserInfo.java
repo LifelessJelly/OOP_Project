@@ -1,5 +1,7 @@
 package GUI.Registration;
 
+import GUI.SlidingPanel;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 
@@ -7,8 +9,6 @@ import java.awt.*;
 import java.time.Year;
 import java.util.Arrays;
 import java.util.Objects;
-
-import static java.lang.Math.*;
 
 public class BasicUserInfo extends SlidingPanel {
     private int loopCycles = 0;
@@ -44,8 +44,8 @@ public class BasicUserInfo extends SlidingPanel {
     private JPanel dateStuffPanel;
     private JButton nextButton;
 
-    BasicUserInfo(Mainframe mainframe) {
-        this.mainframe = mainframe;
+    BasicUserInfo(RegistrationMainframe registrationMainframe) {
+        this.registrationMainframe = registrationMainframe;
         intiComponents();
     }
 
@@ -280,7 +280,7 @@ public class BasicUserInfo extends SlidingPanel {
                 else {
                     nricFinField.setBorder(defaultBorder);
                     errorMessageLabel.setText("");
-                    mainframe.getController().registerBasicInfo(
+                    registrationMainframe.getController().registerBasicInfo(
                             nameField.getText(),
                             (Integer) Objects.requireNonNull(dayBox.getSelectedItem()),
                             (String) Objects.requireNonNull(monthBox.getSelectedItem()),
@@ -289,7 +289,7 @@ public class BasicUserInfo extends SlidingPanel {
                             emailField.getText(),
                             (String) Objects.requireNonNull(genderComboBox.getSelectedItem()));
                     setButtonsActivated(false);
-                    mainframe.panelOutroRight();
+                    registrationMainframe.panelOutroRight();
                 }
             }
         });

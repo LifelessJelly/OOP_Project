@@ -1,5 +1,7 @@
 package GUI.Registration;
 
+import GUI.SlidingPanel;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -14,8 +16,8 @@ public class Welcome extends SlidingPanel {
     private GridBagConstraints kaiShiConstraints;
     private GridBagLayout layout;
 
-    public Welcome(Mainframe mainframe) {
-        this.mainframe = mainframe;
+    public Welcome(RegistrationMainframe registrationMainframe) {
+        this.registrationMainframe = registrationMainframe;
         initComponents();
     }
 
@@ -52,7 +54,7 @@ public class Welcome extends SlidingPanel {
         this.add(kaiShiButton, kaiShiConstraints);
         kaiShiButton.addActionListener(e -> {
             setButtonsActivated(false);
-            mainframe.panelOutroRight();});
+            registrationMainframe.panelOutroRight();});
 
 
         new Timer(10, e -> {

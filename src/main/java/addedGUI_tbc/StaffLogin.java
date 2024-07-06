@@ -6,7 +6,7 @@ import java.awt.Insets;
 
 import javax.swing.JLabel;
 
-import GUI.Registration.SlidingPanel;
+import GUI.SlidingPanel;
 
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;

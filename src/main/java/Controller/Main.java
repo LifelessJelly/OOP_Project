@@ -1,6 +1,6 @@
 package Controller;
 
-import GUI.Registration.Mainframe;
+import GUI.Infobase.InfobaseMainframe;
 
 
 import Subsystems.ImageBase64;
@@ -21,9 +21,9 @@ public class Main {
             UIManager.setLookAndFeel(new FlatDarkLaf());
         } catch (UnsupportedLookAndFeelException e) {
             throw new RuntimeException(e);
-        }
 
-        new Mainframe();
+        }
+        new InfobaseMainframe();
     }
 }
 

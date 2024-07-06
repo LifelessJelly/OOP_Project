@@ -5,9 +5,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import GUI.Registration.SlidingPanel;
-import addedGUI_tbc.MainFrame_other;
+
+import GUI.SlidingPanel;
+
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import javax.swing.JTextField;
@@ -130,8 +130,8 @@ public class AdminLogin extends SlidingPanel{
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent arg0) {
-                int adjustedFontSizeTitle=(int)(main.getContentPane().getWidth()/25);                                                     //scaling of title font
-                int adjustedFontSizeBody=(int)(main.getContentPane().getWidth()/35);                                                      //scaling of body font
+                int adjustedFontSizeTitle= main.getContentPane().getWidth()/25;                                                     //scaling of title font
+                int adjustedFontSizeBody= main.getContentPane().getWidth()/35;                                                      //scaling of body font
                 Font bodyFont=new Font("Comic Sans MS", Font.PLAIN, (int)adjustedFontSizeBody);                                     //body font
                 Font smallBodyFont=new Font("Comic Sans MS", Font.PLAIN, (int)(Math.round(adjustedFontSizeBody*0.8)));              //smaller body
 
