@@ -1,5 +1,7 @@
 package addedGUI_tbc;
 
+import Data.Staff;
+
 import java.awt.CardLayout;
 
 import javax.swing.JFrame;
@@ -52,6 +54,11 @@ public class MainFrame_other extends JFrame {
         ManagerDashboard mang=new ManagerDashboard(this);
         this.add(mang,"mang");
         this.card.show(this.getContentPane(), "mang");
+    }
+    public void showHRDash(){
+        StaffDashboard staff=new StaffDashboard(this);
+        this.add(staff,"Staff Dashboard");
+        this.card.show(this.getContentPane(), "Staff Dashboard");
     }
 
 
