@@ -10,7 +10,7 @@ import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
-public class Mainframe extends JFrame {
+public class RegistrationMainframe extends JFrame {
 
     private int panelIndex;
     List<SlidingPanel> panels;
@@ -19,10 +19,10 @@ public class Mainframe extends JFrame {
     JRadioButton lightModeButton;
     private final RegistrationController registrationController;
     GridBagConstraints mainPanelConstraints;
-    private final boolean BORDER_DEBUG_MODE = false;
+    private final static boolean BORDER_DEBUG_MODE = false;
 
 
-    public Mainframe() {
+    public RegistrationMainframe() {
         this.registrationController = new RegistrationController();
         mainPanelConstraints = new GridBagConstraints(1, 1, 1, 1, 1, 1,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
@@ -35,6 +35,9 @@ public class Mainframe extends JFrame {
         this.setMinimumSize(new Dimension(0, 0));
         this.setLayout(new GridBagLayout());
         this.setTitle("DongHua JinLong Iron Glycine");
+
+        LookAndFeel lightMode = new FlatLightLaf();
+        LookAndFeel darkMode = new FlatDarkLaf();
 
         JPanel panelWest = new JPanel();
         panelWest.setMinimumSize(new Dimension(120, 0));
@@ -100,7 +103,7 @@ public class Mainframe extends JFrame {
 
         darkModeButton.addActionListener(e -> {
             try {
-                UIManager.setLookAndFeel(new FlatDarkLaf());
+                UIManager.setLookAndFeel(darkMode);
                 SwingUtilities.updateComponentTreeUI(this);
             } catch (UnsupportedLookAndFeelException ex) {
                 throw new RuntimeException(ex);
@@ -108,8 +111,9 @@ public class Mainframe extends JFrame {
         });
 
         lightModeButton.addActionListener(e -> {
+
             try {
-                UIManager.setLookAndFeel(new FlatLightLaf());
+                UIManager.setLookAndFeel(lightMode);
                 SwingUtilities.updateComponentTreeUI(this);
             } catch (UnsupportedLookAndFeelException ex) {
                 throw new RuntimeException(ex);
