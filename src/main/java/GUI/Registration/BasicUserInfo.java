@@ -44,8 +44,8 @@ public class BasicUserInfo extends SlidingPanel {
     private JPanel dateStuffPanel;
     private JButton nextButton;
 
-    BasicUserInfo(Mainframe mainframe) {
-        this.mainframe = mainframe;
+    BasicUserInfo(RegistrationMainframe registrationMainframe) {
+        this.registrationMainframe = registrationMainframe;
         intiComponents();
     }
 
@@ -280,7 +280,7 @@ public class BasicUserInfo extends SlidingPanel {
                 else {
                     nricFinField.setBorder(defaultBorder);
                     errorMessageLabel.setText("");
-                    mainframe.getController().registerBasicInfo(
+                    registrationMainframe.getController().registerBasicInfo(
                             nameField.getText(),
                             (Integer) Objects.requireNonNull(dayBox.getSelectedItem()),
                             (String) Objects.requireNonNull(monthBox.getSelectedItem()),
@@ -289,7 +289,7 @@ public class BasicUserInfo extends SlidingPanel {
                             emailField.getText(),
                             (String) Objects.requireNonNull(genderComboBox.getSelectedItem()));
                     setButtonsActivated(false);
-                    mainframe.panelOutroRight();
+                    registrationMainframe.panelOutroRight();
                 }
             }
         });

@@ -35,8 +35,8 @@ public class SkillsInfo extends SlidingPanel {
     GridBagConstraints nextBackButtonConstraints;
     GridBagLayout layout;
 
-    public SkillsInfo(Mainframe mainframe){
-        this.mainframe = mainframe;
+    public SkillsInfo(RegistrationMainframe registrationMainframe){
+        this.registrationMainframe = registrationMainframe;
         initComponents();
     }
 
@@ -174,7 +174,7 @@ public class SkillsInfo extends SlidingPanel {
             if (skillsField.getText().isEmpty()){
                 return;
             }
-            mainframe.getController().addSkill(skillsField.getText());
+            registrationMainframe.getController().addSkill(skillsField.getText());
             otherSkillsetsList.setModel(getSkillsListModel());
             skillsField.setText("");
         });
@@ -183,11 +183,11 @@ public class SkillsInfo extends SlidingPanel {
                 //return early
                 return;
             }
-            mainframe.getController().removeSkill(otherSkillsetsList.getSelectedIndex());
+            registrationMainframe.getController().removeSkill(otherSkillsetsList.getSelectedIndex());
             otherSkillsetsList.setModel(getSkillsListModel());
         });
         backButton.addActionListener(e -> {
-            mainframe.panelOutroLeft();
+            registrationMainframe.panelOutroLeft();
         });
         nextButton.addActionListener(e -> {
             ArrayList<String> defaultSkillsArrList = new ArrayList<>();
@@ -198,14 +198,14 @@ public class SkillsInfo extends SlidingPanel {
                     }
                 }
             }
-            mainframe.getController().registerAllSkills(defaultSkillsArrList.toArray(new String[0]), mainframe.getController().getSkills());
-            mainframe.panelOutroRight();
+            registrationMainframe.getController().registerAllSkills(defaultSkillsArrList.toArray(new String[0]), registrationMainframe.getController().getSkills());
+            registrationMainframe.panelOutroRight();
         });
 
     }
 
     private DefaultListModel<String> getSkillsListModel() {
-        String[] applicantSkills = mainframe.getController().getSkills();
+        String[] applicantSkills = registrationMainframe.getController().getSkills();
         DefaultListModel<String> skillsListModel = new DefaultListModel<>();
         for (String applicantSkill : applicantSkills) {
             skillsListModel.addElement(applicantSkill);

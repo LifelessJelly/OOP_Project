@@ -23,8 +23,8 @@ public class UploadImage extends SlidingPanel {
     GridBagConstraints uploadImagePanelConstraints;
     GridBagConstraints nextPrevPagePanelConstraints;
 
-    public UploadImage(Mainframe mainframe) {
-        this.mainframe = mainframe;
+    public UploadImage(RegistrationMainframe registrationMainframe) {
+        this.registrationMainframe = registrationMainframe;
         imageBase64String = ImageEmbedded.DEFAULT_APPLICANT_IMAGE;
         initComponents();
     }
@@ -138,12 +138,12 @@ public class UploadImage extends SlidingPanel {
 
             nextButton.addActionListener(e -> {
 
-                mainframe.getController().registerImageBase64(imageBase64String);
-                mainframe.panelOutroRight();
+                registrationMainframe.getController().registerImageBase64(imageBase64String);
+                registrationMainframe.panelOutroRight();
             });
 
         backButton.addActionListener(e -> {
-            mainframe.panelOutroLeft();
+            registrationMainframe.panelOutroLeft();
         });
         removeButton.addActionListener(e -> {
             imageBase64String = ImageEmbedded.DEFAULT_APPLICANT_IMAGE;

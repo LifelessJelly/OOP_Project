@@ -1,6 +1,6 @@
 package GUI;
 
-import GUI.Registration.Mainframe;
+import GUI.Registration.RegistrationMainframe;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +14,7 @@ public abstract class SlidingPanel extends JPanel {
     public static final int RIGHT = 1;
     public static final float IN = 1f;
     public static final float OUT = 2f;
-    protected Mainframe mainframe;
+    protected RegistrationMainframe registrationMainframe;
     protected Insets movingInsets;
     protected int loopCycles = 0;
 
@@ -79,10 +79,10 @@ public abstract class SlidingPanel extends JPanel {
                 if (going == OUT) {
                     this.setVisible(false);
                     if (direction == RIGHT) {
-                        mainframe.panelIntroLeft();
+                        registrationMainframe.panelIntroLeft();
                     }
                     else {
-                        mainframe.panelIntroRight();
+                        registrationMainframe.panelIntroRight();
                     }
                 }
             }
