@@ -36,7 +36,7 @@ public class Hasher {
         MessageDigest digest;
         try {
             //CHANGING THE ALGORITHM HERE WILL VOID ALL HASHED AND ENCRYPTED PERSONAL INFORMATION!
-            digest = MessageDigest.getInstance("SHA3-256");
+            digest = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
