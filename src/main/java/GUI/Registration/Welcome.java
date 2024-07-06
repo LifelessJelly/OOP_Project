@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Welcome extends SlidingPanel {
-    private int loopCycles = 0;
     private float alpha = 0;
     private JLabel welcomeLabel;
     private JLabel getYouStartedLabel;

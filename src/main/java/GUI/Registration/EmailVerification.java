@@ -9,8 +9,6 @@ import java.awt.*;
 import java.util.Arrays;
 import java.util.Random;
 
-import static java.lang.Math.round;
-
 public class EmailVerification extends SlidingPanel {
     JLabel enterOTPLabel;
     JLabel OTPSubLabel;
@@ -19,7 +17,6 @@ public class EmailVerification extends SlidingPanel {
     private JLabel errorMessageLabel;
     private int triesLeft = 4;
     private int[] OTP;
-    private int loopCycles = 0;
     private GridBagLayout layout;
     private GridBagConstraints enterOTPConstraints;
     private GridBagConstraints otpSubConstraints;

@@ -142,9 +142,7 @@ public class UploadImage extends SlidingPanel {
                 registrationMainframe.panelOutroRight();
             });
 
-        backButton.addActionListener(e -> {
-            registrationMainframe.panelOutroLeft();
-        });
+        backButton.addActionListener(e -> registrationMainframe.panelOutroLeft());
         removeButton.addActionListener(e -> {
             imageBase64String = ImageEmbedded.DEFAULT_APPLICANT_IMAGE;
             imageButton.setIcon(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.ADD_IMAGE).getScaledInstance(120, 120, Image.SCALE_SMOOTH)));

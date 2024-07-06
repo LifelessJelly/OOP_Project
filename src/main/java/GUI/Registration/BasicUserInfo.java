@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class BasicUserInfo extends SlidingPanel {
-    private int loopCycles = 0;
     JComboBox<Integer> dayBox;
     JComboBox<String> monthBox;
     JComboBox<Integer> yearBox;
@@ -42,7 +41,6 @@ public class BasicUserInfo extends SlidingPanel {
     private GridBagConstraints nameConstraints;
     private GridBagConstraints headerConstraints;
     private JPanel dateStuffPanel;
-    private JButton nextButton;
 
     BasicUserInfo(RegistrationMainframe registrationMainframe) {
         this.registrationMainframe = registrationMainframe;
@@ -247,7 +245,7 @@ public class BasicUserInfo extends SlidingPanel {
         errorMessageLabel.setFont(errorMessageLabel.getFont().deriveFont(18f));
         confirmInfoStuffPanel.add(errorMessageLabel, errorMessageConstraints);
 
-        nextButton = new JButton("Next");
+        JButton nextButton = new JButton("Next");
         nextButton.setHorizontalAlignment(SwingConstants.CENTER);
         nextButton.setFont(nextButton.getFont().deriveFont(18f));
         confirmInfoStuffPanel.add(nextButton, nextButtonConstraints);

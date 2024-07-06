@@ -224,9 +224,7 @@ public class JobExperiences extends SlidingPanel {
             registrationMainframe.getController().registerExperience(registrationMainframe.getController().getExperience());
             registrationMainframe.panelOutroRight();
         });
-        backButton.addActionListener(e -> {
-            registrationMainframe.panelOutroLeft();
-        });
+        backButton.addActionListener(e -> registrationMainframe.panelOutroLeft());
     }
 
     private DefaultListModel<String> getExperienceListModel() {

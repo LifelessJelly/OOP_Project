@@ -3,7 +3,6 @@ package GUI.Registration;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.Document;
 
 public class TextSequenceListener implements DocumentListener {
     JTextField previousTextBox;

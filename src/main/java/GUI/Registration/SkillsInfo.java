@@ -186,9 +186,7 @@ public class SkillsInfo extends SlidingPanel {
             registrationMainframe.getController().removeSkill(otherSkillsetsList.getSelectedIndex());
             otherSkillsetsList.setModel(getSkillsListModel());
         });
-        backButton.addActionListener(e -> {
-            registrationMainframe.panelOutroLeft();
-        });
+        backButton.addActionListener(e -> registrationMainframe.panelOutroLeft());
         nextButton.addActionListener(e -> {
             ArrayList<String> defaultSkillsArrList = new ArrayList<>();
             for (Component component : this.getComponents()) {
