@@ -2,6 +2,8 @@ package GUI.Infobase;
 
 import Data.Applicant;
 import Data.ApplicantExperience;
+import GUI.ImageEmbedded;
+import GUI.JPanelImageButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,6 +60,7 @@ public class EditApplicant extends JPanel {
     }
 
     //TODO update all the getter methods such that they call the mainframe and then the controller and then the applicant method (damn MVC is so fucking stupid)
+    // I also might simplifiy all of this code with BoxLayout instead of GridBagLayout since there is no need for flexibility
     private void initComponents() {
 
         this.setVisible(true);
@@ -93,8 +96,9 @@ public class EditApplicant extends JPanel {
 
         detailsPanel = new JPanel();
         detailsPanel.setLayout(new GridBagLayout());
-        GridBagConstraints detailsPanelConstraints = new GridBagConstraints(1, 0, 1, 1, 1, 1,
-                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
+        GridBagConstraints detailsPanelConstraints = new GridBagConstraints(
+                1, 0, 1, 1, 1, 1,
+                GridBagConstraints.NORTH, GridBagConstraints.NONE,
                 new Insets(0, 0, 5, 0), 0, 0);
 
         //START INNER COMPONENTS
@@ -196,7 +200,7 @@ public class EditApplicant extends JPanel {
 
             applicantEmailField = new JTextField();
             applicantEmailField.setText(applicant.getEmail());
-            applicantEmail.setFont(applicantEmail.getFont().deriveFont(18f));
+            applicantEmailField.setFont(applicantEmailField.getFont().deriveFont(18f));
             GridBagConstraints applicantEmailFieldConstraints = new GridBagConstraints(
                     0, 7, 1, 1, 0, 0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -410,9 +414,23 @@ public class EditApplicant extends JPanel {
 
         updateChangesPanel = new JPanel();
         updateChangesPanel.setLayout(new GridBagLayout());
-        GridBagConstraints updateChangesPanelConstraints = new GridBagConstraints(2, 0, 1, 1, 0, 0,
-                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+        GridBagConstraints updateChangesPanelConstraints = new GridBagConstraints(2, 0, 1, 1, 1, 1,
+                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
                 new Insets(0, 0, 5, 0), 0, 0);
+        {
+            JPanelImageButton saveChangesButton = new JPanelImageButton("Accept Changes", ImageEmbedded.SAVE_CHANGES, ImageEmbedded.SAVE_CHANGES_COLOURED, 60, 60, JPanelImageButton.LEFT);
+            GridBagConstraints saveChangesConstraints = new GridBagConstraints(0, 0, 1, 1, 0, 0,
+                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                    new Insets(0, 0, 5, 0), 0, 0);
+            updateChangesPanel.add(saveChangesButton, saveChangesConstraints);
+
+            JPanelImageButton discardChangesButton = new JPanelImageButton("Discard Changes", ImageEmbedded.DISCARD_CHANGES, ImageEmbedded.DISCARD_CHANGES_COLOURED, 60, 60, JPanelImageButton.LEFT);
+            GridBagConstraints discardChangesConstraints = new GridBagConstraints(0, 1, 1, 1, 0, 0,
+                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                    new Insets(0, 0, 5, 0), 0, 0);
+            updateChangesPanel.add(discardChangesButton, discardChangesConstraints);
+        }
+        this.add(updateChangesPanel, updateChangesPanelConstraints);
 
     }
 
