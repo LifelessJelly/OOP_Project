@@ -1,13 +1,14 @@
 package GUI.Registration;
 
 import Data.ApplicantExperience;
+import GUI.SlidingPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.Year;
 import java.util.Objects;
 
-public class JobExperiences extends SlidingPanel{
+public class JobExperiences extends SlidingPanel {
     private GridBagLayout layout;
     private JLabel prevExperienceLabel;
     private JLabel noExperienceSkipLabel;
@@ -33,8 +34,8 @@ public class JobExperiences extends SlidingPanel{
     private GridBagConstraints addRemovePanelConstraints;
     private GridBagConstraints nextPrevPagePanelConstraints;
 
-    public JobExperiences(Mainframe mainframe) {
-        this.mainframe = mainframe;
+    public JobExperiences(RegistrationMainframe registrationMainframe) {
+        this.registrationMainframe = registrationMainframe;
         initComponents();
     }
 
@@ -201,7 +202,7 @@ public class JobExperiences extends SlidingPanel{
             }
         });
         addButton.addActionListener(e -> {
-            mainframe.getController().addExperience(companyField.getText(), positionField.getText(),
+            registrationMainframe.getController().addExperience(companyField.getText(), positionField.getText(),
                     Integer.parseInt((String) Objects.requireNonNull(startYearBox.getSelectedItem())),
                     Integer.parseInt((String) Objects.requireNonNull(endYearBox.getSelectedItem())));
             experienceList.setModel(getExperienceListModel());
@@ -215,21 +216,19 @@ public class JobExperiences extends SlidingPanel{
                 //return early
                 return;
             }
-            mainframe.getController().removeExperience(experienceList.getSelectedIndex());
+            registrationMainframe.getController().removeExperience(experienceList.getSelectedIndex());
             experienceList.setModel(getExperienceListModel());
         });
 
         nextButton.addActionListener(e -> {
-            mainframe.getController().registerExperience(mainframe.getController().getExperience());
-            mainframe.panelOutroRight();
+            registrationMainframe.getController().registerExperience(registrationMainframe.getController().getExperience());
+            registrationMainframe.panelOutroRight();
         });
-        backButton.addActionListener(e -> {
-            mainframe.panelOutroLeft();
-        });
+        backButton.addActionListener(e -> registrationMainframe.panelOutroLeft());
     }
 
     private DefaultListModel<String> getExperienceListModel() {
-        ApplicantExperience[] applicantSkills = mainframe.getController().getExperience();
+        ApplicantExperience[] applicantSkills = registrationMainframe.getController().getExperience();
         DefaultListModel<String> skillsListModel = new DefaultListModel<>();
         for (ApplicantExperience applicantSkill : applicantSkills) {
             skillsListModel.addElement(applicantSkill.toString());

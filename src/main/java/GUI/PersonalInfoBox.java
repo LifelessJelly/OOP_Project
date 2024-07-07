@@ -56,10 +56,6 @@ public class PersonalInfoBox extends JPanel {
                         new Insets(0, 0, 2, 2), 0, 0));
 
 
-//        var divider = new JSeparator();
-//        this.add(divider, new GridBagConstraints(0, 3, -1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 5, 5), 0, 0));
-
-
     }
 }
 

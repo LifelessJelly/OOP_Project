@@ -1,15 +1,14 @@
 package GUI.Registration;
 
 import GUI.ImageEmbedded;
+import GUI.SlidingPanel;
 import Subsystems.ImageBase64;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 
 public class UploadImage extends SlidingPanel {
     JLabel uploadImageLabel;
@@ -24,8 +23,8 @@ public class UploadImage extends SlidingPanel {
     GridBagConstraints uploadImagePanelConstraints;
     GridBagConstraints nextPrevPagePanelConstraints;
 
-    public UploadImage(Mainframe mainframe) {
-        this.mainframe = mainframe;
+    public UploadImage(RegistrationMainframe registrationMainframe) {
+        this.registrationMainframe = registrationMainframe;
         imageBase64String = ImageEmbedded.DEFAULT_APPLICANT_IMAGE;
         initComponents();
     }
@@ -60,7 +59,7 @@ public class UploadImage extends SlidingPanel {
 
         uploadImagePanel = new JPanel();
         uploadImagePanel.setLayout(new GridBagLayout());
-        JButton imageButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.ADD_IMAGE_PICTURE).getScaledInstance(120, 120, Image.SCALE_SMOOTH)));
+        JButton imageButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.ADD_IMAGE).getScaledInstance(120, 120, Image.SCALE_SMOOTH)));
         GridBagConstraints imageButtonConstraints = new GridBagConstraints(0, 0, 1, 1, 0, 0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 0, 0), 0, 0);
@@ -139,16 +138,14 @@ public class UploadImage extends SlidingPanel {
 
             nextButton.addActionListener(e -> {
 
-                mainframe.getController().registerImageBase64(imageBase64String);
-                mainframe.panelOutroRight();
+                registrationMainframe.getController().registerImageBase64(imageBase64String);
+                registrationMainframe.panelOutroRight();
             });
 
-        backButton.addActionListener(e -> {
-            mainframe.panelOutroLeft();
-        });
+        backButton.addActionListener(e -> registrationMainframe.panelOutroLeft());
         removeButton.addActionListener(e -> {
             imageBase64String = ImageEmbedded.DEFAULT_APPLICANT_IMAGE;
-            imageButton.setIcon(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.ADD_IMAGE_PICTURE).getScaledInstance(120, 120, Image.SCALE_SMOOTH)));
+            imageButton.setIcon(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.ADD_IMAGE).getScaledInstance(120, 120, Image.SCALE_SMOOTH)));
         });
 
     }

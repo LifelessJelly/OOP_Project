@@ -1,12 +1,13 @@
 package GUI.Registration;
 
 import Data.Applicant;
+import GUI.SlidingPanel;
 import Subsystems.JsonReaderWriter;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class EndScreen extends SlidingPanel{
+public class EndScreen extends SlidingPanel {
     JLabel endLabel;
     JLabel bestWishesLabel;
     JLabel closeWindowLabel;
@@ -17,8 +18,8 @@ public class EndScreen extends SlidingPanel{
     GridBagConstraints closeWindowConstraints;
     GridBagConstraints printJsonConstraints;
 
-    public EndScreen(Mainframe mainframe) {
-        this.mainframe = mainframe;
+    public EndScreen(RegistrationMainframe registrationMainframe) {
+        this.registrationMainframe = registrationMainframe;
         initComponents();
     }
 
@@ -61,7 +62,7 @@ public class EndScreen extends SlidingPanel{
         this.add(printJsonButton, printJsonConstraints);
 
         printJsonButton.addActionListener(e -> {
-            Applicant newApplicant = mainframe.getController().createApplicant();
+            Applicant newApplicant = registrationMainframe.getController().createApplicant();
             System.out.println(JsonReaderWriter.modelToJson(newApplicant));
         });
     }

@@ -9,9 +9,9 @@ import java.awt.image.BufferedImage;
 public class Applicant{
 
     private final ApplicantDetails applicantDetails;
+    private final ApplicantExperience[] applicantPrevExps;
+    private final String[] skills;
     private final ApplicantMetadata applicantMetadata;
-    private ApplicantExperience[] applicantPrevExps;
-    private String[] skills;
 
 
     public Applicant(String name, long birthdate, int age, String email, String nric, String gender, String imageBase64, String[] skills, ApplicantExperience[] applicantPrevExps) {
@@ -68,6 +68,10 @@ public class Applicant{
 
     public String[] getSkills() {
         return skills;
+    }
+
+    public ApplicantExperience[] getExperiences() {
+        return applicantPrevExps;
     }
 
 

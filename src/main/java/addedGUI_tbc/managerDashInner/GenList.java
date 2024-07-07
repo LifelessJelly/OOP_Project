@@ -1,6 +1,6 @@
 package addedGUI_tbc.managerDashInner;
 
-import GUI.Registration.SlidingPanel;
+import GUI.SlidingPanel;
 
 public class GenList extends SlidingPanel {
 }

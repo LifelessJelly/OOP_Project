@@ -1,4 +1,6 @@
-package GUI.Registration;
+package GUI;
+
+import GUI.Registration.RegistrationMainframe;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,25 +14,25 @@ public abstract class SlidingPanel extends JPanel {
     public static final int RIGHT = 1;
     public static final float IN = 1f;
     public static final float OUT = 2f;
-    protected Mainframe mainframe;
+    protected RegistrationMainframe registrationMainframe;
     protected Insets movingInsets;
     protected int loopCycles = 0;
 
 
     //TODO Clean up template the sliding animation codes into each of these functions, additionally, group left and right sliding in/out functions together, or even all four functions together if possible
-    void slideInLeft() {
+    public void slideInLeft() {
         slideAnimation(LEFT, IN);
     }
 
-    void slideInRight() {
+    public void slideInRight() {
         slideAnimation(RIGHT, IN);
     }
 
-    void slideOutLeft() {
+    public void slideOutLeft() {
         slideAnimation(LEFT, OUT);
     }
 
-    void slideOutRight() {
+    public void slideOutRight() {
         slideAnimation(RIGHT, OUT);
     }
 
@@ -77,10 +79,10 @@ public abstract class SlidingPanel extends JPanel {
                 if (going == OUT) {
                     this.setVisible(false);
                     if (direction == RIGHT) {
-                        mainframe.panelIntroLeft();
+                        registrationMainframe.panelIntroLeft();
                     }
                     else {
-                        mainframe.panelIntroRight();
+                        registrationMainframe.panelIntroRight();
                     }
                 }
             }

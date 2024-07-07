@@ -1,7 +1,7 @@
 package GUI.Registration;
 
-import Controller.EmailSender;
 import Controller.ParallelEmailSequnce;
+import GUI.SlidingPanel;
 
 import javax.swing.*;
 import javax.swing.text.PlainDocument;
@@ -9,10 +9,7 @@ import java.awt.*;
 import java.util.Arrays;
 import java.util.Random;
 
-import static java.lang.Math.pow;
-import static java.lang.Math.round;
-
-public class EmailVerification extends SlidingPanel{
+public class EmailVerification extends SlidingPanel {
     JLabel enterOTPLabel;
     JLabel OTPSubLabel;
     JPanel OTPPanel;
@@ -20,7 +17,6 @@ public class EmailVerification extends SlidingPanel{
     private JLabel errorMessageLabel;
     private int triesLeft = 4;
     private int[] OTP;
-    private int loopCycles = 0;
     private GridBagLayout layout;
     private GridBagConstraints enterOTPConstraints;
     private GridBagConstraints otpSubConstraints;
@@ -36,8 +32,8 @@ public class EmailVerification extends SlidingPanel{
     private JButton backButton;
 
 
-    public EmailVerification(Mainframe mainframe) {
-        this.mainframe = mainframe;
+    public EmailVerification(RegistrationMainframe registrationMainframe) {
+        this.registrationMainframe = registrationMainframe;
         initComponents();
     }
 
@@ -172,11 +168,11 @@ public class EmailVerification extends SlidingPanel{
                 setButtonsActivated(false);
                 errorMessageLabel.setText("");
                 System.out.println("Correct OTP");
-                mainframe.panelOutroRight();
+                registrationMainframe.panelOutroRight();
             }
             else {
                 if (--triesLeft == 0){
-                    mainframe.dispose();
+                    registrationMainframe.dispose();
                 }
                 errorMessageLabel.setText("Invalid OTP Number. You have " + triesLeft + " tries left.");
                 errorMessageLabel.setForeground(new Color(173, 74, 59));
@@ -185,7 +181,7 @@ public class EmailVerification extends SlidingPanel{
 
         backButton.addActionListener(e ->{
             setButtonsActivated(false);
-            mainframe.panelOutroLeft();
+            registrationMainframe.panelOutroLeft();
         });
         otpDigit1.getDocument().addDocumentListener(new TextSequenceListener(null, otpDigit2));
         otpDigit2.getDocument().addDocumentListener(new TextSequenceListener(otpDigit1, otpDigit3));
@@ -220,7 +216,7 @@ public class EmailVerification extends SlidingPanel{
         return secretOTP;
     }
     private void sendOTPToEmail(int[] OTP){
-        String email = mainframe.getController().getEmail();
+        String email = registrationMainframe.getController().getEmail();
         String header = "Verification Code";
         String body = "Your OTP is " + Arrays.toString(OTP) + ". If you did not request this, please ignore this email. Do not share your OTP number with anyone.";
         new Thread(new ParallelEmailSequnce(email, header, body)).start();
@@ -245,7 +241,7 @@ public class EmailVerification extends SlidingPanel{
     public void slideInRight(){
         movingInsets.left = 0;
         this.setVisible(false);
-        mainframe.panelOutroLeft();
+        registrationMainframe.panelOutroLeft();
     }
 
     @Override
