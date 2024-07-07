@@ -21,11 +21,13 @@ public class Staff {
                 break;
             default:
                 throw new IllegalArgumentException("Invalid security level");
+                //throws error when the specified security level is not met
         }
         this.securityLevel = securityLevel;
         staffCredentials = new StaffCredentials();
     }
 
+    //returns a boolean value specifying if the user passes security
     public boolean authorised(int securityLevelRequired){
         switch (securityLevelRequired){
             case ROOT:
