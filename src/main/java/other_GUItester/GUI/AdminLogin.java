@@ -1,13 +1,14 @@
-package addedGUI_tbc;
+package other_GUItester.GUI;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+
 import GUI.Registration.SlidingPanel;
-import addedGUI_tbc.MainFrame_other;
+import other_GUItester.GUI_temp.MainFrame_other;
+
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import javax.swing.JTextField;

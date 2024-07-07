@@ -1,5 +1,5 @@
-package addedGUI_tbc;
-//PLAYING AROUND BEFORE COMMITTING TO MANAGERDASH//
+package other_GUItester.GUI_temp;
+
 import java.awt.CardLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -15,17 +15,13 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import Controller.MainFrame;
-
-//options are as stands: shortlist, view shortlist, generate list, settings
-
-public class ManagerDashboard_ex extends JPanel{
-    private MainFrame main;
+public class StaffDashboard extends JPanel{
+    private MainFrame_other main;
     private CardLayout card;
-    private option1test op;
-    public ManagerDashboard_ex(MainFrame main) {
+    //private option1test op;
+    public StaffDashboard(MainFrame_other main) {
         this.main=main;
-        this.op=op;
+        //this.op=op;
 
         setSize(640,360);
         GridBagLayout gridBagLayout = new GridBagLayout();
@@ -35,7 +31,7 @@ public class ManagerDashboard_ex extends JPanel{
         gridBagLayout.rowWeights = new double[]{0.0, 1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
         setLayout(gridBagLayout);
 
-        JLabel lblWelcome = new JLabel("Welcome, NAMEHERE");
+        JLabel lblWelcome = new JLabel("Welcome, "+"NAME"+" (MANAGER)");
         GridBagConstraints gbc_lblWelcome = new GridBagConstraints();
         gbc_lblWelcome.gridwidth = 8;
         gbc_lblWelcome.insets = new Insets(0, 0, 5, 5);
@@ -66,8 +62,8 @@ public class ManagerDashboard_ex extends JPanel{
         gbc_panelPanel.fill = GridBagConstraints.BOTH;
         gbc_panelPanel.gridx = 1;
         gbc_panelPanel.gridy = 2;
-        gbc_panelPanel.weightx=1;
-        gbc_panelPanel.weighty=1;
+        gbc_panelPanel.weightx=0.2;
+        gbc_panelPanel.weighty=0.2;
         add(panelPanel, gbc_panelPanel);
 
         // TODO Auto-generated constructor stub
@@ -76,10 +72,10 @@ public class ManagerDashboard_ex extends JPanel{
         JButton btnShortlist = new JButton("shortlist");
         btnShortlist.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JPanel op=new option1test(main);
+                //JPanel op=new option1test(main);
                 System.out.println("Hello??");
 
-                replacePanel(panelPanel,op);
+                //replacePanel(panelPanel,op);
 
             }
         });
@@ -99,10 +95,10 @@ public class ManagerDashboard_ex extends JPanel{
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent arg0) {
-                int adjustedFontSizeTitle=(int)(getWidth()/25);
-                int adjustedFontSizeBody=(int)(getWidth()/35);
-                Font bodyFont=new Font("Comic Sans MS", Font.PLAIN, (int)adjustedFontSizeBody);
-                Font smallBodyFont=new Font("Comic Sans MS", Font.PLAIN, (int)(Math.round(adjustedFontSizeBody*0.8)));
+                int adjustedFontSizeTitle=(int)(main.getContentPane().getWidth()/25);
+                int adjustedFontSizeBody=(int)(main.getContentPane().getWidth()/35);
+                Font bodyFont=new Font("Consolas", Font.PLAIN, (int)adjustedFontSizeBody);
+                Font smallBodyFont=new Font("Consolas", Font.PLAIN, (int)(Math.round(adjustedFontSizeBody*0.8)));
                 lblWelcome.setFont(bodyFont);
                 btnShortlist.setFont(smallBodyFont);
                 btnViewShortList.setFont(smallBodyFont);
@@ -114,8 +110,8 @@ public class ManagerDashboard_ex extends JPanel{
             }
         });
     }
-    //private void showSelectionPage(){this.main.showSelectionPage();}
-    //private void showStaffLogin(){this.main.showStaffLogin();}
+    private void showSelectionPage(){this.main.showSelectionPage();}
+    private void showStaffLogin(){this.main.showStaffLogin();}
 
     private void replacePanel(JPanel container,JPanel replacement){
         System.out.println("Hello!!");
@@ -127,4 +123,5 @@ public class ManagerDashboard_ex extends JPanel{
 
     }
 }
+
 

@@ -1,6 +1,6 @@
-package addedGUI_tbc;
+package other_GUItester.GUI_temp;
 
-import Data.Staff;
+import other_GUItester.GUI.AdminLogin;
 
 import java.awt.CardLayout;
 
