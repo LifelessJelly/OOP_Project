@@ -15,7 +15,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import Controller.MainFrame;
+import other_GUItester.Controller.MainFrame;
+
 public class StaffConsole extends JPanel{
     private MainFrame main;
     private CardLayout card;

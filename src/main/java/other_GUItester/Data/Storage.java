@@ -1,5 +1,6 @@
 package other_GUItester.Data;
 
+import javax.swing.*;
 import java.util.Vector;
 
 public class Storage {
@@ -36,5 +37,6 @@ public class Storage {
         this.applicantEmail.add(email);
         this.applicantContact.add(contact);
     }
+
 
 }

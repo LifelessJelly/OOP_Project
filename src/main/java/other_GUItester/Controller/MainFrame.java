@@ -9,14 +9,8 @@ import GUI;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 
-import GUI.AdminLogin;
-import GUI.ApplicantDescriptionPage;
-import GUI.ManagerDashboard;
-import GUI.ManagerDashboard_ex;
-import GUI.SelectionPage;
-import GUI.StaffDashboard;
-import GUI.StaffDisplayPage;
-import GUI.StaffLogin;
+import other_GUItester.GUI.AdminLogin;
+import other_GUItester.GUI.StaffConsole
 //import GUI.RegUserScren;
 import GUI.TestPanel;
 import GUI.option1test;
