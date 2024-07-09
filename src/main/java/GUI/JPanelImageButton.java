@@ -1,6 +1,6 @@
 package GUI;
 
-import Subsystems.ImageBase64;
+import subsystem.ImageBase64;
 
 import javax.swing.*;
 import java.awt.*;

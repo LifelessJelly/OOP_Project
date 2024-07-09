@@ -1,7 +1,7 @@
 package addedGUI_tbc;
 
-import Data.Applicant;
-import Subsystems.ImageBase64;
+import data.Applicant;
+import subsystem.ImageBase64;
 
 import javax.swing.*;
 import java.awt.*;

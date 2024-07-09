@@ -1,6 +1,6 @@
 package GUI;
 
-import GUI.Registration.RegistrationMainframe;
+import GUI.registration.RegistrationMainframe;
 
 import javax.swing.*;
 import java.awt.*;
