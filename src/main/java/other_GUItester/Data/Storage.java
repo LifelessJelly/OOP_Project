@@ -18,6 +18,9 @@ public class Storage {
     private Vector<String>applicantEmail=new Vector<String>(10,5);
     private Vector<Integer>applicantContact=new Vector<Integer>(10,5);
 
+    private 
+    private DefaultListModel<JPanel> modelList;
+
     public void addUsername(String role, String username) throws Exception{
         if(role=="HR"){this.HRUsername.add(username);}
         else if(role=="manager"){this.managerUsername.add(username);}
@@ -38,5 +41,8 @@ public class Storage {
         this.applicantContact.add(contact);
     }
 
+    public ListModel getListModel(){
+        return
+    }
 
 }
