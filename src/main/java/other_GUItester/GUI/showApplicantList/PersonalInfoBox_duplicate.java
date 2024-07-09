@@ -12,7 +12,8 @@ import java.awt.event.MouseEvent;
 public class PersonalInfoBox_duplicate extends JPanel {
     private StaffConsole console;
 
-    public PersonalInfoBox_duplicate(int index,String name,String email,int contact) {
+    //REPLACE WITH DATA GOTTEN FROM CONTROLLER!!!!!!!!!!!!!!!!
+    public PersonalInfoBox_duplicate(ApplicantData app) {
         this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
         this.setMinimumSize(new Dimension(Integer.MAX_VALUE, 100));
         this.setPreferredSize(new Dimension(Integer.MAX_VALUE, 100));
@@ -39,7 +40,7 @@ public class PersonalInfoBox_duplicate extends JPanel {
                 new Insets(0, 0, 5, 5), 0, 0));
 
         //INDEX//
-        JLabel indexLabel = new JLabel(Integer.toString(index));
+        JLabel indexLabel = new JLabel(Integer.toString(app.getIndex()));
         GridBagConstraints gbc_indexLabel = new GridBagConstraints();
         gbc_indexLabel.insets = new Insets(0, 0, 5, 0);
         gbc_indexLabel.gridx = 0;
@@ -51,20 +52,20 @@ public class PersonalInfoBox_duplicate extends JPanel {
         // Insets insets, int ipadx, int ipady)
 
         //NAME//
-        JLabel nameLabel = new JLabel(name);
+        JLabel nameLabel = new JLabel(app.getName());
         GridBagConstraints gbc_name=new GridBagConstraints(0, 1, 1, 1, 1, 0,
                 GridBagConstraints.WEST, GridBagConstraints.BOTH,
                 new Insets(0, 0, 5, 2), 0, 0);
         textHolder.add(nameLabel, gbc_name);
 
         //EMAIL//
-        JLabel emailLabel = new JLabel(email);
+        JLabel emailLabel = new JLabel(app.getEmail());
         GridBagConstraints gbc_Email=new GridBagConstraints(0, 2, 1, 1, 1, 0,
                 GridBagConstraints.WEST, GridBagConstraints.BOTH,
                 new Insets(0, 0, 5, 2), 0, 0);
         textHolder.add(emailLabel, gbc_Email);
 
-        JLabel numberLabel = new JLabel(Integer.toString(contact));
+        JLabel numberLabel = new JLabel(Integer.toString(app.getContact()));
         GridBagConstraints gbc_Number=new GridBagConstraints(0, 3, 1, 1, 0,0,
                 GridBagConstraints.WEST, GridBagConstraints.BOTH,
                 new Insets(0, 0, 2, 2), 0, 0);

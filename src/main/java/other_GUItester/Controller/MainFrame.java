@@ -10,22 +10,23 @@ import GUI;
 import com.formdev.flatlaf.FlatDarkLaf;
 
 import other_GUItester.GUI.AdminLogin;
-import other_GUItester.GUI.StaffConsole
+import other_GUItester.GUI.StaffConsole;
 //import GUI.RegUserScren;
-import GUI.TestPanel;
-import GUI.option1test;
+//import GUI.TestPanel;
+//import GUI.option1test;
 
 public class MainFrame extends JFrame {
 
     private CardLayout card;
-    //public Controller controller;
-    public TestPanel testPanel;
+    public Controller cont;
+    //public TestPanel testPanel;
 
     int screenWidth;
     int screenHeight;
 
 
-    public MainFrame(){
+    public MainFrame(Controller cont){
+        this.cont = cont;
         FlatDarkLaf.setup();
         screenWidth=640;
         screenHeight=360;
@@ -97,6 +98,10 @@ public class MainFrame extends JFrame {
         option1test wtf= new option1test(this);
         this.add(wtf,"gg");
         this.card.show(this.getContentPane(),"gg");
+    }
+
+    public Controller getController(){
+        return cont;
     }
 
 	/*public void getScreenSize(){

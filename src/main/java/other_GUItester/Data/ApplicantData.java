@@ -1,15 +1,20 @@
 package other_GUItester.Data;
 
 public class ApplicantData {
+    public int index;
     public String name;
     public String email;
     public int contact;
 
-    public ApplicantData(String n,String e,int c) {
+    public ApplicantData(int i, String n,String e,int c) {
+        this.index=i;
         this.name=n;
         this.email=e;
         this.contact=c;
     }
+
+    public int getIndex(){return index;}
+    public void setIndex(int i){this.index=i;}
 
     public String getName(){return name;}
     public void setName(String n){this.name=n;}
