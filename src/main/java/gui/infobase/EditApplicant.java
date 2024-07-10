@@ -1,16 +1,17 @@
-package GUI.Infobase;
+package gui.infobase;
 
-import Data.Applicant;
-import Data.ApplicantExperience;
-import GUI.ImageEmbedded;
-import GUI.JPanelImageButton;
+import controller.InfobaseMainframe;
+import data.Applicant;
+import data.ApplicantExperience;
+import gui.ImageEmbedded;
+import gui.JPanelImageButton;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.Year;
 
 public class EditApplicant extends JPanel {
-    InfobaseMainframe infobaseMainframe;
+    InfobaseMainframe main;
     Applicant applicant;
     JPanel picturePanel;
     JPanel detailsPanel;
@@ -53,14 +54,13 @@ public class EditApplicant extends JPanel {
     JComboBox<String> endYearComboBox;
     JPanel updateChangesPanel;
 
-    EditApplicant(Applicant applicant, InfobaseMainframe infobaseMainframe) {
+    public EditApplicant(Applicant applicant, InfobaseMainframe main) {
         this.applicant = applicant;
-        this.infobaseMainframe = infobaseMainframe;
+        this.main = main;
         initComponents();
     }
 
-    //TODO update all the getter methods such that they call the mainframe and then the controller and then the applicant method (damn MVC is so fucking stupid)
-    // I also might simplifiy all of this code with BoxLayout instead of GridBagLayout since there is no need for flexibility
+
     private void initComponents() {
 
         this.setVisible(true);
@@ -76,14 +76,14 @@ public class EditApplicant extends JPanel {
 
         //START INNER COMPONENTS
         {
-            applicantImageButton = new JButton(new ImageIcon(applicant.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH)));
+            applicantImageButton = new JButton(new ImageIcon(main.getController().getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH)));
             GridBagConstraints applicantImageButtonConstraints = new GridBagConstraints(
                     0, 0, 1, 1, 0, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.BOTH,
                     new Insets(0, 0, 5, 0), 0, 0);
             picturePanel.add(applicantImageButton, applicantImageButtonConstraints);
 
-            imageRemoveButton = new JButton("Remove image");
+            imageRemoveButton = new JButton(main.getLocale("EditApplicant.JButton.removeImage"));
             imageRemoveButton.setFont(imageRemoveButton.getFont().deriveFont(18f));
             GridBagConstraints imageRemoveButtonConstraints = new GridBagConstraints(
                     0, 1, 1, 1, 0, 0,
@@ -103,7 +103,7 @@ public class EditApplicant extends JPanel {
 
         //START INNER COMPONENTS
         {
-            applicantNameLabel = new JLabel("Applicant Name:");
+            applicantNameLabel = new JLabel(main.getLocale("EditApplicant.JLabel.applicant_name"));
             applicantNameLabel.setFont(applicantNameLabel.getFont().deriveFont(18f));
             applicantNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
             GridBagConstraints applicantNameLabelConstraints = new GridBagConstraints(
@@ -113,7 +113,7 @@ public class EditApplicant extends JPanel {
             detailsPanel.add(applicantNameLabel, applicantNameLabelConstraints);
 
             applicantNameField = new JTextField();
-            applicantNameField.setText(applicant.getName());
+            applicantNameField.setText(main.getController().getName());
             applicantNameField.setFont(applicantNameField.getFont().deriveFont(18f));
             GridBagConstraints applicantNameFieldConstraints = new GridBagConstraints(
                     0, 1, 1, 1, 0, 0,
@@ -121,7 +121,7 @@ public class EditApplicant extends JPanel {
                     new Insets(0, 0, 5, 0), 0, 0);
             detailsPanel.add(applicantNameField, applicantNameFieldConstraints);
 
-            applicantBirthday = new JLabel("Birthday:");
+            applicantBirthday = new JLabel(main.getLocale("EditApplicant.JLabel.birth_date"));
             applicantNameLabel.setFont(applicantNameLabel.getFont().deriveFont(18f));
             applicantBirthday.setHorizontalAlignment(SwingConstants.LEFT);
             GridBagConstraints applicantBirthdayConstraints = new GridBagConstraints(
@@ -171,7 +171,7 @@ public class EditApplicant extends JPanel {
             //END INNER COMPONENTS
             detailsPanel.add(birthdayPanel, birthdayPanelConstraints);
 
-            applicantNricLabel = new JLabel("NRIC:");
+            applicantNricLabel = new JLabel(main.getLocale("EditApplicant.JLabel.nric"));
             applicantNricLabel.setFont(applicantNricLabel.getFont().deriveFont(18f));
             applicantNricLabel.setHorizontalAlignment(SwingConstants.LEFT);
             GridBagConstraints applicantNricLabelConstraints = new GridBagConstraints(
@@ -181,7 +181,7 @@ public class EditApplicant extends JPanel {
             detailsPanel.add(applicantNricLabel, applicantNricLabelConstraints);
 
             applicantNricField = new JTextField();
-            applicantNricField.setText(applicant.getNRIC());
+            applicantNricField.setText(main.getController().getNRIC());
             applicantNricField.setFont(applicantNricField.getFont().deriveFont(18f));
             GridBagConstraints applicantNricFieldConstraints = new GridBagConstraints(
                     0, 5, 1, 1, 0, 0,
@@ -189,7 +189,7 @@ public class EditApplicant extends JPanel {
                     new Insets(0, 0, 5, 0), 0, 0);
             detailsPanel.add(applicantNricField, applicantNricFieldConstraints);
 
-            applicantEmail = new JLabel("Email:");
+            applicantEmail = new JLabel(main.getLocale("EditApplicant.JLabel.email"));
             applicantEmail.setFont(applicantEmail.getFont().deriveFont(18f));
             applicantEmail.setHorizontalAlignment(SwingConstants.LEFT);
             GridBagConstraints applicantEmailConstraints = new GridBagConstraints(
@@ -199,7 +199,7 @@ public class EditApplicant extends JPanel {
             detailsPanel.add(applicantEmail, applicantEmailConstraints);
 
             applicantEmailField = new JTextField();
-            applicantEmailField.setText(applicant.getEmail());
+            applicantEmailField.setText(main.getController().getEmail());
             applicantEmailField.setFont(applicantEmailField.getFont().deriveFont(18f));
             GridBagConstraints applicantEmailFieldConstraints = new GridBagConstraints(
                     0, 7, 1, 1, 0, 0,
@@ -207,7 +207,7 @@ public class EditApplicant extends JPanel {
                     new Insets(0, 0, 5, 0), 0, 0);
             detailsPanel.add(applicantEmailField, applicantEmailFieldConstraints);
 
-            applicantGenderLabel = new JLabel("Gender:");
+            applicantGenderLabel = new JLabel(main.getLocale("EditApplicant.JLabel.gender"));
             applicantGenderLabel.setFont(applicantGenderLabel.getFont().deriveFont(18f));
             applicantGenderLabel.setHorizontalAlignment(SwingConstants.LEFT);
             GridBagConstraints applicantGenderLabelConstraints = new GridBagConstraints(
@@ -238,7 +238,7 @@ public class EditApplicant extends JPanel {
                     new Insets(0, 0, 5, 0), 0, 0);
             detailsPanel.add(applicantGenderComboBox, applicantGenderComboBoxConstraints);
 
-            skillsLabel = new JLabel("Skills:");
+            skillsLabel = new JLabel(main.getLocale("EditApplicant.JLabel.skills"));
             skillsLabel.setFont(skillsLabel.getFont().deriveFont(18f));
             skillsLabel.setHorizontalAlignment(SwingConstants.LEFT);
             GridBagConstraints skillsLabelConstraints = new GridBagConstraints(
@@ -267,7 +267,7 @@ public class EditApplicant extends JPanel {
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(5, 0, 0, 0), 0, 0);
             {
-                addSkillButton = new JButton("Add");
+                addSkillButton = new JButton(main.getLocale("EditApplicant.JButton.add"));
                 addSkillButton.setFont(addSkillButton.getFont().deriveFont(18f));
                 addSkillButton.setHorizontalAlignment(SwingConstants.CENTER);
                 GridBagConstraints addSkillButtonConstraints = new GridBagConstraints(0, 0, 1, 1, 0, 0,
@@ -275,14 +275,14 @@ public class EditApplicant extends JPanel {
                         new Insets(0, 0, 5, 0), 0, 0);
                 skillsButtonPanel.add(addSkillButton, addSkillButtonConstraints);
 
-                removeSkillButton = new JButton("Remove");
+                removeSkillButton = new JButton(main.getLocale("EditApplicant.JButton.remove"));
                 removeSkillButton.setFont(removeSkillButton.getFont().deriveFont(18f));
                 GridBagConstraints removeSkillButtonConstraints = new GridBagConstraints(1, 0, 1, 1, 0, 0,
                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                         new Insets(0, 0, 5, 0), 0, 0);
                 skillsButtonPanel.add(removeSkillButton, removeSkillButtonConstraints);
 
-                editSkillButton = new JButton("Edit");
+                editSkillButton = new JButton(main.getLocale("EditApplicant.JButton.edit"));
                 editSkillButton.setFont(editSkillButton.getFont().deriveFont(18f));
                 GridBagConstraints editSkillButtonConstraints = new GridBagConstraints(2, 0, 1, 1, 0, 0,
                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -298,7 +298,7 @@ public class EditApplicant extends JPanel {
             }
             detailsPanel.add(skillsButtonPanel, skillsButtonPanelConstraints);
 
-            applicantExperience = new JLabel("Experience:");
+            applicantExperience = new JLabel(main.getLocale("EditApplicant.JLabel.experiences"));
             applicantExperience.setFont(applicantExperience.getFont().deriveFont(18f));
             applicantExperience.setHorizontalAlignment(SwingConstants.LEFT);
             GridBagConstraints applicantExperienceConstraints = new GridBagConstraints(0, 13, 1, 1, 0, 0,
@@ -328,7 +328,7 @@ public class EditApplicant extends JPanel {
                     new Insets(0, 0, 5, 0), 0, 0);
 
             {
-                addApplicantExperienceButton = new JButton("Add");
+                addApplicantExperienceButton = new JButton(main.getLocale("EditApplicant.JButton.add"));
                 addApplicantExperienceButton.setFont(addApplicantExperienceButton.getFont().deriveFont(18f));
                 addApplicantExperienceButton.setHorizontalAlignment(SwingConstants.CENTER);
                 GridBagConstraints addApplicantExperienceConstraints = new GridBagConstraints(0, 0, 1, 1, 0, 0,
@@ -336,7 +336,7 @@ public class EditApplicant extends JPanel {
                         new Insets(0, 0, 5, 0), 0, 0);
                 applicantExperiencesButtonPanel.add(addApplicantExperienceButton, addApplicantExperienceConstraints);
 
-                removeApplicantExperienceButton = new JButton("Remove");
+                removeApplicantExperienceButton = new JButton(main.getLocale("EditApplicant.JButton.remove"));
                 removeApplicantExperienceButton.setFont(removeApplicantExperienceButton.getFont().deriveFont(18f));
                 removeApplicantExperienceButton.setHorizontalAlignment(SwingConstants.CENTER);
                 GridBagConstraints removeApplicantExperienceConstraints = new GridBagConstraints(1, 0, 1, 1, 0, 0,
@@ -344,7 +344,7 @@ public class EditApplicant extends JPanel {
                         new Insets(0, 0, 5, 0), 0, 0);
                 applicantExperiencesButtonPanel.add(removeApplicantExperienceButton, removeApplicantExperienceConstraints);
 
-                editApplicantExperienceButton = new JButton("Edit");
+                editApplicantExperienceButton = new JButton(main.getLocale("EditApplicant.JButton.edit"));
                 editApplicantExperienceButton.setFont(editApplicantExperienceButton.getFont().deriveFont(18f));
                 editApplicantExperienceButton.setHorizontalAlignment(SwingConstants.CENTER);
                 GridBagConstraints editApplicantExperienceConstraints = new GridBagConstraints(2, 0, 1, 1, 0, 0,
@@ -354,7 +354,7 @@ public class EditApplicant extends JPanel {
             }
             detailsPanel.add(applicantExperiencesButtonPanel, applicantExperiencesPanelConstraints);
 
-            companyLabel = new JLabel("Company:");
+            companyLabel = new JLabel(main.getLocale("EditApplicant.JLabel.company"));
             companyLabel.setFont(companyLabel.getFont().deriveFont(18f));
             companyLabel.setHorizontalAlignment(SwingConstants.LEFT);
             GridBagConstraints companyLabelConstraints = new GridBagConstraints(0, 16, 1, 1, 0, 0,
@@ -369,7 +369,7 @@ public class EditApplicant extends JPanel {
                     new Insets(0, 0, 5, 0), 0, 0);
             detailsPanel.add(companyField, companyFieldConstraints);
 
-            positionLabel = new JLabel("Position:");
+            positionLabel = new JLabel(main.getLocale("EditApplicant.JLabel.position"));
             positionLabel.setFont(positionLabel.getFont().deriveFont(18f));
             positionLabel.setHorizontalAlignment(SwingConstants.LEFT);
             GridBagConstraints positionLabelConstraints = new GridBagConstraints(0, 18, 1, 1, 0, 0,
@@ -418,13 +418,13 @@ public class EditApplicant extends JPanel {
                 GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
                 new Insets(0, 0, 5, 0), 0, 0);
         {
-            JPanelImageButton saveChangesButton = new JPanelImageButton("Accept Changes", ImageEmbedded.SAVE_CHANGES, ImageEmbedded.SAVE_CHANGES_COLOURED, 60, 60, JPanelImageButton.LEFT);
+            JPanelImageButton saveChangesButton = new JPanelImageButton(main.getLocale("EditApplicant.JButton.save_changes"), ImageEmbedded.SAVE_CHANGES, ImageEmbedded.SAVE_CHANGES_COLOURED, 60, 60, JPanelImageButton.LEFT);
             GridBagConstraints saveChangesConstraints = new GridBagConstraints(0, 0, 1, 1, 0, 0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 5, 0), 0, 0);
             updateChangesPanel.add(saveChangesButton, saveChangesConstraints);
 
-            JPanelImageButton discardChangesButton = new JPanelImageButton("Discard Changes", ImageEmbedded.DISCARD_CHANGES, ImageEmbedded.DISCARD_CHANGES_COLOURED, 60, 60, JPanelImageButton.LEFT);
+            JPanelImageButton discardChangesButton = new JPanelImageButton(main.getLocale("EditApplicant.JLabel.discard_changes"), ImageEmbedded.DISCARD_CHANGES, ImageEmbedded.DISCARD_CHANGES_COLOURED, 60, 60, JPanelImageButton.LEFT);
             GridBagConstraints discardChangesConstraints = new GridBagConstraints(0, 1, 1, 1, 0, 0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 5, 0), 0, 0);
@@ -432,11 +432,14 @@ public class EditApplicant extends JPanel {
         }
         this.add(updateChangesPanel, updateChangesPanelConstraints);
 
+        addSkillButton.addActionListener(e -> main.getController().addSkill(editSkillTextField.getText()));
+
+
     }
 
     private DefaultListModel<String> getSkillsModel(){
         DefaultListModel<String> skillsModel = new DefaultListModel<>();
-        for (String skill : applicant.getSkills()){
+        for (String skill : main.getController().getSkills()){
             skillsModel.addElement(skill);
         }
         return skillsModel;
@@ -444,11 +447,12 @@ public class EditApplicant extends JPanel {
 
     private DefaultListModel<String> getApplicantExperienceModel(){
         DefaultListModel<String> applicantExperienceModel = new DefaultListModel<>();
-        for (ApplicantExperience experience : applicant.getExperiences()){
+        for (ApplicantExperience experience : main.getController().getExperiences()){
             applicantExperienceModel.addElement(experience.toString());
         }
         return applicantExperienceModel;
     }
+
 
 
 }

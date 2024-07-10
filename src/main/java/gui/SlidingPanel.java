@@ -1,6 +1,6 @@
-package GUI;
+package gui;
 
-import GUI.Registration.RegistrationMainframe;
+import controller.RegistrationMainframe;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,23 +19,46 @@ public abstract class SlidingPanel extends JPanel {
     protected int loopCycles = 0;
 
 
-    //TODO Clean up template the sliding animation codes into each of these functions, additionally, group left and right sliding in/out functions together, or even all four functions together if possible
+    /**
+     * Animates the sliding of a panel from the left side into view.
+     * This method triggers the slideAnimation method with the direction set to LEFT and action set to IN.
+     */
+
     public void slideInLeft() {
         slideAnimation(LEFT, IN);
     }
+
+    /**
+     * Animates the sliding of a panel from the right side into view.
+     * This method triggers the slideAnimation method with the direction set to RIGHT and action set to IN.
+     */
 
     public void slideInRight() {
         slideAnimation(RIGHT, IN);
     }
 
+    /**
+     * Animates the sliding of a panel towards the left side to hide it.
+     * This method triggers the slideAnimation method with the direction set to LEFT and action set to OUT.
+     */
     public void slideOutLeft() {
         slideAnimation(LEFT, OUT);
     }
 
+    /**
+     * Animates the sliding of a panel towards the right side to hide it.
+     * This method triggers the slideAnimation method with the direction set to RIGHT and action set to OUT.
+     */
     public void slideOutRight() {
         slideAnimation(RIGHT, OUT);
     }
 
+    /**
+     * Performs a slide animation for the panel based on the specified direction and action.
+     *
+     * @param direction The direction of the slide animation (LEFT or RIGHT).
+     * @param going The action of the slide animation (IN or OUT).
+     */
     void slideAnimation(int direction, float going){
         assert (going == IN || going == OUT) && (direction == LEFT || direction == RIGHT);
         final int[] positionalOffset = new int[1];
@@ -88,10 +111,18 @@ public abstract class SlidingPanel extends JPanel {
             }
         }).start();
     }
-
+    /**
+     * Updates the animation of the panel during the sliding process.
+     */
     protected void updateAnimation(){
 
     }
+    /**
+     * Sets the activation status of buttons within the panel.
+     *
+     * @param activated A boolean value indicating whether the buttons should be activated or deactivated.
+     */
+    // rather useless function if your buttons are not in the main sliding panel, might rewrite it with recursion
     protected void setButtonsActivated(boolean activated){
         for (Component component : this.getComponents()){
             if (component instanceof JButton){
@@ -99,6 +130,11 @@ public abstract class SlidingPanel extends JPanel {
             }
         }
     }
+    /**
+     * Calculates the starting position for the slide animation.
+     *
+     * @return The calculated starting position for the slide animation.
+     */
     private int getStartPos(){
         int startPos = 0;
         for (int i = 0; i < 40; ++i ){

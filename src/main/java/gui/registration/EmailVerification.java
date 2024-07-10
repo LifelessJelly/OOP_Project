@@ -1,7 +1,8 @@
-package GUI.Registration;
+package gui.registration;
 
-import Controller.ParallelEmailSequnce;
-import GUI.SlidingPanel;
+import controller.ParallelEmailSequnce;
+import controller.RegistrationMainframe;
+import gui.SlidingPanel;
 
 import javax.swing.*;
 import javax.swing.text.PlainDocument;

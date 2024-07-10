@@ -1,6 +1,7 @@
-package GUI.Registration;
+package gui.registration;
 
-import GUI.SlidingPanel;
+import controller.RegistrationMainframe;
+import gui.SlidingPanel;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -42,7 +43,7 @@ public class BasicUserInfo extends SlidingPanel {
     private GridBagConstraints headerConstraints;
     private JPanel dateStuffPanel;
 
-    BasicUserInfo(RegistrationMainframe registrationMainframe) {
+    public BasicUserInfo(RegistrationMainframe registrationMainframe) {
         this.registrationMainframe = registrationMainframe;
         intiComponents();
     }

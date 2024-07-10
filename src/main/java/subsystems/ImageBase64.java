@@ -1,4 +1,4 @@
-package Subsystems;
+package subsystems;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -10,6 +10,13 @@ import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 
 public class ImageBase64 {
+    /**
+     * Converts an image file to a Base64 encoded string.
+     *
+     * @param pathToImage the path to the image file to be converted
+     * @return a Base64 encoded string representing the image
+     * @throws RuntimeException if there are any issues during the conversion process
+     */
     public static String imageToBase64(String pathToImage) {
         BufferedImage image;
         ImageIO.setUseCache(false);
@@ -41,6 +48,13 @@ public class ImageBase64 {
         return Base64.getEncoder().encodeToString(bytes);
     }
 
+    /**
+     * Converts a Base64 encoded string back to an image.
+     *
+     * @param base64 the Base64 encoded string representing the image
+     * @return the BufferedImage decoded from the Base64 string
+     * @throws RuntimeException if there are any issues during the conversion process
+     */
     public static BufferedImage base64ToImage(String base64) {
         byte[] bytes = Base64.getDecoder().decode(base64);          //decodes image for usage
         try {

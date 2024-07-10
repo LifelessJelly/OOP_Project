@@ -1,6 +1,6 @@
-package Data;
+package data;
 
-import Subsystems.SHA256;
+import subsystems.SHA256;
 
 public class Admin {
 
