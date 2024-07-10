@@ -1,4 +1,4 @@
-package other_GUItester.Data;
+package Data;
 
 public class ApplicantData {
     public int index;
