@@ -1,10 +1,10 @@
-package Controller;
+package controller;
 
 
-import Data.Applicant;
-import Subsystems.FileContentEncryptor;
-import Subsystems.JsonReaderWriter;
-import Subsystems.SHA256;
+import data.Applicant;
+import subsystems.FileContentEncryptor;
+import subsystems.JsonReaderWriter;
+import subsystems.SHA256;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -26,11 +26,11 @@ public class ApplicantIO {
 
     }
 
-
     /**
+     * Writes the applicant information to a file in the specified directory after encrypting it.
      *
-     * @param applicant
-     * @param pathToDirectory
+     * @param applicant The Applicant object containing the information to be written.
+     * @param pathToDirectory The path to the directory where the file will be written.
      */
     public static void writeApplicant(Applicant applicant, String pathToDirectory) {
         try {
