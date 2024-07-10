@@ -14,6 +14,11 @@ public class Applicant{
     private final String[] skills;
     private final ApplicantMetadata applicantMetadata;
 
+    /**
+     * Constructs a new Applicant object by copying the details, previous experiences, skills, and metadata from another Applicant object.
+     *
+     * @param applicantToCopyFrom The Applicant object to copy the information from.
+     */
     public Applicant(Applicant applicantToCopyFrom){
         this.applicantDetails = new ApplicantDetails(applicantToCopyFrom.applicantDetails);
         this.applicantPrevExps = Arrays.copyOf(applicantToCopyFrom.applicantPrevExps, applicantToCopyFrom.applicantPrevExps.length);
@@ -21,7 +26,19 @@ public class Applicant{
         this.applicantMetadata = new ApplicantMetadata(applicantToCopyFrom.applicantMetadata);
     }
 
-
+    /**
+     * Constructs a new Applicant object with the specified details, skills, and previous experiences.
+     *
+     * @param name The name of the applicant.
+     * @param birthdate The birthdate of the applicant.
+     * @param age The age of the applicant.
+     * @param email The email address of the applicant.
+     * @param nric The National Registration Identity Card (NRIC) of the applicant.
+     * @param gender The gender of the applicant.
+     * @param imageBase64 The base64 encoded image of the applicant.
+     * @param skills The array of skills possessed by the applicant.
+     * @param applicantPrevExps The array of previous experiences of the applicant.
+     */
     public Applicant(String name, long birthdate, int age, String email, String nric, String gender, String imageBase64, String[] skills, ApplicantExperience[] applicantPrevExps) {
         this.skills = skills;
         this.applicantPrevExps = applicantPrevExps;
@@ -35,24 +52,6 @@ public class Applicant{
         applicantDetails.gender = gender;
         applicantDetails.imageBase64 = imageBase64;
     }
-//
-//    public void setDetails(String applicantName,
-//                           long birthdate,
-//                           int age,
-//                           String nationality,
-//                           String gender,
-//                           String NRIC_Fin_Passport,
-//                           String pathToImage,
-//                           String email)
-//    {
-//        applicantDetails.name = applicantName;
-//        applicantDetails.birthdate = birthdate;
-//        applicantDetails.age = age;
-//        applicantDetails.gender = gender;
-//        applicantDetails.NRIC_Fin_Passport = NRIC_Fin_Passport;
-//        applicantDetails.imageBase64 = ImageBase64.imageToBase64(pathToImage);
-//        applicantDetails.email = email;
-//    }
 
     public BufferedImage getImage(){
         return ImageBase64.base64ToImage(applicantDetails.imageBase64);
@@ -95,6 +94,10 @@ public class Applicant{
         private String imageBase64;
         private String email;
 
+        /**
+         * Default constructor for creating an empty ApplicantDetails object.
+         * Initializes all fields to default values.
+         */
         private ApplicantDetails() {
             this.name = "";
             this.birthdate = 0;
@@ -105,6 +108,11 @@ public class Applicant{
             this.email = "";
         }
 
+        /**
+         * Constructs a new ApplicantDetails object by copying the details from another ApplicantDetails object.
+         *
+         * @param applicantDetailsToCopyFrom The ApplicantDetails object to copy the information from.
+         */
         private ApplicantDetails(ApplicantDetails applicantDetailsToCopyFrom) {
             this.name = applicantDetailsToCopyFrom.name;
             this.birthdate = applicantDetailsToCopyFrom.birthdate;
@@ -124,13 +132,22 @@ public class Applicant{
         private boolean isAccepted;
         private final long interviewDate;
 
-        public ApplicantMetadata() {
+        /**
+         * Default constructor for creating an empty ApplicantMetadata object.
+         * Initializes fields with default values.
+         */
+        private ApplicantMetadata() {
             applicationDate = System.currentTimeMillis();
             isShortlisted = false;
             isAccepted = false;
             interviewDate = -1;
         }
 
+        /**
+         * Constructs a new ApplicantMetadata object by copying the metadata from another ApplicantMetadata object.
+         *
+         * @param applicantMetadataToCopyFrom The ApplicantMetadata object to copy the information from.
+         */
         private ApplicantMetadata(ApplicantMetadata applicantMetadataToCopyFrom) {
             this.applicationDate = applicantMetadataToCopyFrom.applicationDate;
             this.isShortlisted = applicantMetadataToCopyFrom.isShortlisted;
