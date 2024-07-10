@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -8,6 +8,13 @@ import java.util.Properties;
 
 public class EmailSender {
 
+    /**
+     * Initializes an EmailSender object with the specified email details and sends an email using SMTP.
+     *
+     * @param toEmail The recipient's email address.
+     * @param subject The subject of the email.
+     * @param body The body content of the email.
+     */
     public EmailSender(String toEmail, String subject, String body){
         final String fromEmail = "PrinceOfNigerianKingdom@outlook.com";
         final String password = "67805610_Steven";
@@ -31,6 +38,15 @@ public class EmailSender {
         sendEmail(session, toEmail, fromEmail, subject, body);
     }
 
+    /**
+     * Sends an email using the provided JavaMail Session with the specified email details.
+     *
+     * @param session The JavaMail Session object for sending the email.
+     * @param toEmail The recipient's email address.
+     * @param fromEmail The sender's email address.
+     * @param subject The subject of the email.
+     * @param body The body content of the email.
+     */
     private static void sendEmail(Session session, String toEmail, String fromEmail, String subject, String body){
         try
         {
