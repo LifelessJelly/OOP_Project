@@ -1,8 +1,8 @@
-package Controller;
+package controller;
 
-import Data.Applicant;
-import Data.ApplicantExperience;
-import Subsystems.ImageBase64;
+import data.Applicant;
+import data.ApplicantExperience;
+import subsystems.ImageBase64;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
