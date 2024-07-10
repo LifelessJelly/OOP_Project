@@ -1,10 +1,11 @@
-package Data;
+package data;
 
 //Class model implementation for applicants
 
-import Subsystems.ImageBase64;
+import subsystems.ImageBase64;
 
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 public class Applicant{
 
@@ -12,6 +13,13 @@ public class Applicant{
     private final ApplicantExperience[] applicantPrevExps;
     private final String[] skills;
     private final ApplicantMetadata applicantMetadata;
+
+    public Applicant(Applicant applicantToCopyFrom){
+        this.applicantDetails = new ApplicantDetails(applicantToCopyFrom.applicantDetails);
+        this.applicantPrevExps = Arrays.copyOf(applicantToCopyFrom.applicantPrevExps, applicantToCopyFrom.applicantPrevExps.length);
+        this.skills = Arrays.copyOf(applicantToCopyFrom.skills, applicantToCopyFrom.skills.length);
+        this.applicantMetadata = new ApplicantMetadata(applicantToCopyFrom.applicantMetadata);
+    }
 
 
     public Applicant(String name, long birthdate, int age, String email, String nric, String gender, String imageBase64, String[] skills, ApplicantExperience[] applicantPrevExps) {
@@ -75,6 +83,8 @@ public class Applicant{
     }
 
 
+
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private static class ApplicantDetails {
         private String name;
@@ -84,6 +94,26 @@ public class Applicant{
         private String nric;
         private String imageBase64;
         private String email;
+
+        private ApplicantDetails() {
+            this.name = "";
+            this.birthdate = 0;
+            this.age = 0;
+            this.gender = "";
+            this.nric = "";
+            this.imageBase64 = "";
+            this.email = "";
+        }
+
+        private ApplicantDetails(ApplicantDetails applicantDetailsToCopyFrom) {
+            this.name = applicantDetailsToCopyFrom.name;
+            this.birthdate = applicantDetailsToCopyFrom.birthdate;
+            this.age = applicantDetailsToCopyFrom.age;
+            this.gender = applicantDetailsToCopyFrom.gender;
+            this.nric = applicantDetailsToCopyFrom.nric;
+            this.imageBase64 = applicantDetailsToCopyFrom.imageBase64;
+            this.email = applicantDetailsToCopyFrom.email;
+        }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -92,13 +122,20 @@ public class Applicant{
         private final long applicationDate;
         private boolean isShortlisted;
         private boolean isAccepted;
-        private long interviewDate;
+        private final long interviewDate;
 
         public ApplicantMetadata() {
             applicationDate = System.currentTimeMillis();
             isShortlisted = false;
             isAccepted = false;
             interviewDate = -1;
+        }
+
+        private ApplicantMetadata(ApplicantMetadata applicantMetadataToCopyFrom) {
+            this.applicationDate = applicantMetadataToCopyFrom.applicationDate;
+            this.isShortlisted = applicantMetadataToCopyFrom.isShortlisted;
+            this.isAccepted = applicantMetadataToCopyFrom.isAccepted;
+            this.interviewDate = applicantMetadataToCopyFrom.interviewDate;
         }
     }
 }
