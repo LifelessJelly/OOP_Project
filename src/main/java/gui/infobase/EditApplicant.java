@@ -1,9 +1,10 @@
-package GUI.Infobase;
+package gui.infobase;
 
-import Data.Applicant;
-import Data.ApplicantExperience;
-import GUI.ImageEmbedded;
-import GUI.JPanelImageButton;
+import controller.InfobaseMainframe;
+import data.Applicant;
+import data.ApplicantExperience;
+import gui.ImageEmbedded;
+import gui.JPanelImageButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -53,7 +54,7 @@ public class EditApplicant extends JPanel {
     JComboBox<String> endYearComboBox;
     JPanel updateChangesPanel;
 
-    EditApplicant(Applicant applicant, InfobaseMainframe main) {
+    public EditApplicant(Applicant applicant, InfobaseMainframe main) {
         this.applicant = applicant;
         this.main = main;
         initComponents();
@@ -75,7 +76,7 @@ public class EditApplicant extends JPanel {
 
         //START INNER COMPONENTS
         {
-            applicantImageButton = new JButton(new ImageIcon(applicant.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH)));
+            applicantImageButton = new JButton(new ImageIcon(main.getController().getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH)));
             GridBagConstraints applicantImageButtonConstraints = new GridBagConstraints(
                     0, 0, 1, 1, 0, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.BOTH,
@@ -112,7 +113,7 @@ public class EditApplicant extends JPanel {
             detailsPanel.add(applicantNameLabel, applicantNameLabelConstraints);
 
             applicantNameField = new JTextField();
-            applicantNameField.setText(applicant.getName());
+            applicantNameField.setText(main.getController().getName());
             applicantNameField.setFont(applicantNameField.getFont().deriveFont(18f));
             GridBagConstraints applicantNameFieldConstraints = new GridBagConstraints(
                     0, 1, 1, 1, 0, 0,
@@ -180,7 +181,7 @@ public class EditApplicant extends JPanel {
             detailsPanel.add(applicantNricLabel, applicantNricLabelConstraints);
 
             applicantNricField = new JTextField();
-            applicantNricField.setText(applicant.getNRIC());
+            applicantNricField.setText(main.getController().getNRIC());
             applicantNricField.setFont(applicantNricField.getFont().deriveFont(18f));
             GridBagConstraints applicantNricFieldConstraints = new GridBagConstraints(
                     0, 5, 1, 1, 0, 0,
@@ -198,7 +199,7 @@ public class EditApplicant extends JPanel {
             detailsPanel.add(applicantEmail, applicantEmailConstraints);
 
             applicantEmailField = new JTextField();
-            applicantEmailField.setText(applicant.getEmail());
+            applicantEmailField.setText(main.getController().getEmail());
             applicantEmailField.setFont(applicantEmailField.getFont().deriveFont(18f));
             GridBagConstraints applicantEmailFieldConstraints = new GridBagConstraints(
                     0, 7, 1, 1, 0, 0,
@@ -431,11 +432,14 @@ public class EditApplicant extends JPanel {
         }
         this.add(updateChangesPanel, updateChangesPanelConstraints);
 
+        addSkillButton.addActionListener(e -> main.getController().addSkill(editSkillTextField.getText()));
+
+
     }
 
     private DefaultListModel<String> getSkillsModel(){
         DefaultListModel<String> skillsModel = new DefaultListModel<>();
-        for (String skill : applicant.getSkills()){
+        for (String skill : main.getController().getSkills()){
             skillsModel.addElement(skill);
         }
         return skillsModel;
@@ -443,7 +447,7 @@ public class EditApplicant extends JPanel {
 
     private DefaultListModel<String> getApplicantExperienceModel(){
         DefaultListModel<String> applicantExperienceModel = new DefaultListModel<>();
-        for (ApplicantExperience experience : applicant.getExperiences()){
+        for (ApplicantExperience experience : main.getController().getExperiences()){
             applicantExperienceModel.addElement(experience.toString());
         }
         return applicantExperienceModel;
