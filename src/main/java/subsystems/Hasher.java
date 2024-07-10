@@ -1,4 +1,4 @@
-package Subsystems;
+package subsystems;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
@@ -10,6 +10,13 @@ public class Hasher {
     public Hasher(boolean isHexRepresentation){
         this.isHexRepresented = isHexRepresentation;             //setting of hex representation bool?
     }
+
+    /**
+     * Hashes a given string using SHA-256 algorithm through multiple iterations.
+     *
+     * @param stringBeHashed the string to be hashed
+     * @return a byte array representing the hashed value of the input string
+     */
     public byte[] hashString(String stringBeHashed){
         String currentString = stringBeHashed;
         byte[] hashHolder = new byte[32];
@@ -31,7 +38,12 @@ public class Hasher {
         }
     }
 
-
+    /**
+     * Generates the SHA-256 hash output for a given string.
+     *
+     * @param string the input string to be hashed
+     * @return a byte array representing the SHA-256 hash of the input string
+     */
     private static byte[] getSHAOutput(String string)  {
         MessageDigest digest;
         try {
