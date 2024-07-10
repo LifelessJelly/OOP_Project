@@ -1,8 +1,9 @@
-package GUI.Registration;
+package gui.registration;
 
-import Data.Applicant;
-import GUI.SlidingPanel;
-import Subsystems.JsonReaderWriter;
+import controller.RegistrationMainframe;
+import data.Applicant;
+import gui.SlidingPanel;
+import subsystems.JsonReaderWriter;
 
 import javax.swing.*;
 import java.awt.*;
