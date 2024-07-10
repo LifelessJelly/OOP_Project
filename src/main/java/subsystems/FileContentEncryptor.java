@@ -1,4 +1,4 @@
-package Subsystems;
+package subsystems;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -14,6 +14,14 @@ import javax.crypto.NoSuchPaddingException;
 
 public class FileContentEncryptor {
     //Uses file location name to generate a hash for the secret key
+    /**
+     * Encrypts a given plaintext using AES encryption with a secret key derived from the file location name.
+     *
+     * @param plainText the plaintext to be encrypted
+     * @param toFileLocation the file location name used to generate the secret key
+     * @return a Base64 encoded string representing the encrypted plaintext
+     * @throws RuntimeException if there are any issues during the encryption process
+     */
     public static String encrypt(String plainText, String toFileLocation) {
         SecretKeySpec secretKeySpec = new SecretKeySpec(SHA256.getHasherByte().hashString(toFileLocation), "AES");
         Cipher cipher;
@@ -27,6 +35,14 @@ public class FileContentEncryptor {
             throw new RuntimeException(e);
         }
     }
+    /**
+     * Decrypts a given ciphertext using AES decryption with a secret key derived from the file location name.
+     *
+     * @param cipherText the ciphertext to be decrypted
+     * @param fromFileLocation the file location name used to generate the secret key
+     * @return the decrypted plaintext as a string
+     * @throws RuntimeException if there are any issues during the decryption process
+     */
     public static String decrypt(String cipherText, String fromFileLocation) {
         SecretKeySpec secretKeySpec = new SecretKeySpec(SHA256.getHasherByte().hashString(fromFileLocation), "AES");
         Cipher cipher;
