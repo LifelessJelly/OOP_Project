@@ -15,7 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import Controller.MainFrame;
+import controller.MainFrame;
 
 //options are as stands: shortlist, view shortlist, generate list, settings
 

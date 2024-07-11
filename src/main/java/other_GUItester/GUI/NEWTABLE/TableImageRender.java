@@ -1,14 +1,12 @@
 package other_GUItester.GUI.NEWTABLE;
 
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import Subsystems.ImageBase64;
+
+import subsystems.ImageBase64;
 public class TableImageRender extends JLabel implements TableCellRenderer {
     private ImageBase64 converter;
 

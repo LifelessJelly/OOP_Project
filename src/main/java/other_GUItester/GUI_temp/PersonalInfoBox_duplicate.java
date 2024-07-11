@@ -1,7 +1,7 @@
 package other_GUItester.GUI_temp;
 
-import Data.Applicant;
-import Subsystems.ImageBase64;
+import data.Applicant;
+import subsystems.ImageBase64;
 
 import javax.swing.*;
 import java.awt.*;

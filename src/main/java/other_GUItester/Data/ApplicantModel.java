@@ -1,11 +1,9 @@
 package other_GUItester.Data;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.swing.table.AbstractTableModel;
 
-import Data.Applicant;
 import other_GUItester.Data.ApplicantData;
 
 public class ApplicantModel extends AbstractTableModel{

@@ -7,7 +7,7 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.JPanel;
 
-import Controller.MainFrame;
+import controller.MainFrame;
 import java.awt.Color;
 
 public class option1test extends JPanel{

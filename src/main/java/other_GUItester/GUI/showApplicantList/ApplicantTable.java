@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import java.util.List;
 
-import Controller.MainFrame;
+import controller.MainFrame;
 //import other_GUItester.Data.AdminData;
 import other_GUItester.Data.ApplicantData;
 import other_GUItester.Data.ApplicantModel;

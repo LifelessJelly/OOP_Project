@@ -6,7 +6,7 @@ import java.awt.Insets;
 
 import javax.swing.JLabel;
 
-import GUI.Registration.SlidingPanel;
+import gui.registration.SlidingPanel;
 import other_GUItester.GUI_temp.MainFrame_other;
 
 import java.awt.event.ComponentAdapter;
