@@ -1,7 +1,9 @@
-package Data;
+package data;
 
-import Subsystems.SHA256;
+import subsystems.SHA256;
 
+//Redundant class
+@Deprecated
 public class Staff {
 
     public static final int ROOT = 0;

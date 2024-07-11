@@ -1,7 +1,7 @@
-package GUI;
+package gui;
 
-import Data.Applicant;
-import Subsystems.ImageBase64;
+import data.Applicant;
+import subsystems.ImageBase64;
 
 import javax.swing.*;
 import java.awt.*;

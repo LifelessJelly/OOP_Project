@@ -1,4 +1,4 @@
-package Subsystems;
+package subsystems;
 
 public class SHA256 {
     public static Hasher getHasherByte(){

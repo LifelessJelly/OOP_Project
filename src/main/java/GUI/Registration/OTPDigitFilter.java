@@ -1,4 +1,4 @@
-package GUI.Registration;
+package gui.registration;
 
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
