@@ -1,9 +1,9 @@
-package GUI.Registration;
+package controller;
 
-import Controller.RegistrationController;
-import GUI.SlidingPanel;
+import gui.SlidingPanel;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
+import gui.registration.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -158,6 +158,7 @@ public class RegistrationMainframe extends JFrame {
     }
     public void panelOutroLeft() { //go back one page
         if (panelIndex >= panels.size()) {
+            // debug message; it happened once and I don't know why
             System.out.println("Something has gone very wrong. Current panel index: " + panelIndex + ", Current panel size: " + panels.size() + ", Current Panel Objects: " + panels);
         }
         panels.get(panelIndex).slideOutLeft();
