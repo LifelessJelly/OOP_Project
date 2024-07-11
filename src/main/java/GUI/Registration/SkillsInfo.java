@@ -1,6 +1,7 @@
-package GUI.Registration;
+package gui.registration;
 
-import GUI.SlidingPanel;
+import controller.RegistrationMainframe;
+import gui.SlidingPanel;
 
 import javax.swing.*;
 import java.awt.*;

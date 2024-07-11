@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 public class ImageEmbedded {
     public static final String DEFAULT_APPLICANT_IMAGE = getDefaultApplicantImage();

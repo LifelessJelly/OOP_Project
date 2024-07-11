@@ -132,10 +132,6 @@ public class Applicant{
         private boolean isAccepted;
         private final long interviewDate;
 
-        /**
-         * Default constructor for creating an empty ApplicantMetadata object.
-         * Initializes fields with default values.
-         */
         private ApplicantMetadata() {
             applicationDate = System.currentTimeMillis();
             isShortlisted = false;
@@ -143,11 +139,6 @@ public class Applicant{
             interviewDate = -1;
         }
 
-        /**
-         * Constructs a new ApplicantMetadata object by copying the metadata from another ApplicantMetadata object.
-         *
-         * @param applicantMetadataToCopyFrom The ApplicantMetadata object to copy the information from.
-         */
         private ApplicantMetadata(ApplicantMetadata applicantMetadataToCopyFrom) {
             this.applicationDate = applicantMetadataToCopyFrom.applicationDate;
             this.isShortlisted = applicantMetadataToCopyFrom.isShortlisted;

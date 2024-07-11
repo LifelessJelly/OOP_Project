@@ -1,8 +1,8 @@
-package Controller;
+package controller;
 
-import Data.Applicant;
-import Data.ApplicantExperience;
-import Data.DataStorage;
+import data.Applicant;
+import data.ApplicantExperience;
+import data.DataStorage;
 
 public class RegistrationController {
     private final DataStorage datastorage;

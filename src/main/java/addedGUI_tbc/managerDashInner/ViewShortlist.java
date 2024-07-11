@@ -1,6 +1,6 @@
 package addedGUI_tbc.managerDashInner;
 
-import GUI.SlidingPanel;
+import gui.SlidingPanel;
 
 public class ViewShortlist extends SlidingPanel  {
 }

@@ -1,8 +1,9 @@
-package GUI.Registration;
+package gui.registration;
 
-import GUI.ImageEmbedded;
-import GUI.SlidingPanel;
-import Subsystems.ImageBase64;
+import controller.RegistrationMainframe;
+import gui.ImageEmbedded;
+import gui.SlidingPanel;
+import subsystems.ImageBase64;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;

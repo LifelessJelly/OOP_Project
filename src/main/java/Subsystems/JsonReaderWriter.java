@@ -1,4 +1,4 @@
-package Subsystems;
+package subsystems;
 
 import com.google.gson.Gson;
 
@@ -11,8 +11,9 @@ public class JsonReaderWriter {
      * Constructs an instance of a class model from the given input json string. If an invalid json string is given,
      * a default object of the passed in class will be created.
      * @param json The string in json format
-     * @param classType the class that the json text will model against
-     * @return the class generated from the json string
+     * @param classType the class type of the Java object to be created
+     * @return an instance of the specified class type populated with data from the JSON string
+     * @throws RuntimeException if there are any issues during the conversion process
      */
     public static <T> T jsonToModel(String json, Class<T> classType) {
         T t;

@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 public class ParallelEmailSequnce implements Runnable{
     private final String toEmail;

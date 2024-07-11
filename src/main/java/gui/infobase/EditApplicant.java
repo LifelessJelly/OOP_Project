@@ -57,6 +57,7 @@ public class EditApplicant extends JPanel {
     public EditApplicant(Applicant applicant, InfobaseMainframe main) {
         this.applicant = applicant;
         this.main = main;
+        this.main.getController().setApplicantInstance(applicant);
         initComponents();
     }
 
