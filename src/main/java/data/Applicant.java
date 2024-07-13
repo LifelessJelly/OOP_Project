@@ -5,6 +5,8 @@ package data;
 import subsystems.ImageBase64;
 
 import java.awt.image.BufferedImage;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Arrays;
 
 public class Applicant{
@@ -81,7 +83,48 @@ public class Applicant{
         return applicantPrevExps;
     }
 
+    public String getBirthdate() {
+        return LocalDate.ofEpochDay(applicantDetails.birthdate).toString();
+    }
+    public int getAge() {
+        return applicantDetails.age;
+    }
 
+    public String printDetails() {
+        LocalDate birthdate = LocalDate.ofEpochDay(applicantDetails.birthdate);
+        String skills = "";
+        String shortlistStatus = "";
+        for (String skill : this.skills){
+            skills = skill + " ";
+        }
+        if (applicantMetadata.isShortlisted){
+            shortlistStatus = "Shortlisted for interview";
+        }
+        else {
+            shortlistStatus = "Pending";
+        }
+
+        return "name: " + applicantDetails.name + '\n' +
+                "birthdate: " + birthdate + '\n' +
+                "age: " + applicantDetails.age + '\n' +
+                "email: " + applicantDetails.email + '\n' +
+                "NRIC: " + applicantDetails.nric + '\n' +
+                "gender: " + applicantDetails.gender + '\n' +
+                "Skills" + skills + '\n' +
+                "Shortlist status: " + shortlistStatus + '\n' +
+                "Acceptance status";
+    }
+
+    public boolean isShortlisted() {
+        return applicantMetadata.isShortlisted;
+    }
+    public boolean isAccepted(){
+        return applicantMetadata.isAccepted;
+    }
+
+    public String getGender() {
+        return applicantDetails.gender;
+    }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
