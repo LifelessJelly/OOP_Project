@@ -44,7 +44,7 @@ public class ApplicantIO {
     }
 
 
-    private static String readFile(String pathToFile) {
+    public static String readFile(String pathToFile) {
         try {
             return new String(Files.readAllBytes(Paths.get(pathToFile)));
         } catch (IOException e) {
