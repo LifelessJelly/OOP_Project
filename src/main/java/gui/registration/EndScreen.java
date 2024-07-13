@@ -4,9 +4,13 @@ import controller.RegistrationMainframe;
 import data.Applicant;
 import gui.SlidingPanel;
 import subsystems.JsonReaderWriter;
+import subsystems.SHA256;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
 
 public class EndScreen extends SlidingPanel {
     JLabel endLabel;
@@ -65,6 +69,14 @@ public class EndScreen extends SlidingPanel {
         printJsonButton.addActionListener(e -> {
             Applicant newApplicant = registrationMainframe.getController().createApplicant();
             System.out.println(JsonReaderWriter.modelToJson(newApplicant));
+            try {
+                try (FileWriter fileWriter = new FileWriter(System.getProperty("user.dir") + "\\" + new String(SHA256.getHasherHex().hashString(LocalDateTime.now().toString())) + "_Applicant.json")) {
+                    fileWriter.write(JsonReaderWriter.modelToJson(newApplicant));
+                }
+            }
+            catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         });
     }
 
