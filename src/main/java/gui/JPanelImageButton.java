@@ -51,7 +51,12 @@ public class JPanelImageButton extends JPanel{
         ImageIcon scaledImage = new ImageIcon(ImageBase64.base64ToImage(base64ImageOff).getScaledInstance(width, height, Image.SCALE_SMOOTH));
         invisibleButton = new InvisibleButton();
         JLabel imageLabel = new JLabel(scaledImage);
-        this.add(new JLabel(textDisplayed), textPosConstraints);
+        JLabel text = new JLabel(textDisplayed);
+        text.setMinimumSize(new Dimension(150, height));
+        text.setPreferredSize(new Dimension(150, height));
+        text.setFont(text.getFont().deriveFont(18f));
+        text.setHorizontalAlignment(SwingConstants.CENTER);
+        this.add(text, textPosConstraints);
         this.add(imageLabel, iconConstraints);
         this.add(invisibleButton, invisibleButtonConstraints);
         invisibleButton.setRolloverEnabled(true);
