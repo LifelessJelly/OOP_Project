@@ -4,6 +4,7 @@ import data.Applicant;
 import data.ApplicantExperience;
 import subsystems.ImageBase64;
 
+import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -53,8 +54,8 @@ public class ApplicantRegistrator {
         imageBase64 = ImageBase64.imageToBase64(pathToImage);
     }
 
-    public void registerImageFromBase64(String imageBase64) {
-        this.imageBase64 = imageBase64;
+    public void registerImageFromBase64(Image imageBase64) {
+        this.imageBase64 = ImageBase64.imageToBase64(imageBase64);
     }
 
     public Applicant createApplicant() {
