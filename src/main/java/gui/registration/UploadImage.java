@@ -139,7 +139,7 @@ public class UploadImage extends SlidingPanel {
 
             nextButton.addActionListener(e -> {
 
-                registrationMainframe.getController().registerImageBase64(imageBase64String);
+                registrationMainframe.getController().registerImageBase64(profileImage);
                 registrationMainframe.panelOutroRight();
             });
 
