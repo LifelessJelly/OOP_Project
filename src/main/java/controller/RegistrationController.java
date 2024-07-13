@@ -4,6 +4,8 @@ import data.Applicant;
 import data.ApplicantExperience;
 import data.DataStorage;
 
+import java.awt.*;
+
 public class RegistrationController {
     private final DataStorage datastorage;
     private final ApplicantRegistrator registrator;
@@ -53,9 +55,10 @@ public class RegistrationController {
         registrator.registerImageFromFile(pathToImage);
     }
 
-    public void registerImageBase64(String imageBase64) {
+    public void registerImageBase64(Image imageBase64) {
         registrator.registerImageFromBase64(imageBase64);
     }
+
 
     public Applicant createApplicant() {
         return registrator.createApplicant();
@@ -64,4 +67,5 @@ public class RegistrationController {
     public void registerAllSkills(String[] defaultSkills, String[] userDefinedSkills) {
         registrator.registerAllSkills(defaultSkills, userDefinedSkills);
     }
+
 }
