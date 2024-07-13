@@ -1,4 +1,4 @@
-package other_GUItester.GUI.NEWTABLE;
+package gui.infobase;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
@@ -6,13 +6,15 @@ import java.awt.*;
 
 public class TableCellRender extends JTextArea implements TableCellRenderer {
     public TableCellRender() {
-        setLineWrap(true);
-        setWrapStyleWord(true);
-        setOpaque(true);
-        setEditable(false);
+        this.setLineWrap(true);
+        this.setWrapStyleWord(true);
+        this.setOpaque(true);
+        this.setEditable(false);
+        this.setFont(this.getFont().deriveFont(16f));
+
     }
     @Override
-    public Component getTableCellRendererComponent(JTable table, Object value,boolean selected, boolean inFocus, int row, int column){
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean inFocus, int row, int column){
         setText(value.toString());
         setSize(table.getColumnModel().getColumn(column).getWidth(),
                 getPreferredSize().height);
@@ -25,7 +27,5 @@ public class TableCellRender extends JTextArea implements TableCellRenderer {
             setForeground(table.getForeground());
         }
         return this;
-
-
     }
 }
