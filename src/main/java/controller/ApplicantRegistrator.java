@@ -50,10 +50,6 @@ public class ApplicantRegistrator {
         applicantExperiences = experiences;
     }
 
-    public void registerImageFromFile(String pathToImage) {
-        imageBase64 = ImageBase64.imageToBase64(pathToImage);
-    }
-
     public void registerImageFromBase64(Image imageBase64) {
         this.imageBase64 = ImageBase64.imageToBase64(imageBase64);
     }

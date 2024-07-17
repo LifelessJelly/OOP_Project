@@ -3,7 +3,7 @@ package controller;
 import gui.SlidingPanel;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
-import gui.registration.*;
+import gui.applicant_registration.*;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,25 +1,10 @@
-package GUI;
+package gui.staff_portal;
 
 import javax.swing.*;
 import java.awt.*;
-
-
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-
-//import Controller.MainFrame;
 import javax.swing.ButtonGroup;
 
     public class LoginScreen extends JPanel{
@@ -123,10 +108,8 @@ import javax.swing.ButtonGroup;
             passwordField.setColumns(10);
 
             JButton btnLogin = new JButton("Login");
-            btnLogin.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent arg0) {
+            btnLogin.addActionListener(arg0 -> {
 
-                }
             });
             GridBagConstraints gbc_btnLogin = new GridBagConstraints();
             gbc_btnLogin.gridx = 0;
@@ -148,40 +131,36 @@ import javax.swing.ButtonGroup;
             gbc_lblValidTest.insets = new Insets(0, 0, 5, 5);
             add(lblValidTest, gbc_lblValidTest);
 
-            rdbtnHr.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent arg0) {
-                    rdbtnManager.setEnabled(true);
-                    rdbtnHr.setEnabled(false);
-                    lblLoginPage.setText("Login Page (HR):");
-                    usernameField.setEnabled(true);
-                    usernameField.setText(null);
-                    passwordField.setEnabled(true);
-                    passwordField.setText(null);
-                }
+            rdbtnHr.addActionListener(arg0 -> {
+                rdbtnManager.setEnabled(true);
+                rdbtnHr.setEnabled(false);
+                lblLoginPage.setText("Login Page (HR):");
+                usernameField.setEnabled(true);
+                usernameField.setText(null);
+                passwordField.setEnabled(true);
+                passwordField.setText(null);
             });
-            rdbtnManager.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent arg0) {
-                    rdbtnManager.setEnabled(false);
-                    rdbtnHr.setEnabled(true);
-                    lblLoginPage.setText("Login Page (Manager):");
-                    usernameField.setEnabled(true);
-                    usernameField.setText(null);
-                    passwordField.setEnabled(true);
-                    passwordField.setText(null);
-                }
+            rdbtnManager.addActionListener(arg0 -> {
+                rdbtnManager.setEnabled(false);
+                rdbtnHr.setEnabled(true);
+                lblLoginPage.setText("Login Page (Manager):");
+                usernameField.setEnabled(true);
+                usernameField.setText(null);
+                passwordField.setEnabled(true);
+                passwordField.setText(null);
             });
 
             //===COMPONENT LISTENER (WINDOW)===//
             addComponentListener(new ComponentAdapter() {
                 @Override
                 public void componentResized(ComponentEvent arg0) {
-                    int adjustedFontSizeTitle=(int)(getWidth()/25);
-                    int adjustedFontSizeBody=(int)(getWidth()/35);
+                    int adjustedFontSizeTitle= getWidth()/25;
+                    int adjustedFontSizeBody= getWidth()/35;
 
-                    Font bodyFont=new Font("Comic Sans MS", Font.PLAIN, (int)adjustedFontSizeBody);
+                    Font bodyFont=new Font("Comic Sans MS", Font.PLAIN, adjustedFontSizeBody);
                     Font smallBodyFont=new Font("Comic Sans MS", Font.PLAIN, (int)(Math.round(adjustedFontSizeBody*0.8)));
 
-                    lblLoginPage.setFont(new Font("Comic Sans MS", Font.BOLD, (int)adjustedFontSizeTitle));
+                    lblLoginPage.setFont(new Font("Comic Sans MS", Font.BOLD, adjustedFontSizeTitle));
                     lblUsername.setFont(bodyFont);
                     lblPassword.setFont(bodyFont);
                     lblValidTest.setFont(smallBodyFont);

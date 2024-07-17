@@ -51,10 +51,6 @@ public class RegistrationController {
         return registrator.getEmail();
     }
 
-    public void registerImageFromFile(String pathToImage){
-        registrator.registerImageFromFile(pathToImage);
-    }
-
     public void registerImageBase64(Image imageBase64) {
         registrator.registerImageFromBase64(imageBase64);
     }

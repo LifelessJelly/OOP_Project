@@ -5,27 +5,32 @@ import data.ApplicantExperience;
 import subsystems.JsonReaderWriter;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class InfobaseController {
     Applicant applicantInstance;
     Applicant tempApplicantToEdit;
-    private Applicant nathan;
-    private Applicant kwekXinJayden;
-    private Applicant shitKai;
-    private Applicant gtfoOng;
-    private Applicant bendTooLow;
+    List<Applicant> applicantList;
 
     public InfobaseController() {
-        String path = System.getProperty("user.dir") + "\\";
-//        nathan = JsonReaderWriter.jsonToModel(ApplicantIO.readFile(path + "875f20b07a408171d0b93af41dee737fc77bf7c4f34b8177899dfef17281e68f_Applicant.json"), Applicant.class);
-        kwekXinJayden = JsonReaderWriter.jsonToModel(ApplicantIO.readFile(path + "977518f927af3faed090be7f46c8f712b7f646751786d9ad00ed9523c8bae48e_Applicant.json"), Applicant.class);
-        nathan = new Applicant(kwekXinJayden);
-        shitKai = new Applicant(kwekXinJayden);
-        gtfoOng = new Applicant(kwekXinJayden);
-        bendTooLow = new Applicant(kwekXinJayden);
-//        shitKai = JsonReaderWriter.jsonToModel(ApplicantIO.readFile(path + "391357fad663d5e8eafc9346859b3a27c274701876072f9b1fd09873c3231af3_Applicant.json"), Applicant.class);
-//        gtfoOng = JsonReaderWriter.jsonToModel(ApplicantIO.readFile(path + "af35fa8902982ebc32407e2c72d36361795599bcb655637a91b551a3cff6d86_Applicant.json"), Applicant.class);
-//        bendTooLow = JsonReaderWriter.jsonToModel(ApplicantIO.readFile(path + "c9fb2d8aa22d1fd66fd6d84caba2934fbead977528c2d480263ea2b7a6948957_Applicant.json"), Applicant.class);
+        String path = System.getProperty("user.dir") + "\\" + "applicants";
+        applicantList = new ArrayList<>();
+        File dir = new File(path);
+        File[] files = dir.listFiles();
+        assert files != null;
+        for (File file : files) {
+            if (file.getName().endsWith(".json")) {
+                String json = ApplicantIO.readFile(file.getAbsolutePath());
+                Applicant applicant = JsonReaderWriter.jsonToModel(json, Applicant.class);
+                if (!applicant.getName().isEmpty()){
+
+                    applicantList.add(applicant);
+                }
+            }
+        }
+        System.out.println(applicantList.size());
     }
 
     public void setApplicantInstance(Applicant applicant){
@@ -76,6 +81,6 @@ public class InfobaseController {
     }
 
     public Applicant[] getApplicants() {
-        return new Applicant[]{kwekXinJayden, shitKai, gtfoOng, bendTooLow, nathan};
+        return applicantList.toArray(new Applicant[0]);
     }
 }

@@ -132,4 +132,5 @@ public final class TranslationTable {
     public String getTranslation(TranslationKey key) {
         return translationTable.get(key);
     }
+
 }

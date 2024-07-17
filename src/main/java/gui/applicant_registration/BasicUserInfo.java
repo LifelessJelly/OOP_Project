@@ -1,4 +1,4 @@
-package gui.registration;
+package gui.applicant_registration;
 
 import controller.RegistrationMainframe;
 import gui.SlidingPanel;

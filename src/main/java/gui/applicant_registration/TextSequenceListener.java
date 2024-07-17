@@ -1,4 +1,4 @@
-package gui.registration;
+package gui.applicant_registration;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;

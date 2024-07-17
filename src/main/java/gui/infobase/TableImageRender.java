@@ -1,6 +1,8 @@
 package gui.infobase;
 
 
+import data.Applicant;
+
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
@@ -17,9 +19,11 @@ public class TableImageRender extends JLabel implements TableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean selected,
                                                    boolean inFocus, int row, int column) {
-        if (value instanceof BufferedImage) { //if value is an instance of a String
+
+
+        if (value instanceof Applicant) { //if value is an instance of a String
             //BufferedImage image = ImageIO.read(new File((String) value));
-            BufferedImage image = (BufferedImage) value;
+            BufferedImage image = ((Applicant) value).getImage();
 
             //creating a new ImageIcon that is scaled to table width, height and set to smooth scaling
             ImageIcon iconScaled = new ImageIcon(image.getScaledInstance(
@@ -34,10 +38,11 @@ public class TableImageRender extends JLabel implements TableCellRenderer {
                 setForeground(table.getForeground());
 
             }
-
-            return this;
         }
-        throw new IllegalArgumentException("No image instance of class BufferedImage found");
+        else {
+            setIcon(null);
+        }
+        return this;
     }
 }
 
