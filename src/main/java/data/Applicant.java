@@ -22,7 +22,12 @@ public class Applicant{
      */
     public Applicant(Applicant applicantToCopyFrom){
         this.applicantDetails = new ApplicantDetails(applicantToCopyFrom.applicantDetails);
-        this.applicantPrevExps = Arrays.copyOf(applicantToCopyFrom.applicantPrevExps, applicantToCopyFrom.applicantPrevExps.length);
+        if (applicantToCopyFrom.applicantPrevExps != null) {
+            this.applicantPrevExps = Arrays.copyOf(applicantToCopyFrom.applicantPrevExps, applicantToCopyFrom.applicantPrevExps.length);
+        }
+        else {
+            this.applicantPrevExps = new ApplicantExperience[0];
+        }
         this.skills = Arrays.copyOf(applicantToCopyFrom.skills, applicantToCopyFrom.skills.length);
         this.applicantMetadata = new ApplicantMetadata(applicantToCopyFrom.applicantMetadata);
     }
