@@ -2,6 +2,7 @@ package data;
 
 import subsystems.SHA256;
 
+@Deprecated
 public class Admin {
 
     //======ACCESS LEVELS======//
