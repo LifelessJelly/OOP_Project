@@ -2,6 +2,7 @@ package gui.staff_portal;
 
 import com.formdev.flatlaf.ui.FlatLineBorder;
 import controller.LoginMainframe;
+import data.Staff;
 import gui.ImageEmbedded;
 import gui.StretchIcon;
 import subsystems.ImageBase64;
@@ -11,10 +12,16 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import javax.swing.ButtonGroup;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
-    public class LoginScreen extends JPanel {
+public class LoginScreen extends JPanel {
+        private final JButton loginButton;
         private LoginMainframe main;
-        private boolean isRegistering;
+        private boolean passwordIsFilled;
+        private boolean usernameIsFilled;
+        private boolean domainSelected;
+        private static final Color UNMET_REQUIREMENT_COLOUR = new Color(218, 67, 67);
 
         public LoginScreen(LoginMainframe main){
             this.main=main;
@@ -67,6 +74,10 @@ import javax.swing.ButtonGroup;
                     GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
                     new Insets(0, 10, 0, 0), 0, 0);
             domainPanel.add(HRButton, HRButtonConstraints);
+            HRButton.addActionListener(e -> {
+                domainSelected = true;
+                updateLoginButton();
+            });
 
             JRadioButton ManagerButton = new JRadioButton("Manager");
             ManagerButton.setOpaque(false);
@@ -76,6 +87,10 @@ import javax.swing.ButtonGroup;
                     GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
                     new Insets(0, 10, 0, 0), 0, 0);
             domainPanel.add(ManagerButton, ManagerButtonConstraints);
+            ManagerButton.addActionListener(e -> {
+                domainSelected = true;
+                updateLoginButton();
+            });
 
             GridBagConstraints domainPanelConstraints = new GridBagConstraints(0, 2, 1, 1, 1, 1,
                     GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
@@ -97,6 +112,23 @@ import javax.swing.ButtonGroup;
                     GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
                     new Insets(10, 75, 0, 0), 0, 0);
             loginPanel.add(usernameField, usernameFieldConstraints);
+            usernameField.getDocument().addDocumentListener(new DocumentListener() {
+                @Override
+                public void insertUpdate(DocumentEvent e) {
+                    removeUpdate(e);
+                }
+
+                @Override
+                public void removeUpdate(DocumentEvent e) {
+                    changedUpdate(e);
+                }
+
+                @Override
+                public void changedUpdate(DocumentEvent e) {
+                    usernameIsFilled = !usernameField.getText().isEmpty();
+                    updateLoginButton();
+                }
+            });
 
             JLabel passwordLabel = new JLabel("Password: ");
             passwordLabel.setFont(passwordLabel.getFont().deriveFont(18f));
@@ -113,8 +145,35 @@ import javax.swing.ButtonGroup;
                     GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
                     new Insets(10, 75, 0, 0), 0, 0);
             loginPanel.add(passwordField, passwordFieldConstraints);
+            passwordField.getDocument().addDocumentListener(new DocumentListener() {
 
-            JButton loginButton = new JButton("LOGIN");
+                @Override
+                public void insertUpdate(DocumentEvent e) {
+                    removeUpdate(e);
+                }
+
+                @Override
+                public void removeUpdate(DocumentEvent e) {
+                    changedUpdate(e);
+                }
+
+                @Override
+                public void changedUpdate(DocumentEvent e) {
+                    passwordIsFilled = passwordField.getPassword().length != 0;
+                    updateLoginButton();
+                }
+            });
+
+            JLabel badLoginWarnLabel = new JLabel("");
+            badLoginWarnLabel.setForeground(UNMET_REQUIREMENT_COLOUR);
+            GridBagConstraints badLoginWarnConstraints = new GridBagConstraints(0, 7, 1, 1, 1, 1,
+                    GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
+                    new Insets(10, 75, 0, 0), 0, 0);
+            loginPanel.add(badLoginWarnLabel, badLoginWarnConstraints);
+
+
+            loginButton = new JButton("LOGIN");
+            loginButton.setEnabled(false);
             loginButton.setBackground(new Color(56, 109, 255));
             loginButton.setForeground(Color.WHITE);
             loginButton.setBorder(new FlatLineBorder(new Insets(16, 16, 16, 16 ), new Color(255, 255, 255), -20, 90));
@@ -122,26 +181,48 @@ import javax.swing.ButtonGroup;
             loginButton.setPreferredSize(new Dimension(500, 50));
             loginButton.setFont(loginButton.getFont().deriveFont(20f));
             loginButton.setHorizontalAlignment(SwingConstants.CENTER);
-            GridBagConstraints loginButtonConstraints = new GridBagConstraints(0, 7, 1, 1, 1, 1,
+            GridBagConstraints loginButtonConstraints = new GridBagConstraints(0, 8, 1, 1, 1, 1,
                     GridBagConstraints.CENTER, GridBagConstraints.NONE,
                     new Insets(10, 0, 0, 0), 0, 0);
             loginPanel.add(loginButton, loginButtonConstraints);
             loginButton.addActionListener(e -> {
-                this.main.checkAuthorisation(usernameField.getText(), passwordField.getPassword());
-                passwordField.setText("");
+                int domainSelected = -1;
+                if (HRButton.isSelected()){
+                    domainSelected = Staff.HR;
+                }
+                else if (ManagerButton.isSelected()){
+                    domainSelected = Staff.MANAGER;
+                }
+                if (main.checkAuthorisation(usernameField.getText(), passwordField.getPassword(), domainSelected)) {
+                    usernameField.setText("");
+                    passwordField.setText("");
+                    badLoginWarnLabel.setText("");
+                }
+                else {
+                    badLoginWarnLabel.setText("Invalid username, password or domain");
+                    usernameField.setText("");
+                    passwordField.setText("");
+                    HRButton.setSelected(false);
+                    ManagerButton.setSelected(false);
+                }
             });
 
             JButton registerButton = new JButton("Not an registered employee? Click on me!");
             registerButton.setFont(registerButton.getFont().deriveFont(16f));
             registerButton.setBorder(BorderFactory.createEmptyBorder());
             registerButton.setHorizontalAlignment(SwingConstants.CENTER);
-            GridBagConstraints registerButtonConstraints = new GridBagConstraints(0, 8, 1, 1, 1, 1,
+            GridBagConstraints registerButtonConstraints = new GridBagConstraints(0, 9, 1, 1, 1, 1,
                     GridBagConstraints.CENTER, GridBagConstraints.NONE,
                     new Insets(10, 0, 0, 0), 0, 0);
             loginPanel.add(registerButton, registerButtonConstraints);
 
             registerButton.addActionListener(e -> {
                 main.showRegister();
+                usernameField.setText("");
+                passwordField.setText("");
+                HRButton.setSelected(false);
+                ManagerButton.setSelected(false);
+                domainSelected = false;
             });
 
             //===COMPONENT LISTENER (WINDOW)===//
@@ -168,15 +249,8 @@ import javax.swing.ButtonGroup;
             });
         }
 
-
-        @Override
-        protected void paintComponent(Graphics g) {
-
-        }
-
-        private void invokeButtonRepaint(){
-            this.revalidate();
-            this.repaint();
+        private void updateLoginButton(){
+            loginButton.setEnabled(passwordIsFilled && usernameIsFilled && domainSelected);
         }
 
     }
