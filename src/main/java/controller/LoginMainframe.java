@@ -35,8 +35,8 @@ public class LoginMainframe extends JFrame {
         cardLayout.show(this.getContentPane(), "RegisterScreen");
     }
 
-    public boolean checkAuthorisation(String username, char[] password){
-        if (!LoginController.verifyLogin(username, password)){
+    public boolean checkAuthorisation(String username, char[] password, int domain){
+        if (!LoginController.verifyLogin(username, password, domain)){
             return false;
         }
         this.dispose();
@@ -44,7 +44,7 @@ public class LoginMainframe extends JFrame {
         return true;
     }
 
-    public void registerStaff(){
-
+    public boolean registerStaff(String username, char[] password, int securityLevel){
+        return LoginController.registerNewStaff(username, password, securityLevel);
     }
 }
