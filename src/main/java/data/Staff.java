@@ -2,14 +2,12 @@ package data;
 
 import subsystems.SHA256;
 
-//Redundant class
-@Deprecated
+
 public class Staff {
 
     public static final int ROOT = 0;
-    public static final int ADMIN = 1;
-    public static final int MANAGER = 2;
-    public static final int HR = 3;
+    public static final int MANAGER = 1;
+    public static final int HR = 2;
 
     private final StaffCredentials staffCredentials;
     private final int securityLevel;
@@ -19,7 +17,6 @@ public class Staff {
             case ROOT:
             case MANAGER:
             case HR:
-            case ADMIN:
                 break;
             default:
                 throw new IllegalArgumentException("Invalid security level");
@@ -35,7 +32,6 @@ public class Staff {
             case ROOT:
             case MANAGER:
             case HR:
-            case ADMIN:
                 break;
             default:
                 throw new IllegalArgumentException("Invalid security level");
@@ -44,16 +40,20 @@ public class Staff {
     }
 
     //updates the staff credentials, creating a new String that has the hashed staff credentials
-    public void updateCredentials(String username, String password){
+    public void updateCredentials(String username, char[] password){
         staffCredentials.usernameHash = new String(SHA256.getHasherHex().hashString(username));
-        staffCredentials.passwordHash = new String(SHA256.getHasherHex().hashString(password));
+        staffCredentials.passwordHash = new String(SHA256.getHasherHex().hashString(new String(password)));
     }
 
     //checks the staff credentials, returns a boolean value that signifies
     // if the hashed username and password is equal to the stored hash
-    public boolean checkCredentials(String username, String password){
+    public boolean checkCredentials(String username, char[] password, int securityLevel){
         return (new String(SHA256.getHasherHex().hashString(username)).equals(staffCredentials.usernameHash)
-                && new String(SHA256.getHasherHex().hashString(password)).equals(staffCredentials.passwordHash));
+                && new String(SHA256.getHasherHex().hashString(new String(password))).equals(staffCredentials.passwordHash) && this.securityLevel == securityLevel);
+    }
+
+    public boolean checkUsernameExists(String username){
+        return new String(SHA256.getHasherHex().hashString(username)).equals(staffCredentials.usernameHash);
     }
 
     private static class StaffCredentials {

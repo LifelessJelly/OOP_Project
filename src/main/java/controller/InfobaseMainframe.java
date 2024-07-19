@@ -27,11 +27,11 @@ public class InfobaseMainframe extends JFrame {
         this.setVisible(true);
         cardLayout = new CardLayout();
         this.setLayout(cardLayout);
-        this.setMinimumSize(new Dimension(1000, 200));
-        this.setPreferredSize(new Dimension(1000, 200));
+        this.setMinimumSize(new Dimension(1920, 1080));
+        this.setPreferredSize(new Dimension(1920, 1080));
         this.add(new ApplicantListPage(this), "ApplicantListPage");
         cardLayout.show(this.getContentPane(), "ApplicantListPage");
-        ThemeChooser.setDarkBorealis();
+//        ThemeChooser.setDarkBorealis();
         this.pack();
     }
 

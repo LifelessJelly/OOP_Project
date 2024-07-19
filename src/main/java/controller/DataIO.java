@@ -16,7 +16,7 @@ import java.nio.file.Paths;
 //change it so that it handles both read and write of the json file for applicants
 //also change it so that it handles only a single applicant at a time for security reasons
 //store every applicant's data discretely
-public class ApplicantIO {
+public class DataIO {
 
     //still broken don't use
     public static Applicant readApplicant(File pathToApplicantsFile) {

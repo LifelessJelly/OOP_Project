@@ -454,8 +454,10 @@ public class EditApplicant extends JPanel {
 
     private DefaultListModel<String> getApplicantExperienceModel(){
         DefaultListModel<String> applicantExperienceModel = new DefaultListModel<>();
-        for (ApplicantExperience experience : main.getController().getExperiences()){
-            applicantExperienceModel.addElement(experience.toString());
+        if (main.getController().getExperiences() != null) {
+            for (ApplicantExperience experience : main.getController().getExperiences()) {
+                applicantExperienceModel.addElement(experience.toString());
+            }
         }
         return applicantExperienceModel;
     }

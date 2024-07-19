@@ -22,7 +22,7 @@ public class InfobaseController {
         assert files != null;
         for (File file : files) {
             if (file.getName().endsWith(".json")) {
-                String json = ApplicantIO.readFile(file.getAbsolutePath());
+                String json = DataIO.readFile(file.getAbsolutePath());
                 Applicant applicant = JsonReaderWriter.jsonToModel(json, Applicant.class);
                 if (!applicant.getName().isEmpty()){
 
