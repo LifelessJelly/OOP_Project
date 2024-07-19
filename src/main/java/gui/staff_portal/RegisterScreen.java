@@ -2,6 +2,7 @@ package gui.staff_portal;
 
 import com.formdev.flatlaf.ui.FlatLineBorder;
 import controller.LoginMainframe;
+import data.Staff;
 import gui.ImageEmbedded;
 import gui.StretchIcon;
 import subsystems.ImageBase64;
@@ -20,6 +21,7 @@ public class RegisterScreen extends JPanel {
     private LoginMainframe main;
     private boolean passwordIsValid;
     private boolean usernameIsValid;
+    private boolean jobRoleSelected;
     private static final Color UNMET_REQUIREMENT_COLOUR = new Color(218, 67, 67);
     private static final Color MET_REQUIREMENT_COLOUR = new Color(59, 178, 59);
 
@@ -74,6 +76,10 @@ public class RegisterScreen extends JPanel {
                 GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
                 new Insets(0, 10, 0, 0), 0, 0);
         domainPanel.add(HRButton, HRButtonConstraints);
+        HRButton.addActionListener(e -> {
+            jobRoleSelected = true;
+            updateRegisterButton();
+        });
 
         JRadioButton ManagerButton = new JRadioButton("Manager");
         ManagerButton.setOpaque(false);
@@ -83,6 +89,10 @@ public class RegisterScreen extends JPanel {
                 GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
                 new Insets(0, 10, 0, 0), 0, 0);
         domainPanel.add(ManagerButton, ManagerButtonConstraints);
+        ManagerButton.addActionListener(e -> {
+            jobRoleSelected = true;
+            updateRegisterButton();
+        });
 
         GridBagConstraints domainPanelConstraints = new GridBagConstraints(0, 2, 1, 1, 1, 1,
                 GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
@@ -105,7 +115,7 @@ public class RegisterScreen extends JPanel {
                 new Insets(10, 75, 0, 0), 0, 0);
         registrationPanel.add(usernameField, usernameFieldConstraints);
 
-        JLabel signedUpAlrWarningLabel = new JLabel("This user has already been registered");
+        JLabel signedUpAlrWarningLabel = new JLabel("");
         signedUpAlrWarningLabel.setForeground(UNMET_REQUIREMENT_COLOUR);
         GridBagConstraints signedUpAlrWarningLabelConstraints = new GridBagConstraints(0, 5, 1, 1, 1, 1,
                 GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
@@ -182,7 +192,21 @@ public class RegisterScreen extends JPanel {
                 new Insets(10, 0, 0, 0), 0, 0);
         registrationPanel.add(registerButton, loginButtonConstraints);
         registerButton.addActionListener(e -> {
-
+            int domainSelected = -1;
+            if (HRButton.isSelected()){
+                domainSelected = Staff.HR;
+            }
+            else if (ManagerButton.isSelected()){
+                domainSelected = Staff.MANAGER;
+            }
+            if (main.registerStaff(usernameField.getText(), passwordField.getPassword(), domainSelected)){
+                signedUpAlrWarningLabel.setText("");
+                JOptionPane.showMessageDialog(null, "You are successfully registered. Welcome!");
+                main.showLogin();
+            }
+            else {
+                signedUpAlrWarningLabel.setText("This user has already been registered");
+            }
         });
 
         JButton backToLoginButton = new JButton("I am already registered");
@@ -291,7 +315,7 @@ public class RegisterScreen extends JPanel {
     }
 
     private void updateRegisterButton(){
-        registerButton.setEnabled(passwordIsValid && usernameIsValid);
+        registerButton.setEnabled(passwordIsValid && usernameIsValid && jobRoleSelected);
     }
 
 
