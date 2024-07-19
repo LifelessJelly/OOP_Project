@@ -47,9 +47,13 @@ public class Staff {
 
     //checks the staff credentials, returns a boolean value that signifies
     // if the hashed username and password is equal to the stored hash
-    public boolean checkCredentials(String username, char[] password){
+    public boolean checkCredentials(String username, char[] password, int securityLevel){
         return (new String(SHA256.getHasherHex().hashString(username)).equals(staffCredentials.usernameHash)
-                && new String(SHA256.getHasherHex().hashString(new String(password))).equals(staffCredentials.passwordHash));
+                && new String(SHA256.getHasherHex().hashString(new String(password))).equals(staffCredentials.passwordHash) && this.securityLevel == securityLevel);
+    }
+
+    public boolean checkUsernameExists(String username){
+        return new String(SHA256.getHasherHex().hashString(username)).equals(staffCredentials.usernameHash);
     }
 
     private static class StaffCredentials {
