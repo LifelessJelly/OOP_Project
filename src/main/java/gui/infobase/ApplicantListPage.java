@@ -2,6 +2,8 @@ package gui.infobase;
 
 
 import controller.InfobaseMainframe;
+import gui.ImageEmbedded;
+import subsystems.ImageBase64;
 
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
@@ -20,13 +22,16 @@ import java.awt.event.ComponentEvent;
 
 public class ApplicantListPage extends JPanel{
     private final InfobaseMainframe main;
-    private final TableModel applicantModel;
     private final TableRowSorter<TableModel> sorter;
     private final JTable table;
     private JCheckBox shortlistedCheckBox;
     private JCheckBox acceptedCheckBox;
     private JTextField filterField;
     private JCheckBox waitingShortlist;
+    private JCheckBox programmingCheckBox;
+    private JCheckBox industrialCheckBox;
+    private JCheckBox artisticCheckBox;
+    private JCheckBox communicationCheckBox;
 
     public ApplicantListPage(InfobaseMainframe mainframe) {
         this.main = mainframe;
@@ -43,8 +48,8 @@ public class ApplicantListPage extends JPanel{
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
         this.add(staffListLabel, staffListConstraints);
 
-
-        applicantModel = new ApplicantTableModel(main);
+//FROM HERE
+        TableModel applicantModel = new ApplicantTableModel(main);
         table = new JTable(applicantModel);
         sorter = new TableRowSorter<>(applicantModel);
         table.setRowSorter(sorter);
@@ -68,65 +73,54 @@ public class ApplicantListPage extends JPanel{
         ////////
         table.setBorder(new MatteBorder(1, 1, 1, 1, Color.GRAY));
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        GridBagConstraints scrollTableConstraints = new GridBagConstraints(0, 1, 1, 1, 0, 0,
+        //UNTIL HERE
+
+        GridBagConstraints scrollTableConstraints = new GridBagConstraints(0, 1, 1, 1, 1, 1,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
         add(tableScroll, scrollTableConstraints);
 
         JPanel filterMenu = getFilterMenu();
-        GridBagConstraints filterMenuConstraints = new GridBagConstraints(1, 1, 1, 1, 0, 0,
+        GridBagConstraints filterMenuConstraints = new GridBagConstraints(1, 1, 1, 1, 1, 1,
                 GridBagConstraints.EAST, GridBagConstraints.BOTH, new Insets(0, 100, 0, 0), 0, 0);
         filterMenu.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
         this.add(filterMenu, filterMenuConstraints);
 
-        JButton editApplicantButton = new JButton("Edit Applicant");
-        editApplicantButton.setLayout(new GridBagLayout());
-        GridBagConstraints buttonConstraints = new GridBagConstraints(0, 2, 1, 1, 0, 0,
-                GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0);
-        this.add(editApplicantButton, buttonConstraints);
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridBagLayout());
+
+        JButton addApplicantButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.ADD_APPLICANT_ICON)));
+        GridBagConstraints addApplicantConstraints = new GridBagConstraints(0, 0, 1, 1, 1, 1,
+                GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
+        buttonPanel.add(addApplicantButton, addApplicantConstraints);
+
+        JButton editApplicantButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.EDIT_ICON)));
+        GridBagConstraints editApplicantConstraints = new GridBagConstraints(1, 0, 1, 1, 0, 1,
+                GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
+        buttonPanel.add(editApplicantButton, editApplicantConstraints);
+
+        GridBagConstraints buttonPanelConstraints = new GridBagConstraints(0, 2, 1, 1, 1, 0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
+
+        this.add(buttonPanel, buttonPanelConstraints);
+
 
         editApplicantButton.addActionListener(e -> {
-            int selectedRow = table.getSelectedRow();
+            int selectedRow = table.convertRowIndexToModel(table.getSelectedRow());
             if (selectedRow == -1) {
                 return;
             }
-            main.showEditApplicant(main.getController().getApplicants()[selectedRow]);
+            main.showEditApplicant(main.getController().getApplicants()[selectedRow], selectedRow);
+
         });
-
-
-
 
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent arg0) {
                 //scaling of title font
-                float adjustedFontSizeBody= (float) main.getContentPane().getWidth() /50;                                                      //scaling of body font
-//                Font bodyFont=new Font("Comic Sans MS", Font.PLAIN, adjustedFontSizeBody);                                     //body font
-//                Font smallBodyFont=new Font("Comic Sans MS", Font.PLAIN, (int)(Math.round(adjustedFontSizeBody*0.8)));
-                //smaller body
+                float adjustedFontSizeBody= (float) main.getContentPane().getWidth() /50;
 
                 staffListLabel.setFont(staffListLabel.getFont().deriveFont(adjustedFontSizeBody));
                 editApplicantButton.setFont(editApplicantButton.getFont().deriveFont(adjustedFontSizeBody));
-
-
-                tableScroll.setPreferredSize(new Dimension((int)(Math.round(0.7*getWidth())),(int)(Math.round(0.7*getHeight()))));
-                filterMenu.setPreferredSize(new Dimension((int)(Math.round(0.2*getWidth())),(int)(Math.round(0.7*getHeight()))));
-//
-//                for(int i=0;i<table.getRowCount();++i){
-//                    //for(int j=0;j<table.getColumnCount();++j){
-//                    TableCellRenderer render=table.getCellRenderer(i,1);
-//                    Component comp=table.prepareRenderer(render,i,1);
-//                    comp.setFont(smallerBodyFont);
-//                }
-
-                /*for(int i=0;i<table.getRowCount();++i){
-                    //for(int j=0;j<table.getColumnCount();++j){
-                    TableCellRenderer render=table.getCellRenderer(i,0);
-                    BufferedImage img=table.prepareRenderer(render,i,0);
-                    ((BufferedImage)img);
-                }*/
-
-
-                //System.out.println(main.getContentPane().getWidth()+"X"+main.getContentPane().getHeight());
                 System.out.println(table.getWidth()+"X"+ table.getHeight());
             }
         });
@@ -135,18 +129,22 @@ public class ApplicantListPage extends JPanel{
     private JPanel getFilterMenu() {
         JPanel filterMenu = new JPanel(new GridBagLayout());
         {
-            JLabel nameFilterLabel = new JLabel("Filter by name:");
+            ((GridBagLayout)filterMenu.getLayout()).rowWeights = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0,  1e-4};
+            JLabel nameFilterLabel = new JLabel(main.getLocale("ApplicantListPage.JLabel.filterName"));
             nameFilterLabel.setFont(nameFilterLabel.getFont().deriveFont(18f));
             GridBagConstraints nameFilterConstraints = new GridBagConstraints(0, 0, 1, 1, 0, 0,
-                    GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(0, 5, 10, 0), 0, 0);
+                    GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 5, 10, 0), 0, 0);
             filterMenu.add(nameFilterLabel, nameFilterConstraints);
 
             filterField = new JTextField();
             filterField.setColumns(20);
+            filterField.setMinimumSize(new Dimension(200, 20));
             filterField.setFont(filterField.getFont().deriveFont(16f));
             GridBagConstraints filterFieldConstraints = new GridBagConstraints(0, 1, 1, 1, 0, 0,
-                    GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(0, 5, 0, 0), 0, 0);
+                    GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 0, 0);
             filterMenu.add(filterField, filterFieldConstraints);
+
+
 
             filterField.getDocument().addDocumentListener(new DocumentListener() {
 
@@ -167,36 +165,72 @@ public class ApplicantListPage extends JPanel{
 
             });
 
-            JLabel statusFilterLabel = new JLabel("Filter status by:");
+            JLabel statusFilterLabel = new JLabel(main.getLocale("ApplicantListPage.JLabel.filterStatus"));
             statusFilterLabel.setFont(statusFilterLabel.getFont().deriveFont(18f));
             GridBagConstraints statusFilterConstarints = new GridBagConstraints(0, 2, 1, 1, 0, 0,
-                    GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(0, 5, 10, 0), 0, 0);
+                    GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 5, 10, 0), 0, 0);
             filterMenu.add(statusFilterLabel, statusFilterConstarints);
 
-            waitingShortlist = new JCheckBox("Waiting shortlist");
+            waitingShortlist = new JCheckBox(main.getLocale("ApplicantListPage.JCheckBox.waitingShortlist"));
             waitingShortlist.setSelected(true);
             waitingShortlist.setFont(waitingShortlist.getFont().deriveFont(16f));
             GridBagConstraints waitingFilterConstraints = new GridBagConstraints(0, 3, 1, 1, 0, 0,
-                    GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(0, 5, 0, 0), 0, 0);
+                    GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 0, 0);
             filterMenu.add(waitingShortlist, waitingFilterConstraints);
             waitingShortlist.addActionListener(e -> updateModel());
 
-            shortlistedCheckBox = new JCheckBox("Shortlisted");
+            shortlistedCheckBox = new JCheckBox(main.getLocale("ApplicantListPage.JCheckBox.shortlisted"));
             shortlistedCheckBox.setSelected(true);
             shortlistedCheckBox.setFont(shortlistedCheckBox.getFont().deriveFont(16f));
             GridBagConstraints statusFilterConstraints = new GridBagConstraints(0, 4, 1, 1, 0, 0,
-                    GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(0, 5, 0, 0), 0, 0);
+                    GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 0, 0);
             filterMenu.add(shortlistedCheckBox, statusFilterConstraints);
             shortlistedCheckBox.addActionListener(e -> updateModel());
 
 
-            acceptedCheckBox = new JCheckBox("Accepted");
+            acceptedCheckBox = new JCheckBox(main.getLocale("ApplicantListPage.JCheckBox.accepted"));
             acceptedCheckBox.setSelected(true);
             acceptedCheckBox.setFont(acceptedCheckBox.getFont().deriveFont(16f));
             GridBagConstraints acceptedFilterConstraints = new GridBagConstraints(0, 5, 1, 1, 0, 0,
-                    GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(0, 5, 0, 0), 0, 0);
+                    GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 0, 0);
             filterMenu.add(acceptedCheckBox, acceptedFilterConstraints);
             acceptedCheckBox.addActionListener(e -> updateModel());
+
+            programmingCheckBox = new JCheckBox(main.getLocale("ShortlistPage.JCheckBox.programming"));
+            programmingCheckBox.setFont(programmingCheckBox.getFont().deriveFont(18f));
+            GridBagConstraints programmingConstraints = new GridBagConstraints(0, 6, 1, 1, 0, 0,
+                    GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 0, 0);
+            filterMenu.add(programmingCheckBox, programmingConstraints);
+            programmingCheckBox.addActionListener(e -> {
+                updateModel();
+            });
+
+            industrialCheckBox = new JCheckBox(main.getLocale("ShortlistPage.JCheckBox.industrial"));
+            industrialCheckBox.setFont(industrialCheckBox.getFont().deriveFont(18f));
+            GridBagConstraints industrialConstraints = new GridBagConstraints(0, 7, 1, 1, 0, 0,
+                    GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 0, 0);
+            filterMenu.add(industrialCheckBox, industrialConstraints);
+            industrialCheckBox.addActionListener(e -> {
+                updateModel();
+            });
+
+            artisticCheckBox = new JCheckBox(main.getLocale("ShortlistPage.JCheckBox.artistic"));
+            artisticCheckBox.setFont(artisticCheckBox.getFont().deriveFont(18f));
+            GridBagConstraints artisticConstraints = new GridBagConstraints(0, 8, 1, 1, 0, 0,
+                    GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 0, 0);
+            filterMenu.add(artisticCheckBox, artisticConstraints);
+            artisticCheckBox.addActionListener(e -> {
+                updateModel();
+            });
+
+            communicationCheckBox = new JCheckBox(main.getLocale("ShortlistPage.JCheckBox.communication"));
+            communicationCheckBox.setFont(communicationCheckBox.getFont().deriveFont(18f));
+            GridBagConstraints communicationConstraints = new GridBagConstraints(0, 9, 1, 1, 0, 0,
+                    GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 0, 0);
+            filterMenu.add(communicationCheckBox, communicationConstraints);
+            communicationCheckBox.addActionListener(e -> {
+                updateModel();
+            });
 
         }
         updateModel();
@@ -214,7 +248,24 @@ public class ApplicantListPage extends JPanel{
             shortlistStages.add(ApplicantRowFilter.STAGE_ACCEPTED);
         }
 
-        sorter.setRowFilter(new ApplicantRowFilter(shortlistStages.stream().mapToInt(i->i).toArray(), filterField.getText(), null));
+        List<String> skillFilters = new ArrayList<>();
+        if (programmingCheckBox.isSelected()){
+            skillFilters.add("Programming");
+        }
+        if (industrialCheckBox.isSelected()){
+            skillFilters.add("Industrial");
+        }
+        if (artisticCheckBox.isSelected()){
+            skillFilters.add("Artistic");
+        }
+        if (communicationCheckBox.isSelected()){
+            skillFilters.add("Communication");
+        }
+
+        sorter.setRowFilter(new ApplicantRowFilter(
+                shortlistStages.stream().mapToInt(i->i).toArray(),
+                filterField.getText(),
+                skillFilters.toArray(new String[0])));
         table.setRowSorter(sorter);
     }
 }

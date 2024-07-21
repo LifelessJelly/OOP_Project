@@ -9,7 +9,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class LoginController {
-    public static boolean verifyLogin(String username, char[] password, int domain) {
+    private Staff loggedInStaff;
+
+    public boolean verifyLogin(String username, char[] password, int domain) {
         String path = System.getProperty("user.dir") + "\\" + "staff";
         File dir = new File(path);
         File[] files = dir.listFiles();
@@ -21,6 +23,7 @@ public class LoginController {
                 String json = DataIO.readFile(file.getAbsolutePath());
                 Staff staff = JsonReaderWriter.jsonToModel(json, Staff.class);
                 if (staff.checkCredentials(username, password, domain)) {
+                    loggedInStaff = staff;
                     return true;
                 }
             }
@@ -28,7 +31,7 @@ public class LoginController {
         return false;
     }
 
-    public static boolean registerNewStaff(String username, char[] password, int securityLevel) {
+    public static boolean registerNewStaff(String displayName, String username, char[] password, int securityLevel) {
         String path = System.getProperty("user.dir") + "\\" + "staff";
         File dir = new File(path);
         File[] files = dir.listFiles();
@@ -43,7 +46,7 @@ public class LoginController {
                 }
             }
         }
-        Staff newStaff =  new Staff(securityLevel);
+        Staff newStaff =  new Staff(displayName, securityLevel);
         newStaff.updateCredentials(username, password);
         try {
             try (FileWriter fileWriter = new FileWriter(path + "\\" + new String(SHA256.getHasherHex().hashString(String.valueOf(System.nanoTime()))) + "_Staff.json")) {
@@ -53,5 +56,9 @@ public class LoginController {
             throw new RuntimeException(ex);
         }
         return true;
+    }
+
+    public Staff getLoggedInUser() {
+        return loggedInStaff;
     }
 }

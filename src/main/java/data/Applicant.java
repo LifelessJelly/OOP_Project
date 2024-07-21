@@ -13,7 +13,7 @@ public class Applicant{
     private final ApplicantDetails applicantDetails;
     private final ApplicantExperience[] applicantPrevExps;
     private final String[] skills;
-    private final ApplicantMetadata applicantMetadata;
+    private ApplicantMetadata applicantMetadata;
 
     /**
      * Constructs a new Applicant object by copying the details, previous experiences, skills, and metadata from another Applicant object.
@@ -103,6 +103,19 @@ public class Applicant{
 
     public String getGender() {
         return applicantDetails.gender;
+    }
+
+    public void setShortlisted(boolean shortlisted) {
+        applicantMetadata.isShortlisted = shortlisted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        applicantMetadata.isAccepted = accepted;
+    }
+
+    //for editing
+    public void copyApplicantMetadata(Applicant previousApplicantInstance){
+        applicantMetadata = previousApplicantInstance.applicantMetadata;
     }
 
 

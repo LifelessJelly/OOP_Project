@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.stream.Stream;
 
+//TODO Deprecate this in the future, use only EditsDataStorage
 public class ApplicantRegistrator {
     private String name;
     private int age;

@@ -11,6 +11,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -33,9 +34,10 @@ public class ApplicantSpammer {
 
                     //ignore case of Singaporeans born before 1965
                     int year = new Random().nextInt(2024 - 1965 + 1) + 1965;
+
                     final String[] months = new String[]{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
                     String month = months[new Random().nextInt(months.length)];
-                    int day = 0;
+                    int day;
                     if (year % 4 == 0 && year % 100 != 0 && month.equals("February")) {
                         day = new Random().nextInt(29 - 1) + 1;
                     } else if (month.equals("February")) {

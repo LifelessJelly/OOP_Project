@@ -204,6 +204,7 @@ public class LoginScreen extends JPanel {
                     passwordField.setText("");
                     HRButton.setSelected(false);
                     ManagerButton.setSelected(false);
+                    domainButtonGroup.clearSelection();
                 }
             });
 
@@ -217,11 +218,13 @@ public class LoginScreen extends JPanel {
             loginPanel.add(registerButton, registerButtonConstraints);
 
             registerButton.addActionListener(e -> {
+                badLoginWarnLabel.setText("");
                 main.showRegister();
                 usernameField.setText("");
                 passwordField.setText("");
                 HRButton.setSelected(false);
                 ManagerButton.setSelected(false);
+                domainButtonGroup.clearSelection();
                 domainSelected = false;
             });
 

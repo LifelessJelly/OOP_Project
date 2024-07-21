@@ -10,8 +10,9 @@ public class LoginMainframe extends JFrame {
     CardLayout cardLayout;
     JPanel loginPanel;
     JPanel registerPanel;
+    private LoginController loginController;
     public LoginMainframe() {
-
+        loginController = new LoginController();
         this.cardLayout = new CardLayout();
         this.loginPanel = new LoginScreen(this);
         this.registerPanel = new RegisterScreen(this);
@@ -36,15 +37,15 @@ public class LoginMainframe extends JFrame {
     }
 
     public boolean checkAuthorisation(String username, char[] password, int domain){
-        if (!LoginController.verifyLogin(username, password, domain)){
+        if (!loginController.verifyLogin(username, password, domain)){
             return false;
         }
         this.dispose();
-        new InfobaseMainframe();
+        new InfobaseMainframe(loginController.getLoggedInUser());
         return true;
     }
 
-    public boolean registerStaff(String username, char[] password, int securityLevel){
-        return LoginController.registerNewStaff(username, password, securityLevel);
+    public boolean registerStaff(String displayName, String username, char[] password, int securityLevel){
+        return LoginController.registerNewStaff(displayName, username, password, securityLevel);
     }
 }

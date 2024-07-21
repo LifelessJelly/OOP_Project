@@ -21,7 +21,7 @@ public class TableImageRender extends JLabel implements TableCellRenderer {
                                                    boolean inFocus, int row, int column) {
 
 
-        if (value instanceof Applicant) { //if value is an instance of a String
+        if (value instanceof Applicant) { //if value is an instance of applicant
             //BufferedImage image = ImageIO.read(new File((String) value));
             BufferedImage image = ((Applicant) value).getImage();
 

@@ -1,14 +1,17 @@
 package data;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 
-public class DataStorage {
+public class EditsDataStorage {
     private final ArrayList<String> skills;
     private final ArrayList<ApplicantExperience> experience;
-    public DataStorage() {
+
+    public EditsDataStorage() {
         skills = new ArrayList<>();
         experience = new ArrayList<>();
+
     }
 
     //skill getter
@@ -29,6 +32,18 @@ public class DataStorage {
     //get applicant experience array
     public ApplicantExperience[] getExperience() {
         return experience.toArray(new ApplicantExperience[0]);
+    }
+
+    public void importSkills(String[] skills) {
+        if (skills != null) {
+            this.skills.addAll(Arrays.asList(skills));
+        }
+    }
+
+    public void importExperience(ApplicantExperience[] experience) {
+        if (experience != null) {
+            this.experience.addAll(Arrays.asList(experience));
+        }
     }
 
     //add applicant experience array

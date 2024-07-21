@@ -54,10 +54,10 @@ public class EditApplicant extends JPanel {
     JComboBox<String> endYearComboBox;
     JPanel updateChangesPanel;
 
-    public EditApplicant(Applicant applicant, InfobaseMainframe main) {
-        this.applicant = applicant;
+    public EditApplicant(Applicant applicant, int index, InfobaseMainframe main) {
         this.main = main;
-        this.main.getController().setApplicantInstance(applicant);
+        this.applicant = applicant;
+        this.main.getController().setApplicantInstance(applicant, index);
         initComponents();
     }
 
@@ -142,6 +142,7 @@ public class EditApplicant extends JPanel {
                 dayComboBox = new JComboBox<>(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31});
                 dayComboBox.setAlignmentX(Component.LEFT_ALIGNMENT);
                 dayComboBox.setFont(dayComboBox.getFont().deriveFont(18f));
+                dayComboBox.setSelectedIndex(Integer.parseInt(applicant.getBirthdate().substring(8, 10))-1);
                 GridBagConstraints dayComboBoxConstraints = new GridBagConstraints(
                         0, 0, 1, 1, 0, 0,
                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -151,6 +152,7 @@ public class EditApplicant extends JPanel {
                 monthComboBox = new JComboBox<>(new String[]{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"});
                 monthComboBox.setAlignmentX(Component.LEFT_ALIGNMENT);
                 monthComboBox.setFont(monthComboBox.getFont().deriveFont(18f));
+                monthComboBox.setSelectedIndex(Integer.parseInt(applicant.getBirthdate().substring(5, 7))-1);
                 GridBagConstraints monthComboBoxConstraints = new GridBagConstraints(
                         1, 0, 1, 1, 0, 0,
                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -163,6 +165,7 @@ public class EditApplicant extends JPanel {
                 }
                 yearComboBox.setAlignmentX(Component.LEFT_ALIGNMENT);
                 yearComboBox.setFont(yearComboBox.getFont().deriveFont(18f));
+                yearComboBox.setSelectedIndex(yearComboBox.getItemCount()-(Integer.parseInt(applicant.getBirthdate().substring(0, 4))-1899));
                 GridBagConstraints yearComboBoxConstraints = new GridBagConstraints(
                         2, 0, 1, 1, 0, 0,
                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -430,7 +433,24 @@ public class EditApplicant extends JPanel {
                     new Insets(0, 0, 5, 0), 0, 0);
             updateChangesPanel.add(saveChangesButton, saveChangesConstraints);
 
+            saveChangesButton.addActionListener(e -> {
+               main.getController().applyApplicantEdits(applicantNameField.getText(),
+                       dayComboBox.getItemAt(dayComboBox.getSelectedIndex()),
+                       monthComboBox.getItemAt(monthComboBox.getSelectedIndex()),
+                       yearComboBox.getItemAt(yearComboBox.getSelectedIndex()),
+                        applicantNricField.getText(),
+                       applicantEmailField.getText(),
+                       applicantGenderComboBox.getItemAt(applicantGenderComboBox.getSelectedIndex())
+                       );
+               main.showApplicantListPage();
+            });
+
             JPanelImageButton discardChangesButton = new JPanelImageButton(main.getLocale("EditApplicant.JLabel.discard_changes"), ImageEmbedded.DISCARD_CHANGES, ImageEmbedded.DISCARD_CHANGES_COLOURED, 60, 60, JPanelImageButton.LEFT);
+            discardChangesButton.addActionListener(e -> {
+                if (JOptionPane.showConfirmDialog(null, main.getLocale("EditApplicant.JOptionPane.discardConfirm"), "", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+                    main.showApplicantListPage();
+                }
+            });
 
             GridBagConstraints discardChangesConstraints = new GridBagConstraints(0, 1, 1, 1, 0, 0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -439,9 +459,19 @@ public class EditApplicant extends JPanel {
         }
         this.add(updateChangesPanel, updateChangesPanelConstraints);
 
-        addSkillButton.addActionListener(e -> main.getController().addSkill(editSkillTextField.getText()));
+        addSkillButton.addActionListener(e -> {
+            main.getController().addSkill(editSkillTextField.getText());
+            getSkillsModel();
+            skillsList.setModel(getSkillsModel());
+        });
 
-
+        addApplicantExperienceButton.addActionListener(e -> {
+            main.getController().addExperience(companyField.getText(),
+                    positionField.getText(),
+                    Integer.parseInt(startYearComboBox.getItemAt(startYearComboBox.getSelectedIndex())),
+                    Integer.parseInt(endYearComboBox.getItemAt(endYearComboBox.getSelectedIndex())));
+            applicantExperiencesList.setModel(getApplicantExperienceModel());
+        });
     }
 
     private DefaultListModel<String> getSkillsModel(){

@@ -21,6 +21,7 @@ public class RegisterScreen extends JPanel {
     private LoginMainframe main;
     private boolean passwordIsValid;
     private boolean usernameIsValid;
+    private boolean displayNameIsValid;
     private boolean jobRoleSelected;
     private static final Color UNMET_REQUIREMENT_COLOUR = new Color(218, 67, 67);
     private static final Color MET_REQUIREMENT_COLOUR = new Color(59, 178, 59);
@@ -99,9 +100,25 @@ public class RegisterScreen extends JPanel {
                 new Insets(20, 75, 0, 0), 0, 0);
         registrationPanel.add(domainPanel, domainPanelConstraints);
 
+        JLabel displayNameLabel = new JLabel("DisplayName: ");
+        displayNameLabel.setFont(displayNameLabel.getFont().deriveFont(18f));
+        GridBagConstraints displqyNameConstraints = new GridBagConstraints(0, 3, 1, 1, 1, 1,
+                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
+                new Insets(10, 75, 0, 0), 0, 0);
+        registrationPanel.add(displayNameLabel, displqyNameConstraints);
+
+        JTextField displayNameField = new JTextField();
+        displayNameField.setPreferredSize(new Dimension(500, 50));
+        displayNameField.setMinimumSize(new Dimension(500, 50));
+        displayNameField.setFont(displayNameField.getFont().deriveFont(18f));
+        GridBagConstraints displayNameConstraints = new GridBagConstraints(0, 4, 1, 1, 1, 1,
+                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
+                new Insets(10, 75, 0, 0), 0, 0);
+        registrationPanel.add(displayNameField, displayNameConstraints);
+
         JLabel usernameLabel = new JLabel("Username: ");
         usernameLabel.setFont(usernameLabel.getFont().deriveFont(18f));
-        GridBagConstraints usernameLabelConstraints = new GridBagConstraints(0, 3, 1, 1, 1, 1,
+        GridBagConstraints usernameLabelConstraints = new GridBagConstraints(0, 5, 1, 1, 1, 1,
                 GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
                 new Insets(10, 75, 0, 0), 0, 0);
         registrationPanel.add(usernameLabel, usernameLabelConstraints);
@@ -110,21 +127,21 @@ public class RegisterScreen extends JPanel {
         usernameField.setPreferredSize(new Dimension(500, 50));
         usernameField.setMinimumSize(new Dimension(500, 50));
         usernameField.setFont(usernameField.getFont().deriveFont(18f));
-        GridBagConstraints usernameFieldConstraints = new GridBagConstraints(0, 4, 1, 1, 1, 1,
+        GridBagConstraints usernameFieldConstraints = new GridBagConstraints(0, 6, 1, 1, 1, 1,
                 GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
                 new Insets(10, 75, 0, 0), 0, 0);
         registrationPanel.add(usernameField, usernameFieldConstraints);
 
         JLabel signedUpAlrWarningLabel = new JLabel("");
         signedUpAlrWarningLabel.setForeground(UNMET_REQUIREMENT_COLOUR);
-        GridBagConstraints signedUpAlrWarningLabelConstraints = new GridBagConstraints(0, 5, 1, 1, 1, 1,
+        GridBagConstraints signedUpAlrWarningLabelConstraints = new GridBagConstraints(0, 7, 1, 1, 1, 1,
                 GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
                 new Insets(10, 75, 0, 0), 0, 0);
         registrationPanel.add(signedUpAlrWarningLabel, signedUpAlrWarningLabelConstraints);
 
         JLabel passwordLabel = new JLabel("Password: ");
         passwordLabel.setFont(passwordLabel.getFont().deriveFont(18f));
-        GridBagConstraints passwordLabelConstraints = new GridBagConstraints(0, 6, 1, 1, 1, 1,
+        GridBagConstraints passwordLabelConstraints = new GridBagConstraints(0, 8, 1, 1, 1, 1,
                 GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
                 new Insets(10, 75, 0, 0), 0, 0);
         registrationPanel.add(passwordLabel, passwordLabelConstraints);
@@ -133,14 +150,14 @@ public class RegisterScreen extends JPanel {
         passwordField.setPreferredSize(new Dimension(500, 50));
         passwordField.setMinimumSize(new Dimension(500, 50));
         passwordField.setFont(passwordField.getFont().deriveFont(18f));
-        GridBagConstraints passwordFieldConstraints = new GridBagConstraints(0, 7, 1, 1, 1, 1,
+        GridBagConstraints passwordFieldConstraints = new GridBagConstraints(0, 9, 1, 1, 1, 1,
                 GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
                 new Insets(10, 75, 0, 0), 0, 0);
         registrationPanel.add(passwordField, passwordFieldConstraints);
 
         JLabel passwordRequirementLabel = new JLabel("Your password must include at least: ");
         passwordRequirementLabel.setFont(passwordRequirementLabel.getFont().deriveFont(18f));
-        GridBagConstraints passwordRequirementConstraint = new GridBagConstraints(0, 8, 1, 1, 1, 1,
+        GridBagConstraints passwordRequirementConstraint = new GridBagConstraints(0, 10, 1, 1, 1, 1,
                 GridBagConstraints.NORTHWEST,GridBagConstraints.NONE,
                 new Insets(10, 75, 0, 0), 0, 0);
         registrationPanel.add(passwordRequirementLabel, passwordRequirementConstraint);
@@ -148,7 +165,7 @@ public class RegisterScreen extends JPanel {
         JLabel upperLowerCaseLabel = new JLabel("An upper case (A-Z) and lower case (a-z) alphabet");
         upperLowerCaseLabel.setFont(upperLowerCaseLabel.getFont().deriveFont(18f));
         upperLowerCaseLabel.setForeground(UNMET_REQUIREMENT_COLOUR);
-        GridBagConstraints upperLowerCaseConstraints = new GridBagConstraints(0, 9, 1, 1, 1, 1,
+        GridBagConstraints upperLowerCaseConstraints = new GridBagConstraints(0, 11, 1, 1, 1, 1,
                 GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
                 new Insets(5, 75, 0, 0), 0, 0);
         registrationPanel.add(upperLowerCaseLabel, upperLowerCaseConstraints);
@@ -156,7 +173,7 @@ public class RegisterScreen extends JPanel {
         JLabel numberLabel = new JLabel("A number (0-9)");
         numberLabel.setFont(numberLabel.getFont().deriveFont(18f));
         numberLabel.setForeground(UNMET_REQUIREMENT_COLOUR);
-        GridBagConstraints numberConstraints = new GridBagConstraints(0, 10, 1, 1, 1, 1,
+        GridBagConstraints numberConstraints = new GridBagConstraints(0, 12, 1, 1, 1, 1,
                 GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
                 new Insets(5, 75, 0, 0), 0, 0);
         registrationPanel.add(numberLabel, numberConstraints);
@@ -164,7 +181,7 @@ public class RegisterScreen extends JPanel {
         JLabel symbolLabel = new JLabel("A symbol (!@#$%^&*, etc.)");
         symbolLabel.setFont(symbolLabel.getFont().deriveFont(18f));
         symbolLabel.setForeground(UNMET_REQUIREMENT_COLOUR);
-        GridBagConstraints symbolConstraints = new GridBagConstraints(0, 11, 1, 1, 1, 1,
+        GridBagConstraints symbolConstraints = new GridBagConstraints(0, 13, 1, 1, 1, 1,
                 GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
                 new Insets(5, 75, 0, 0), 0, 0);
         registrationPanel.add(symbolLabel, symbolConstraints);
@@ -172,7 +189,7 @@ public class RegisterScreen extends JPanel {
         JLabel lengthLabel = new JLabel("A minimum of 10 characters");
         lengthLabel.setFont(lengthLabel.getFont().deriveFont(18f));
         lengthLabel.setForeground(UNMET_REQUIREMENT_COLOUR);
-        GridBagConstraints lengthConstraints = new GridBagConstraints(0, 12, 1, 1, 1, 1,
+        GridBagConstraints lengthConstraints = new GridBagConstraints(0, 14, 1, 1, 1, 1,
                 GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
                 new Insets(5, 75, 0, 0), 0, 0);
         registrationPanel.add(lengthLabel, lengthConstraints);
@@ -187,7 +204,7 @@ public class RegisterScreen extends JPanel {
         registerButton.setPreferredSize(new Dimension(500, 50));
         registerButton.setFont(registerButton.getFont().deriveFont(20f));
         registerButton.setHorizontalAlignment(SwingConstants.CENTER);
-        GridBagConstraints loginButtonConstraints = new GridBagConstraints(0, 13, 1, 1, 1, 1,
+        GridBagConstraints loginButtonConstraints = new GridBagConstraints(0, 15, 1, 1, 1, 1,
                 GridBagConstraints.CENTER, GridBagConstraints.NONE,
                 new Insets(10, 0, 0, 0), 0, 0);
         registrationPanel.add(registerButton, loginButtonConstraints);
@@ -199,7 +216,7 @@ public class RegisterScreen extends JPanel {
             else if (ManagerButton.isSelected()){
                 domainSelected = Staff.MANAGER;
             }
-            if (main.registerStaff(usernameField.getText(), passwordField.getPassword(), domainSelected)){
+            if (main.registerStaff(displayNameField.getText(), usernameField.getText(), passwordField.getPassword(), domainSelected)){
                 signedUpAlrWarningLabel.setText("");
                 JOptionPane.showMessageDialog(null, "You are successfully registered. Welcome!");
                 main.showLogin();
@@ -213,13 +230,31 @@ public class RegisterScreen extends JPanel {
         backToLoginButton.setFont(backToLoginButton.getFont().deriveFont(16f));
         backToLoginButton.setBorder(BorderFactory.createEmptyBorder());
         backToLoginButton.setHorizontalAlignment(SwingConstants.CENTER);
-        GridBagConstraints registerButtonConstraints = new GridBagConstraints(0, 14, 1, 1, 1, 1,
+        GridBagConstraints registerButtonConstraints = new GridBagConstraints(0, 16, 1, 1, 1, 1,
                 GridBagConstraints.CENTER, GridBagConstraints.NONE,
                 new Insets(10, 0, 0, 0), 0, 0);
         registrationPanel.add(backToLoginButton, registerButtonConstraints);
 
 
         backToLoginButton.addActionListener(e -> main.showLogin());
+
+        displayNameField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                removeUpdate(e);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                changedUpdate(e);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                displayNameIsValid = !displayNameField.getText().isEmpty();
+                updateRegisterButton();
+            }
+        });
 
         usernameField.getDocument().addDocumentListener(new DocumentListener() {
 
@@ -262,29 +297,12 @@ public class RegisterScreen extends JPanel {
                 Pattern matchNumber = Pattern.compile("[0-9]");
                 Pattern matchSymbol = Pattern.compile("[^A-Za-z0-9]");
 
-                if (matchUpper.matcher(passString).find() && matchLower.matcher(passString).find()) {
-                    upperLowerCaseLabel.setForeground(MET_REQUIREMENT_COLOUR);
-                } else {
-                    upperLowerCaseLabel.setForeground(UNMET_REQUIREMENT_COLOUR);
-                }
 
-                if (matchNumber.matcher(passString).find()) {
-                    numberLabel.setForeground(MET_REQUIREMENT_COLOUR);
-                } else {
-                    numberLabel.setForeground(UNMET_REQUIREMENT_COLOUR);
-                }
-                if (matchSymbol.matcher(passString).find()) {
-                    symbolLabel.setForeground(MET_REQUIREMENT_COLOUR);
-                }
-                else {
-                    symbolLabel.setForeground(UNMET_REQUIREMENT_COLOUR);
-                }
-                if (passString.length() >= 10){
-                    lengthLabel.setForeground(MET_REQUIREMENT_COLOUR);
-                }
-                else {
-                    lengthLabel.setForeground(UNMET_REQUIREMENT_COLOUR);
-                }
+                upperLowerCaseLabel.setForeground(matchUpper.matcher(passString).find() && matchLower.matcher(passString).find() ? MET_REQUIREMENT_COLOUR : UNMET_REQUIREMENT_COLOUR);
+                numberLabel.setForeground(matchNumber.matcher(passString).find() ? MET_REQUIREMENT_COLOUR : UNMET_REQUIREMENT_COLOUR);
+                symbolLabel.setForeground(matchSymbol.matcher(passString).find() ? MET_REQUIREMENT_COLOUR : UNMET_REQUIREMENT_COLOUR);
+                lengthLabel.setForeground(passString.length() >= 10 ? MET_REQUIREMENT_COLOUR : UNMET_REQUIREMENT_COLOUR);
+
                 passwordIsValid = matchUpper.matcher(passString).find() && matchLower.matcher(passString).find() && matchNumber.matcher(passString).find() && matchSymbol.matcher(passString).find();
                 updateRegisterButton();
             }
@@ -315,7 +333,7 @@ public class RegisterScreen extends JPanel {
     }
 
     private void updateRegisterButton(){
-        registerButton.setEnabled(passwordIsValid && usernameIsValid && jobRoleSelected);
+        registerButton.setEnabled(displayNameIsValid && passwordIsValid && usernameIsValid && jobRoleSelected);
     }
 
 

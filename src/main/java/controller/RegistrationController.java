@@ -2,17 +2,17 @@ package controller;
 
 import data.Applicant;
 import data.ApplicantExperience;
-import data.DataStorage;
+import data.EditsDataStorage;
 
 import java.awt.*;
 
 public class RegistrationController {
-    private final DataStorage datastorage;
+    private final EditsDataStorage datastorage;
     private final ApplicantRegistrator registrator;
 
     public RegistrationController() {
         registrator = new ApplicantRegistrator();
-        datastorage = new DataStorage();
+        datastorage = new EditsDataStorage();
     }
 
     public void registerBasicInfo(String name, int day, String month, int year, String nricFin, String email, String gender){

@@ -17,9 +17,6 @@ public class ApplicantTableModel extends AbstractTableModel {
      * @param main The infobase's mainframe object
      */
     public ApplicantTableModel(InfobaseMainframe main) {
-
-
-
         this.main = main;
     }
 

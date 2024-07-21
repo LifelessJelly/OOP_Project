@@ -11,8 +11,9 @@ public class Staff {
 
     private final StaffCredentials staffCredentials;
     private final int securityLevel;
+    private final String displayName;
 
-    public Staff(int securityLevel){
+    public Staff(String displayName, int securityLevel){
         switch (securityLevel){
             case ROOT:
             case MANAGER:
@@ -23,6 +24,7 @@ public class Staff {
                 //throws error when the specified security level is not met
         }
         this.securityLevel = securityLevel;
+        this.displayName = displayName;
         staffCredentials = new StaffCredentials();
     }
 
@@ -50,6 +52,10 @@ public class Staff {
     public boolean checkCredentials(String username, char[] password, int securityLevel){
         return (new String(SHA256.getHasherHex().hashString(username)).equals(staffCredentials.usernameHash)
                 && new String(SHA256.getHasherHex().hashString(new String(password))).equals(staffCredentials.passwordHash) && this.securityLevel == securityLevel);
+    }
+
+    public String getDisplayName(){
+        return displayName;
     }
 
     public boolean checkUsernameExists(String username){

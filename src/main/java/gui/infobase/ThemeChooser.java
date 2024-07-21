@@ -19,10 +19,11 @@ public class ThemeChooser {
     public static final int UNICORN = 7;
     public static final int INK = 8;
 
-    private static void setDark() {
+    private void setDark(JFrame frame) {
         try {
             UIManager.setLookAndFeel(darkMode);
             UIManager.put("Button.background", new Color(255, 255, 255));
+            SwingUtilities.updateComponentTreeUI(frame);
         } catch (UnsupportedLookAndFeelException e) {
             throw new RuntimeException(e);
         }
@@ -35,8 +36,8 @@ public class ThemeChooser {
         }
     }
 
-    public static void setDarkBorealis(){
-        setDark();
+    public void setDarkBorealis(JFrame frame){
+        setDark(frame);
     }
 
     public static void setDefaultComponentProperties(){

@@ -3,7 +3,7 @@ package data;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class TranslationTable {
+public class TranslationTable {
 
     private static TranslationTable instance;
 
@@ -102,6 +102,34 @@ public final class TranslationTable {
 
         put("en", "ApplicantListPage.JTable.applicantAwaitingApproval", "Awaiting approval");
         put("cn", "ApplicantListPage.JTable.applicantAwaitingApproval", "等待批准");
+
+        put("en", "ApplicantListPage.JLabel.filterName", "Filter by name:");
+        put("cn", "ApplicantListPage.JLabel.filterName", "姓名过滤： ");
+
+        put("en", "ApplicantListPage.JLabel.filterStatus", "Filter by status: ");
+        put("cn", "ApplicantListPage.JLabel.filterStatus", "状态过滤： ");
+
+        put("en", "ApplicantListPage.JCheckBox.waitingShortlist", "Waiting shortlist");
+        put("cn", "ApplicantListPage.JCheckBox.waitingShortlist", "等待入围");
+
+        put("en", "ApplicantListPage.JCheckBox.shortlisted", "Shortlisted");
+        put("cn", "ApplicantListPage.JCheckBox.shortlisted", "入围了");
+
+        put("en", "ApplicantListPage.JCheckBox.accepted", "Accepted");
+        put("cn", "ApplicantListPage.JCheckBox.accepted", "进入公司");
+
+        put("en", "EditApplicant.JOptionPane.discardConfirm", "Are you sure you want to discard the current changes?");
+        put("cn", "EditApplicant.JOptionPane.discardConfirm", "您确定把当前的更改摒弃吗？");
+
+        put("en", "ShortlistPage.JCheckBox.programming", "Programming");
+
+        put("en", "ShortlistPage.JCheckBox.industrial", "Industrial");
+
+        put("en", "ShortlistPage.JCheckBox.artistic", "Artistic");
+
+        put("en", "ShortlistPage.JCheckBox.communication", "Communication");
+
+
     }
 
     /**
@@ -110,7 +138,7 @@ public final class TranslationTable {
      *
      * @return the instance of the TranslationTable class
      */
-    public static synchronized TranslationTable getInstance() {
+    public static TranslationTable getInstance() {
         if (instance == null) {
             instance = new TranslationTable();
         }
