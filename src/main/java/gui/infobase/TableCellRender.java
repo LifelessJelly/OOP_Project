@@ -53,26 +53,23 @@ public class TableCellRender extends JTextArea implements TableCellRenderer {
         String emailText = main.getLocale("ApplicantListPage.JTable.applicantEmail");
         String genderText = main.getLocale("ApplicantListPage.JTable.applicantGender");
         String skillText = main.getLocale("ApplicantListPage.JTable.applicantSkills");
-        String shortlistText = main.getLocale("ApplicantListPage.JTable.applicantShortlist");
-        String acceptText = main.getLocale("ApplicantListPage.JTable.applicantAccept");
+        String shortlistText = main.getLocale("ApplicantListPage.JTable.applicantStatus");
         String shortlistStatus;
-        String acceptStatus;
 
-        if (applicant.isShortlisted()){
-            shortlistStatus = main.getLocale("ApplicantListPage.JTable.applicantShortlisted");
+        switch (applicant.getStatus()){
+            case Applicant.WAITING_SHORTLIST:
+                shortlistStatus = main.getLocale("ApplicantListPage.JTable.applicantPendingShortlist");
+                break;
+            case Applicant.SHORTLISTED:
+                shortlistStatus = main.getLocale("ApplicantListPage.JTable.applicantShortlisted");
+                break;
+            case Applicant.ACCEPTED:
+                shortlistStatus = main.getLocale("ApplicantListPage.JTable.applicantAccepted");
+                break;
+            default:
+                throw new IllegalArgumentException("This should not happen");
         }
-        else {
-            shortlistStatus = main.getLocale("ApplicantListPage.JTable.applicantPending");
-        }
-        if (applicant.isAccepted()){
-            acceptStatus = main.getLocale("ApplicantListPage.JTable.applicantAccepted");
-        }
-        else if (!applicant.isShortlisted()){
-            acceptStatus = main.getLocale("ApplicantListPage.JTable.applicantPendingShortlist");
-        }
-        else {
-            acceptStatus = main.getLocale("ApplicantListPage.JTable.applicantAwaitingApproval");
-        }
+
         return  nameText + applicant.getName() + '\n' +
                 birthDateText + applicant.getBirthdate() + '\n' +
                 ageText + applicant.getAge() + '\n' +
@@ -80,7 +77,6 @@ public class TableCellRender extends JTextArea implements TableCellRenderer {
                 emailText + applicant.getEmail() + '\n' +
                 genderText + applicant.getGender() + '\n' +
                 skillText + String.join(", ", applicant.getSkills()) + '\n' +
-                shortlistText + shortlistStatus + '\n' +
-                acceptText + acceptStatus + '\n';
+                shortlistText + shortlistStatus + '\n';
     }
 }
