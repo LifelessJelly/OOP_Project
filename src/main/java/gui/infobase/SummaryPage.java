@@ -11,12 +11,15 @@ import java.awt.*;
 
 public class SummaryPage extends JPanel {
     InfobaseMainframe main;
-    private final TableRowSorter<TableModel> sorter;
-    private final JTable table;
+
     public SummaryPage(InfobaseMainframe main) {
         this.main = main;
-        setLayout(new GridBagLayout());
+        this.setLayout(new GridBagLayout());
 
+        initComponent();
+    }
+
+    private void initComponent() {
         JLabel summaryListLabel = new JLabel("Applicant Summary");
         summaryListLabel.setFont(summaryListLabel.getFont().deriveFont(20f));
         GridBagConstraints summaryListConstraints = new GridBagConstraints(0, 0, 1, 1, 0, 0,
@@ -24,8 +27,8 @@ public class SummaryPage extends JPanel {
         this.add(summaryListLabel, summaryListConstraints);
 
         TableModel applicantModel = new ApplicantTableModel(main);
-        table = new JTable(applicantModel);
-        sorter = new TableRowSorter<>(applicantModel);
+        JTable table = new JTable(applicantModel);
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(applicantModel);
         //TableRowSorter uses applicantModel as underlying model
         table.setRowSorter(sorter);
         table.setMinimumSize(new Dimension(700, 300));
@@ -53,8 +56,6 @@ public class SummaryPage extends JPanel {
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
         add(tableScroll, scrollTableConstraints);
 
-
-////////////////////////////
         sorter.setRowFilter(new ApplicantRowFilter(
                 new int[]{ApplicantRowFilter.STAGE_ACCEPTED},
                 "",
