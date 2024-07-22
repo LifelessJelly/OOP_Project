@@ -11,9 +11,11 @@ import java.util.Arrays;
 public class Applicant{
 
     private final ApplicantDetails applicantDetails;
-    private final ApplicantExperience[] applicantPrevExps;
     private final String[] skills;
     private ApplicantMetadata applicantMetadata;
+    public static final int WAITING_SHORTLIST = 1;
+    public static final int SHORTLISTED = 2;
+    public static final int ACCEPTED = 3;
 
     /**
      * Constructs a new Applicant object by copying the details, previous experiences, skills, and metadata from another Applicant object.
@@ -22,12 +24,6 @@ public class Applicant{
      */
     public Applicant(Applicant applicantToCopyFrom){
         this.applicantDetails = new ApplicantDetails(applicantToCopyFrom.applicantDetails);
-        if (applicantToCopyFrom.applicantPrevExps != null) {
-            this.applicantPrevExps = Arrays.copyOf(applicantToCopyFrom.applicantPrevExps, applicantToCopyFrom.applicantPrevExps.length);
-        }
-        else {
-            this.applicantPrevExps = new ApplicantExperience[0];
-        }
         this.skills = Arrays.copyOf(applicantToCopyFrom.skills, applicantToCopyFrom.skills.length);
         this.applicantMetadata = new ApplicantMetadata(applicantToCopyFrom.applicantMetadata);
     }
@@ -43,11 +39,9 @@ public class Applicant{
      * @param gender The gender of the applicant.
      * @param imageBase64 The base64 encoded image of the applicant.
      * @param skills The array of skills possessed by the applicant.
-     * @param applicantPrevExps The array of previous experiences of the applicant.
      */
-    public Applicant(String name, long birthdate, int age, String email, String nric, String gender, String imageBase64, String[] skills, ApplicantExperience[] applicantPrevExps) {
+    public Applicant(String name, long birthdate, int age, String email, String nric, String gender, String imageBase64, String[] skills) {
         this.skills = skills;
-        this.applicantPrevExps = applicantPrevExps;
         applicantMetadata = new ApplicantMetadata();
         applicantDetails = new ApplicantDetails();
         applicantDetails.name = name;
@@ -83,39 +77,29 @@ public class Applicant{
         return skills;
     }
 
-    public ApplicantExperience[] getExperiences() {
-        return applicantPrevExps;
-    }
-
     public String getBirthdate() {
         return LocalDate.ofEpochDay(applicantDetails.birthdate).toString();
     }
+
     public int getAge() {
         return applicantDetails.age;
     }
 
-    public boolean isShortlisted() {
-        return applicantMetadata.isShortlisted;
-    }
-    public boolean isAccepted(){
-        return applicantMetadata.isAccepted;
+    public int getStatus(){
+        return applicantMetadata.status;
     }
 
-    public String getGender() {
-        return applicantDetails.gender;
-    }
-
-    public void setShortlisted(boolean shortlisted) {
-        applicantMetadata.isShortlisted = shortlisted;
-    }
-
-    public void setAccepted(boolean accepted) {
-        applicantMetadata.isAccepted = accepted;
+    public void setStatus(int status){
+        applicantMetadata.status = status;
     }
 
     //for editing
     public void copyApplicantMetadata(Applicant previousApplicantInstance){
         applicantMetadata = previousApplicantInstance.applicantMetadata;
+    }
+
+    public String getGender() {
+        return applicantDetails.gender;
     }
 
 
@@ -163,21 +147,18 @@ public class Applicant{
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private static class ApplicantMetadata {
         private final long applicationDate;
-        private boolean isShortlisted;
-        private boolean isAccepted;
+        private int status;
         private final long interviewDate;
 
         private ApplicantMetadata() {
             applicationDate = System.currentTimeMillis();
-            isShortlisted = false;
-            isAccepted = false;
+            status = WAITING_SHORTLIST;
             interviewDate = -1;
         }
 
         private ApplicantMetadata(ApplicantMetadata applicantMetadataToCopyFrom) {
             this.applicationDate = applicantMetadataToCopyFrom.applicationDate;
-            this.isShortlisted = applicantMetadataToCopyFrom.isShortlisted;
-            this.isAccepted = applicantMetadataToCopyFrom.isAccepted;
+            status = applicantMetadataToCopyFrom.status;
             this.interviewDate = applicantMetadataToCopyFrom.interviewDate;
         }
     }
