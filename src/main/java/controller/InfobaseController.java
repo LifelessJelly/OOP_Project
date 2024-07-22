@@ -39,6 +39,10 @@ public class InfobaseController {
         }
     }
 
+    public void addApplicant(Applicant applicant){
+        applicantDataStorage.addApplicant(applicant);
+    }
+
     public void setApplicantInstance(Applicant applicant, int index){
         this.index = index;
         applicantInstance = applicant;
@@ -109,6 +113,10 @@ public class InfobaseController {
     public void shortlistApplicant(int selectedRow) {
         Applicant applicantsToShortlist = applicantDataStorage.getApplicants()[selectedRow];
         applicantsToShortlist.setShortlisted(true);
+        //Make sure we don't send email to anyone other than steven
+        if (applicantsToShortlist.getEmail().equals("steven_lee@tp.edu.sg")) {
+            new ParallelEmailSequnce("joseph_chiu@outlook.com", "Application to Operate On Peasants LLC", "Greetings, \n We are pleased to announce that you have been shortlisted for interview. Please report to the company building tomorrow 9am. We look forward to seeing you there").run();
+        }
     }
 
     public void acceptApplicant(int selectedRow) {

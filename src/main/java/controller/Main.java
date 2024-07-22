@@ -2,15 +2,7 @@ package controller;
 
 
 import com.formdev.flatlaf.FlatLightLaf;
-import data.Staff;
-import subsystems.ImageBase64;
-
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 
 
 public class Main {
@@ -26,7 +18,7 @@ public class Main {
             throw new RuntimeException(e);
 
         }
-        new InfobaseMainframe(new Staff("I touch kids", Staff.MANAGER));
+        new LoginMainframe();
 
 //        Image image1;
 //        Image image2;

@@ -9,6 +9,7 @@ import gui.JPanelImageButton;
 import javax.swing.*;
 import java.awt.*;
 import java.time.Year;
+import java.util.Objects;
 
 public class EditApplicant extends JPanel {
     InfobaseMainframe main;
@@ -458,6 +459,21 @@ public class EditApplicant extends JPanel {
             updateChangesPanel.add(discardChangesButton, discardChangesConstraints);
         }
         this.add(updateChangesPanel, updateChangesPanelConstraints);
+
+        startYearComboBox.addActionListener(e -> {
+            if (!Objects.equals(startYearComboBox.getSelectedItem(), "Start Year")) {
+                endYearComboBox.setEnabled(true);
+                endYearComboBox.removeAllItems();
+                endYearComboBox.addItem("End Year");
+                for (int i = Year.now().getValue(); i >= Integer.parseInt((String) Objects.requireNonNull(startYearComboBox.getSelectedItem())); --i){
+                    endYearComboBox.addItem(String.valueOf(i));
+                }
+            }
+            else {
+                endYearComboBox.setSelectedIndex(0);
+                endYearComboBox.setEnabled(false);
+            }
+        });
 
         addSkillButton.addActionListener(e -> {
             main.getController().addSkill(editSkillTextField.getText());

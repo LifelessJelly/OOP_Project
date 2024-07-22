@@ -11,7 +11,6 @@ public class EditsDataStorage {
     public EditsDataStorage() {
         skills = new ArrayList<>();
         experience = new ArrayList<>();
-
     }
 
     //skill getter

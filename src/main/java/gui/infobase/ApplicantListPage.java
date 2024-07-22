@@ -1,18 +1,26 @@
 package gui.infobase;
 
 
+import controller.DataIO;
 import controller.InfobaseMainframe;
+import data.Applicant;
 import gui.ImageEmbedded;
 import subsystems.ImageBase64;
+import subsystems.JsonReaderWriter;
 
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ComponentAdapter;
@@ -92,6 +100,26 @@ public class ApplicantListPage extends JPanel{
         GridBagConstraints addApplicantConstraints = new GridBagConstraints(0, 0, 1, 1, 1, 1,
                 GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
         buttonPanel.add(addApplicantButton, addApplicantConstraints);
+        addApplicantButton.addActionListener(e -> {
+            JFileChooser j = getjFileChooser();
+            j.setPreferredSize(new Dimension(640, 480));
+            Action details = j.getActionMap().get("viewTypeDetails");
+            details.actionPerformed(null);
+            int r = j.showOpenDialog(null);
+            File selectedFile;
+            selectedFile = j.getSelectedFile().getAbsoluteFile();
+            if (r == JFileChooser.APPROVE_OPTION) {
+
+                //huge performance impact here, the file gets read twice
+                new Thread(() -> {
+                    Applicant newApplicant = JsonReaderWriter.jsonToModel(DataIO.readFile(selectedFile.getAbsolutePath()), Applicant.class);
+                    main.getController().addApplicant(newApplicant);
+                    updateModel();
+                }).start();
+
+            }
+
+        });
 
         JButton editApplicantButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.EDIT_ICON)));
         GridBagConstraints editApplicantConstraints = new GridBagConstraints(1, 0, 1, 1, 0, 1,
@@ -267,6 +295,29 @@ public class ApplicantListPage extends JPanel{
                 filterField.getText(),
                 skillFilters.toArray(new String[0])));
         table.setRowSorter(sorter);
+    }
+
+    private static JFileChooser getjFileChooser() {
+        JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        j.setFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                if (f.isDirectory()){
+                    return true;
+                }
+                else {
+                    String filename = f.getName().toLowerCase();
+                    return filename.endsWith(".json");
+                }
+            }
+
+            @Override
+            public String getDescription() {
+                return "JSON Files (*.json)";
+            }
+        });
+        j.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        return j;
     }
 }
 

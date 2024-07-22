@@ -235,7 +235,7 @@ public class EmailVerification extends SlidingPanel {
         super.slideInLeft();
         OTP = generateOTPNumber();
         System.out.println(Arrays.toString(OTP));
-//        sendOTPToEmail(OTP);
+        sendOTPToEmail(OTP);
     }
 
     @Override

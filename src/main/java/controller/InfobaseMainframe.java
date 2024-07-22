@@ -4,16 +4,14 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import data.*;
 
-import gui.console.Console;
-import gui.infobase.EditApplicant;
-import gui.infobase.ThemeChooser;
+import gui.infobase.Console;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class InfobaseMainframe extends JFrame {
 
-    private String language;
+    private static String language = "en";
     private final InfobaseController controller;
     private CardLayout cardLayout;
     private Console console;
@@ -32,9 +30,8 @@ public class InfobaseMainframe extends JFrame {
 
 
     public InfobaseMainframe(Staff user){
-        setTheme(TIDE);
+        setTheme(NIGHT);
 
-        this.language = "en";
         this.controller = new InfobaseController(user);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);

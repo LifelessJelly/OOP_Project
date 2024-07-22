@@ -122,12 +122,16 @@ public class TranslationTable {
         put("cn", "EditApplicant.JOptionPane.discardConfirm", "您确定把当前的更改摒弃吗？");
 
         put("en", "ShortlistPage.JCheckBox.programming", "Programming");
+        put("cn", "ShortlistPage.JCheckBox.programming", "Programming");
 
         put("en", "ShortlistPage.JCheckBox.industrial", "Industrial");
+        put("cn", "ShortlistPage.JCheckBox.industrial", "Industrial");
 
         put("en", "ShortlistPage.JCheckBox.artistic", "Artistic");
+        put("cn", "ShortlistPage.JCheckBox.artistic", "Artistic");
 
         put("en", "ShortlistPage.JCheckBox.communication", "Communication");
+        put("cn", "ShortlistPage.JCheckBox.communication", "Communication");
 
 
     }

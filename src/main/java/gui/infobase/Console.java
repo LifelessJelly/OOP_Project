@@ -1,12 +1,9 @@
-package gui.console;
+package gui.infobase;
 
 import controller.InfobaseMainframe;
 import data.Applicant;
 import data.Staff;
-import gui.ImageEmbedded;
 import gui.JPanelImageButton;
-import gui.infobase.*;
-import subsystems.ImageBase64;
 
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
@@ -104,6 +101,15 @@ public class Console extends JPanel {
         settingsButton.setFontSize(15f);
         settingsButton.setTextBoxSize(new Dimension(100, 20));
         buttonSidePanel.add(settingsButton, settingsConstraints);
+        settingsButton.addActionListener(e -> {
+            if (main.getLanguage().equals("en")){
+                main.setLanguage("cn");
+            }
+            else {
+                main.setLanguage("en");
+            }
+            main.reload();
+        });
 
         GridBagConstraints buttonPanelConstraints = new GridBagConstraints(0, 1, 1, 1, 1, 1,
                 GridBagConstraints.NORTHWEST, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0);
@@ -118,14 +124,7 @@ public class Console extends JPanel {
                 GridBagConstraints.NORTHEAST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
         this.add(displayPanel, displayPanelConstraints);
 
-        //for texts, add if needed
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent arg0) {
-                int adjustedFontSizeTitle= getWidth()/45;
-//                lblWelcomename.setFont(new Font("Comic Sans MS", Font.BOLD, (int)adjustedFontSizeTitle));
-            }
-        });
+
     }
     public void showApplicantListPage(){
         editApplicant = null;
