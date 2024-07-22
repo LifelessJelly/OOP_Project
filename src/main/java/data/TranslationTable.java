@@ -3,7 +3,7 @@ package data;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TranslationTable {
+public final class TranslationTable {
 
     private static TranslationTable instance;
 
@@ -82,11 +82,8 @@ public class TranslationTable {
         put("en", "ApplicantListPage.JTable.applicantSkills", "Skills: ");
         put("cn", "ApplicantListPage.JTable.applicantSkills", "某些技能：");
 
-        put("en", "ApplicantListPage.JTable.applicantShortlist", "Shortlist status:  ");
-        put("cn", "ApplicantListPage.JTable.applicantShortlist", "入围状态： ");
-
-        put("en", "ApplicantListPage.JTable.applicantAccept", "Acceptance status: ");
-        put("cn", "ApplicantListPage.JTable.applicantAccept", "进入公司状态： ");
+        put("en", "ApplicantListPage.JTable.applicantStatus", "Status:  ");
+        put("cn", "ApplicantListPage.JTable.applicantStatus", "状态： ");
 
         put("en", "ApplicantListPage.JTable.applicantShortlisted", "Shortlisted for interview");
         put("cn", "ApplicantListPage.JTable.applicantShortlisted", "入围参加面试: ");
@@ -150,8 +147,6 @@ public class TranslationTable {
     }
     
     private void put(String language, String key, String translation) {
-
-
         translationTable.put(new TranslationKey(language, key), translation);
     }
 
