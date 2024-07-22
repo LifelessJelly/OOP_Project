@@ -1,5 +1,6 @@
 package data;
 
+@Deprecated
 public class ApplicantExperience {
 
     private String previousCompanyName;
