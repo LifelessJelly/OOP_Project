@@ -49,14 +49,13 @@ public class InfobaseController {
         image = applicant.getImage();
         editsDataStorageInstance = new EditsDataStorage();
         editsDataStorageInstance.importSkills(applicant.getSkills());
-        editsDataStorageInstance.importExperience(applicant.getExperiences());
     }
 
     public void applyApplicantEdits(String name, int day, String month, int year, String nricFin, String email, String gender){
         String dateString = String.valueOf(day) + ' ' + month + ' ' + year;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH);
         LocalDate localDate = LocalDate.parse(dateString, formatter);
-        Applicant edittedApplicant = new Applicant(name, localDate.toEpochDay(), LocalDate.now().getYear()-localDate.getYear(), email, nricFin, gender, ImageBase64.imageToBase64(image), editsDataStorageInstance.getSkills(), editsDataStorageInstance.getExperience());
+        Applicant edittedApplicant = new Applicant(name, localDate.toEpochDay(), LocalDate.now().getYear()-localDate.getYear(), email, nricFin, gender, ImageBase64.imageToBase64(image), editsDataStorageInstance.getSkills());
         edittedApplicant.copyApplicantMetadata(applicantInstance);
         applicantDataStorage.editApplicant(index, edittedApplicant);
     }
@@ -106,21 +105,15 @@ public class InfobaseController {
         return loggedInStaffInstance;
     }
 
-    public void addExperience(String company, String position, int yearStart, int yearEnd) {
-        editsDataStorageInstance.addExperience(company, position, yearStart, yearEnd);
-    }
-
     public void shortlistApplicant(int selectedRow) {
         Applicant applicantsToShortlist = applicantDataStorage.getApplicants()[selectedRow];
-        applicantsToShortlist.setShortlisted(true);
-        //Make sure we don't send email to anyone other than steven
-        if (applicantsToShortlist.getEmail().equals("steven_lee@tp.edu.sg")) {
-            new ParallelEmailSequnce("joseph_chiu@outlook.com", "Application to Operate On Peasants LLC", "Greetings, \n We are pleased to announce that you have been shortlisted for interview. Please report to the company building tomorrow 9am. We look forward to seeing you there").run();
-        }
+        applicantsToShortlist.setStatus(Applicant.SHORTLISTED);
+        new ParallelEmailSequnce("joseph_chiu@outlook.com", "Application to Operate On Peasants LLC", "Greetings, \n We are pleased to announce that you have been shortlisted for interview. Please report to the company building tomorrow 9am. We look forward to seeing you there").run();
+
     }
 
     public void acceptApplicant(int selectedRow) {
         Applicant applicantToAccept = applicantDataStorage.getApplicants()[selectedRow];
-        applicantToAccept.setAccepted(true);
+        applicantToAccept.setStatus(Applicant.ACCEPTED);
     }
 }
