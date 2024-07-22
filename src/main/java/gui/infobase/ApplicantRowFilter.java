@@ -63,17 +63,17 @@ public class ApplicantRowFilter extends RowFilter<TableModel, Integer> {
                 case STAGE_ANY:
                     return true;
                 case STAGE_AWAITING_SHORTLIST:
-                    if (!applicant.isShortlisted()) {
+                    if (applicant.getStatus() == Applicant.WAITING_SHORTLIST) {
                         return true;
                     }
                     break;
                 case STAGE_AWAITING_ACCEPTANCE:
-                    if (!applicant.isAccepted() && applicant.isShortlisted()) {
+                    if (applicant.getStatus() == Applicant.SHORTLISTED) {
                         return true;
                     }
                     break;
                 case STAGE_ACCEPTED:
-                    if (applicant.isAccepted()) {
+                    if (applicant.getStatus() == Applicant.ACCEPTED) {
                         return true;
                     }
                     break;
