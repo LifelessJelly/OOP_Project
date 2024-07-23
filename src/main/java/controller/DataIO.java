@@ -1,6 +1,7 @@
 package controller;
 
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -20,5 +21,14 @@ public class DataIO {
     }
 
     //TODO add write method
+    public static void writeFile(String directoryOfFile, String content) {
+        try {
+            try (FileWriter fileWriter = new FileWriter(directoryOfFile)) {
+                fileWriter.write(content);
+            }
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 
 }
