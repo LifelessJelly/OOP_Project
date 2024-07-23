@@ -218,6 +218,7 @@ public class RegisterScreen extends JPanel {
 
         backToLoginButton = new JButton("I am already registered");
         backToLoginButton.setFont(backToLoginButton.getFont().deriveFont(16f));
+        backToLoginButton.setBackground(Color.WHITE);
         backToLoginButton.setBorder(BorderFactory.createEmptyBorder());
         backToLoginButton.setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints registerButtonConstraints = new GridBagConstraints(0, 16, 1, 1, 1, 1,

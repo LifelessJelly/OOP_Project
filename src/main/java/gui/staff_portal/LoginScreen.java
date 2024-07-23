@@ -159,6 +159,7 @@ public class LoginScreen extends JPanel {
 
         registerButton = new JButton("Not an registered employee? Click on me!");
         registerButton.setFont(registerButton.getFont().deriveFont(16f));
+        registerButton.setBackground(Color.WHITE);
         registerButton.setBorder(BorderFactory.createEmptyBorder());
         registerButton.setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints registerButtonConstraints = new GridBagConstraints(0, 9, 1, 1, 1, 1,
