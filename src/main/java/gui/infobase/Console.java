@@ -3,11 +3,12 @@ package gui.infobase;
 import controller.InfobaseMainframe;
 import data.Applicant;
 import data.Staff;
+import gui.DropShadowPanel;
+import gui.ImageEmbedded;
 import gui.JPanelImageButton;
+import subsystems.ImageBase64;
 
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 import javax.swing.*;
 
@@ -19,9 +20,9 @@ public class Console extends JPanel {
     private final CardLayout card;
     private EditApplicant editApplicant;
     private JPanelImageButton viewApplicantButton;
-    private JPanelImageButton shortlistApplicantsButton;
     private JPanelImageButton viewSummaryButton;
     private JPanelImageButton settingsButton;
+    private JMenuItem logout;
 
 
     public Console(InfobaseMainframe main){
@@ -36,11 +37,12 @@ public class Console extends JPanel {
     private void initComponents() {
 
         JPanel titlePanel = new JPanel();
+        titlePanel.setBackground(main.isDarkMode() ? Color.BLACK : Color.WHITE);
         titlePanel.setLayout(new GridBagLayout());
 
         JLabel companyIcon = new JLabel(new ImageIcon(main.getImage("MiniCompanyLogo")));
         GridBagConstraints companyIconConstraints = new GridBagConstraints(0, 0, 1, 1, 1, 1,
-                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
+                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 0, 20, 0), 0, 0);
         titlePanel.add(companyIcon, companyIconConstraints);
 
         String jobRole = "";
@@ -50,23 +52,39 @@ public class Console extends JPanel {
         else if (main.getController().getUser().authorised(Staff.HR)){
             jobRole = "(HR)";
         }
-        JLabel userLabel = new JLabel(main.getController().getUser().getDisplayName() + ' ' + jobRole);
-        userLabel.setFont(userLabel.getFont().deriveFont(18f));
+        JMenuBar mb = new JMenuBar();
+        mb.setBackground(main.isDarkMode() ? Color.BLACK : Color.WHITE);
+        mb.setBorder(BorderFactory.createEmptyBorder());
+        mb.putClientProperty("JMenuBar.selectionBackground", main.isDarkMode() ? Color.BLACK : Color.WHITE);
+
+        JMenu userMenu = new JMenu();
+        userMenu.setIcon(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.PROFILE_ICON)));
+        userMenu.setText(main.getController().getUser().getDisplayName() + ' ' + jobRole);
+        userMenu.setFont(userMenu.getFont().deriveFont(18f));
+
+
+        logout = new JMenuItem("Logout");
+        logout.setFont(logout.getFont().deriveFont(18f));
+        userMenu.add(logout);
+
+        mb.add(userMenu);
+
         GridBagConstraints userLabelConstraints = new GridBagConstraints(1, 0, 1, 1, 1, 1,
                 GridBagConstraints.NORTHEAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
-        titlePanel.add(userLabel, userLabelConstraints);
+        titlePanel.add(mb, userLabelConstraints);
 
-        GridBagConstraints titlePanelConstraints = new GridBagConstraints(0, 0, 2, 1, .1, 0.1,
+        GridBagConstraints titlePanelConstraints = new GridBagConstraints(0, 0, 2, 1, 1, 0,
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0);
 
         this.add(titlePanel, titlePanelConstraints);
 
         JPanel buttonSidePanel = new JPanel();
         buttonSidePanel.setLayout(new GridBagLayout());
-        ((GridBagLayout)buttonSidePanel.getLayout()).columnWeights = new double[]{0, 0, 0, 1e-4};
-        ((GridBagLayout)buttonSidePanel.getLayout()).rowWeights = new double[]{0, 0, 0, 1e-4};
+        buttonSidePanel.setBackground(main.isDarkMode() ? Color.BLACK : Color.WHITE);
+        ((GridBagLayout)buttonSidePanel.getLayout()).rowWeights = new double[]{0, 0, 1e-4};
 
         viewApplicantButton = new JPanelImageButton("View Applicants", miau, miau, 60, 60, JPanelImageButton.BOTTOM);
+        viewApplicantButton.setButtonBackground(main.isDarkMode() ? Color.BLACK : Color.WHITE);
         GridBagConstraints viewApplicantConstraints = new GridBagConstraints(0, 0, 1, 1, 1, 0,
                 GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
         viewApplicantButton.setFontSize(14f);
@@ -74,39 +92,34 @@ public class Console extends JPanel {
         buttonSidePanel.add(viewApplicantButton, viewApplicantConstraints);
 
 
-        if (main.getController().getUser().authorised(Staff.MANAGER)) {
-            shortlistApplicantsButton = new JPanelImageButton("Shortlist Applicants", miau, miau, 60, 60, JPanelImageButton.BOTTOM);
-            GridBagConstraints shortlistApplicantsConstraints = new GridBagConstraints(0, 1, 1, 1, 1, 0,
-                    GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
-            shortlistApplicantsButton.setFontSize(11f);
-            shortlistApplicantsButton.setTextBoxSize(new Dimension(100, 20));
-            buttonSidePanel.add(shortlistApplicantsButton, shortlistApplicantsConstraints);
 
+        viewSummaryButton = new JPanelImageButton("View Summary", miau, miau, 60, 60, JPanelImageButton.BOTTOM);
+        viewSummaryButton.setButtonBackground(main.isDarkMode() ? Color.BLACK : Color.WHITE);
+        if (!main.getController().getUser().authorised(Staff.MANAGER)) {
+            viewSummaryButton.setVisible(false);
         }
+        GridBagConstraints viewSummaryConstraints = new GridBagConstraints(0, 1, 1, 1, 1, 0,
+                GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
+        viewSummaryButton.setFontSize(15f);
+        viewSummaryButton.setTextBoxSize(new Dimension(100, 20));
+        buttonSidePanel.add(viewSummaryButton, viewSummaryConstraints);
 
-        if (main.getController().getUser().authorised(Staff.MANAGER)){
-            viewSummaryButton = new JPanelImageButton("View Summary", miau, miau, 60, 60, JPanelImageButton.BOTTOM);
-            GridBagConstraints viewSummaryConstraints = new GridBagConstraints(0, 2, 1, 1, 1, 0,
-                    GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
-            viewSummaryButton.setFontSize(15f);
-            viewSummaryButton.setTextBoxSize(new Dimension(100, 20));
-            buttonSidePanel.add(viewSummaryButton, viewSummaryConstraints);
-        }
 
         settingsButton = new JPanelImageButton("Settings", miau, miau, 60, 60, JPanelImageButton.BOTTOM);
-        GridBagConstraints settingsConstraints = new GridBagConstraints(0, 3, 1, 1, 1, 0,
+        settingsButton.setButtonBackground(main.isDarkMode() ? Color.BLACK : Color.WHITE);
+        GridBagConstraints settingsConstraints = new GridBagConstraints(0, 2, 1, 1, 1, 0,
                 GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
         settingsButton.setFontSize(15f);
         settingsButton.setTextBoxSize(new Dimension(100, 20));
         buttonSidePanel.add(settingsButton, settingsConstraints);
 
 
-        GridBagConstraints buttonPanelConstraints = new GridBagConstraints(0, 1, 1, 1, 1, 1,
+        GridBagConstraints buttonPanelConstraints = new GridBagConstraints(0, 1, 1, 1, 0, 1,
                 GridBagConstraints.NORTHWEST, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0);
 
         this.add(buttonSidePanel, buttonPanelConstraints);
 
-        displayPanel = new JPanel();
+        displayPanel = new DropShadowPanel(20);
         displayPanel.setLayout(card);
         showApplicantListPage();
 
@@ -119,7 +132,6 @@ public class Console extends JPanel {
 
     private void initListeners() {
         viewApplicantButton.addActionListener(e -> showApplicantListPage());
-        shortlistApplicantsButton.addActionListener(e -> showShortlistApplicantPage());
         viewSummaryButton.addActionListener(e -> showSummaryPage());
         settingsButton.addActionListener(e -> {
             if (main.getLanguage().equals("en")){
@@ -129,6 +141,9 @@ public class Console extends JPanel {
                 main.setLanguage("en");
             }
             main.reload();
+        });
+        logout.addActionListener(e -> {
+            main.logout();
         });
     }
 
