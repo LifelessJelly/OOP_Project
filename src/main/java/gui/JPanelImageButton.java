@@ -13,6 +13,7 @@ public class JPanelImageButton extends JPanel{
     public static final int BOTTOM = 3;
     private final InvisibleButton invisibleButton;
     private final JLabel text;
+    private final JLabel imageLabel;
 
     public JPanelImageButton(String textDisplayed, String base64ImageOff, String base64ImageOn, int width, int height, int position) {
         GridBagConstraints textPosConstraints;
@@ -51,7 +52,7 @@ public class JPanelImageButton extends JPanel{
                 new Insets(0, 0, 0, 0), 0, 0);
         ImageIcon scaledImage = new ImageIcon(ImageBase64.base64ToImage(base64ImageOff).getScaledInstance(width, height, Image.SCALE_SMOOTH));
         invisibleButton = new InvisibleButton();
-        JLabel imageLabel = new JLabel(scaledImage);
+        imageLabel = new JLabel(scaledImage);
         imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         text = new JLabel(textDisplayed);
         text.setMinimumSize(new Dimension(150, height));
@@ -86,6 +87,14 @@ public class JPanelImageButton extends JPanel{
 
     public void setFontSize(float size){
         text.setFont(text.getFont().deriveFont(size));
+    }
+
+    public void setButtonBackground(Color color){
+        text.setBackground(color);
+        imageLabel.setBackground(color);
+        invisibleButton.setBackground(color);
+        this.setBackground(color);
+
     }
 
 }
