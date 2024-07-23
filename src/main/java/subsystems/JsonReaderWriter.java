@@ -1,11 +1,12 @@
 package subsystems;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.lang.reflect.InvocationTargetException;
 
 public class JsonReaderWriter {
-    private static final Gson gson = new Gson();
+    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     /**
      * Constructs an instance of a class model from the given input json string. If an invalid json string is given,
