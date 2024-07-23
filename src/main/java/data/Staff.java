@@ -38,7 +38,7 @@ public class Staff {
             default:
                 throw new IllegalArgumentException("Invalid security level");
         }
-        return securityLevelRequired >= this.securityLevel;
+        return securityLevelRequired == this.securityLevel;
     }
 
     //updates the staff credentials, creating a new String that has the hashed staff credentials
