@@ -53,6 +53,21 @@ public class Applicant{
         applicantDetails.imageBase64 = imageBase64;
     }
 
+    public Applicant(String name, long birthdate, int age, String email, String nric, String gender, String imageBase64, String[] skills, Applicant oldApplicant) {
+        this.skills = skills;
+        applicantMetadata = oldApplicant.applicantMetadata;
+        applicantDetails = new ApplicantDetails();
+        applicantDetails.name = name;
+        applicantDetails.birthdate = birthdate;
+        applicantDetails.age = age;
+        applicantDetails.email = email;
+        applicantDetails.nric = nric;
+        applicantDetails.gender = gender;
+        applicantDetails.imageBase64 = imageBase64;
+    }
+
+
+
     public BufferedImage getImage(){
         return ImageBase64.base64ToImage(applicantDetails.imageBase64);
     }
