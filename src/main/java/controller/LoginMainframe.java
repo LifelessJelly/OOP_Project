@@ -1,5 +1,6 @@
 package controller;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import gui.staff_portal.LoginScreen;
 import gui.staff_portal.RegisterScreen;
 
@@ -12,6 +13,14 @@ public class LoginMainframe extends JFrame {
     JPanel registerPanel;
     private LoginController loginController;
     public LoginMainframe() {
+
+        try {
+            UIManager.setLookAndFeel(new FlatLightLaf());
+            SwingUtilities.updateComponentTreeUI(this);
+        } catch (UnsupportedLookAndFeelException e) {
+            throw new RuntimeException(e);
+
+        }
         loginController = new LoginController();
         this.cardLayout = new CardLayout();
         this.loginPanel = new LoginScreen(this);
