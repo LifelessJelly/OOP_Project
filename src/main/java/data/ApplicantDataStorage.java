@@ -9,7 +9,7 @@ public class ApplicantDataStorage {
         applicants = new ArrayList<>();
     }
     public void addApplicant(Applicant applicant) {
-        applicants.add(applicant);
+        applicants.add(0, applicant);
     }
     public void removeApplicant(int index) {
         applicants.remove(index);
