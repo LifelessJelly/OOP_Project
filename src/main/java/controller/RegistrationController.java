@@ -1,7 +1,6 @@
 package controller;
 
 import data.Applicant;
-import data.ApplicantExperience;
 import data.EditsDataStorage;
 
 import java.awt.*;
@@ -31,22 +30,6 @@ public class RegistrationController {
         datastorage.removeSkill(index);
     }
 
-    public ApplicantExperience[] getExperience() {
-        return datastorage.getExperience();
-    }
-
-    public void addExperience(String company, String position, int yearStart, int yearEnd) {
-        datastorage.addExperience(company, position, yearStart, yearEnd);
-    }
-
-    public void removeExperience(int index) {
-        datastorage.removeExperience(index);
-    }
-
-    public void registerExperience(ApplicantExperience[] experience) {
-        registrator.registerApplicantExperiences(experience);
-    }
-
     public String getEmail() {
         return registrator.getEmail();
     }
@@ -54,7 +37,6 @@ public class RegistrationController {
     public void registerImageBase64(Image imageBase64) {
         registrator.registerImageFromBase64(imageBase64);
     }
-
 
     public Applicant createApplicant() {
         return registrator.createApplicant();
