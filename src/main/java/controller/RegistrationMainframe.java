@@ -124,7 +124,6 @@ public class RegistrationMainframe extends JFrame {
                 new BasicUserInfo(this),
                 new EmailVerification(this),
                 new SkillsInfo(this),
-                new JobExperiences(this),
                 new UploadImage(this),
                 new EndScreen(this));
         panels.get(0).setVisible(true);
