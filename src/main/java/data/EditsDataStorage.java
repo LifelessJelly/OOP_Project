@@ -2,15 +2,21 @@ package data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 
 public class EditsDataStorage {
+
+    private String name;
+    private long birthdate;
+    private int age;
+    private String gender;
+    private String nric;
+    private String imageBase64;
+    private String email;
+
     private final ArrayList<String> skills;
-    private final ArrayList<ApplicantExperience> experience;
 
     public EditsDataStorage() {
         skills = new ArrayList<>();
-        experience = new ArrayList<>();
     }
 
     //skill getter
@@ -29,21 +35,13 @@ public class EditsDataStorage {
     }
 
     //get applicant experience array
-    public ApplicantExperience[] getExperience() {
-        return experience.toArray(new ApplicantExperience[0]);
-    }
 
     public void importSkills(String[] skills) {
         if (skills != null) {
             this.skills.addAll(Arrays.asList(skills));
         }
     }
-
     //add applicant experience array
     //remove the experience, pass through index
-    public void removeExperience(int index){
-        experience.remove(index);
-    }
-
 
 }
