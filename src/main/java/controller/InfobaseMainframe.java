@@ -104,6 +104,11 @@ public class InfobaseMainframe extends JFrame {
         new InfobaseMainframe(controller.getUser());
     }
 
+    public void logout(){
+        this.dispose();
+        new LoginMainframe();
+    }
+
     public void showShortlistPage() {
         console.showShortlistPage();
     }
@@ -114,7 +119,7 @@ public class InfobaseMainframe extends JFrame {
         if (theme <= NIGHT) {
             try {
                 UIManager.setLookAndFeel(darkMode);
-                mainthemeColour = Color.BLACK;
+                mainthemeColour = new Color(47, 47, 47);
             } catch (UnsupportedLookAndFeelException e) {
                 throw new RuntimeException(e);
             }
