@@ -154,4 +154,8 @@ public class InfobaseMainframe extends JFrame {
     public boolean isDarkMode(){
         return currentTheme <= NIGHT;
     }
+
+    public void showApplicantListPageWithAnimation() {
+        console.showApplicantWithAnimation();
+    }
 }
