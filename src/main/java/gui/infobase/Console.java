@@ -23,6 +23,7 @@ public class Console extends JPanel {
     private JPanelImageButton viewSummaryButton;
     private JPanelImageButton settingsButton;
     private JMenuItem logout;
+    private ApplicantShowAndEditLayer layer;
 
 
     public Console(InfobaseMainframe main){
@@ -92,7 +93,6 @@ public class Console extends JPanel {
         buttonSidePanel.add(viewApplicantButton, viewApplicantConstraints);
 
 
-
         viewSummaryButton = new JPanelImageButton("View Summary", miau, miau, 60, 60, JPanelImageButton.BOTTOM);
         viewSummaryButton.setButtonBackground(main.isDarkMode() ? Color.BLACK : Color.WHITE);
         if (!main.getController().getUser().authorised(Staff.MANAGER)) {
@@ -119,7 +119,7 @@ public class Console extends JPanel {
 
         this.add(buttonSidePanel, buttonPanelConstraints);
 
-        displayPanel = new DropShadowPanel(20);
+        displayPanel = new DropShadowPanel(10);
         displayPanel.setLayout(card);
         showApplicantListPage();
 
@@ -127,6 +127,7 @@ public class Console extends JPanel {
                 GridBagConstraints.NORTHEAST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
         this.add(displayPanel, displayPanelConstraints);
 
+        System.out.println("panel width: " + displayPanel.getSize().getWidth() + " panel height: " + displayPanel.getSize().getHeight());
 
     }
 
@@ -147,20 +148,31 @@ public class Console extends JPanel {
         });
     }
 
-    public void showApplicantListPage(){
-        editApplicant = null;
-        System.gc();
+    private void addApplicantLayeredPane(){
+        layer = new ApplicantShowAndEditLayer(main);
+        displayPanel.add(layer, "ApplicantShowAndEditLayer");
+        card.show(displayPanel, "ApplicantShowAndEditLayer");
+    }
 
-        ApplicantListPage applicantListPage = new ApplicantListPage(main);
-        displayPanel.add(applicantListPage, "ApplicantListPage");
-        card.show(displayPanel, "ApplicantListPage");
+    public void showApplicantListPage(){
+        addApplicantLayeredPane();
+        System.gc();
+    }
+
+    public void showApplicantWithAnimation(){
+        layer.switchToApplicantListPage();
+        main.getContentPane().validate();
+        main.getContentPane().repaint();
+
+        System.gc();
     }
 
     public void showEditApplicant(Applicant applicant, int index){
+        layer.switchToEditApplicantPage(applicant, index);
+        main.getContentPane().validate();
+        main.getContentPane().repaint();
+
         System.gc();
-        editApplicant = new EditApplicant(applicant, index, main);
-        displayPanel.add(editApplicant, "EditApplicant");
-        card.show(displayPanel, "EditApplicant");
     }
 
     public void showShortlistApplicantPage(){
@@ -177,15 +189,10 @@ public class Console extends JPanel {
         card.show(displayPanel, "ShortlistPage");
     }
 
-    public void showAcceptPage(){
-        AcceptPage acceptPage = new AcceptPage(main);
-        displayPanel.add(acceptPage, "AcceptPage");
-        card.show(displayPanel, "AcceptPage");
-    }
-
     public void showSummaryPage() {
         SummaryPage summaryPage = new SummaryPage(main);
         displayPanel.add(summaryPage, "SummaryPage");
         card.show(displayPanel, "SummaryPage");
     }
+
 }
