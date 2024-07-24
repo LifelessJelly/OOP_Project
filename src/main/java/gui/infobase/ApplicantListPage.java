@@ -41,10 +41,14 @@ public class ApplicantListPage extends JPanel{
     private JCheckBox communicationCheckBox;
     private JButton addApplicantButton;
     private JButton editApplicantButton;
+    private double zoomFactor;
+    private float alpha;
 
     public ApplicantListPage(InfobaseMainframe mainframe) {
         this.main = mainframe;
         this.setLayout(new GridBagLayout());
+        this.zoomFactor = 1;
+        this.alpha = 1;
 
         initComponents();
         initListeners();
@@ -175,35 +179,28 @@ public class ApplicantListPage extends JPanel{
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridBagLayout());
 
+        //HR Staff button set
+        if (main.getController().getUser().authorised(Staff.HR)){
             addApplicantButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.ADD_APPLICANT_ICON)));
-            if (!main.getController().getUser().authorised(Staff.HR)){
-                addApplicantButton.setVisible(false);
-            }
             addApplicantButton.setBorder(BorderFactory.createEmptyBorder());
             GridBagConstraints addApplicantConstraints = new GridBagConstraints(0, 0, 1, 1, 1, 1,
                     GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
             buttonPanel.add(addApplicantButton, addApplicantConstraints);
 
-
-        editApplicantButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.EDIT_ICON)));
-        if (!main.getController().getUser().authorised(Staff.HR)) {
-            editApplicantButton.setVisible(false);
+            editApplicantButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.EDIT_ICON)));
+            editApplicantButton.setBorder(BorderFactory.createEmptyBorder());
+            GridBagConstraints editApplicantConstraints = new GridBagConstraints(1, 0, 1, 1, 0, 1,
+                    GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
+            buttonPanel.add(editApplicantButton, editApplicantConstraints);
         }
-        editApplicantButton.setBorder(BorderFactory.createEmptyBorder());
-        GridBagConstraints editApplicantConstraints = new GridBagConstraints(1, 0, 1, 1, 0, 1,
-                GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
-        buttonPanel.add(editApplicantButton, editApplicantConstraints);
+        if (main.getController().getUser().authorised(Staff.MANAGER)){
+            JButton shortlistApplicantButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.ADD_TO_SHORTLIST_ICON)));
 
-
-        JButton shortlistApplicantButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.ADD_TO_SHORTLIST_ICON)));
-        if (!main.getController().getUser().authorised(Staff.MANAGER)) {
-            shortlistApplicantButton.setVisible(false);
+            shortlistApplicantButton.setBorder(BorderFactory.createEmptyBorder());
+            GridBagConstraints shortlistApplicantConstraints = new GridBagConstraints(2, 0, 1, 1, 1, 1,
+                    GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
+            buttonPanel.add(shortlistApplicantButton, shortlistApplicantConstraints);
         }
-        shortlistApplicantButton.setBorder(BorderFactory.createEmptyBorder());
-        GridBagConstraints shortlistApplicantConstraints = new GridBagConstraints(2, 0, 1, 1, 0, 1,
-                GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
-        buttonPanel.add(shortlistApplicantButton, shortlistApplicantConstraints);
-
 
         GridBagConstraints buttonPanelConstraints = new GridBagConstraints(0, 2, 1, 1, 0, 0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
@@ -242,52 +239,53 @@ public class ApplicantListPage extends JPanel{
 
         communicationCheckBox.addActionListener(e -> updateModel());
 
-        addApplicantButton.addActionListener(e -> {
-            JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-            j.setFileFilter(new FileFilter() {
-                @Override
-                public boolean accept(File f) {
-                    if (f.isDirectory()){
-                        return true;
+        //HR Staff button set
+        if (main.getController().getUser().authorised(Staff.HR)) {
+            addApplicantButton.addActionListener(e -> {
+                JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+                j.setFileFilter(new FileFilter() {
+                    @Override
+                    public boolean accept(File f) {
+                        if (f.isDirectory()) {
+                            return true;
+                        } else {
+                            String filename = f.getName().toLowerCase();
+                            return filename.endsWith(".json");
+                        }
                     }
-                    else {
-                        String filename = f.getName().toLowerCase();
-                        return filename.endsWith(".json");
-                    }
-                }
 
-                @Override
-                public String getDescription() {
-                    return "JSON Files (*.json)";
+                    @Override
+                    public String getDescription() {
+                        return "JSON Files (*.json)";
+                    }
+                });
+                j.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                j.setPreferredSize(new Dimension(640, 480));
+                Action details = j.getActionMap().get("viewTypeDetails");
+                details.actionPerformed(null);
+                int r = j.showOpenDialog(null);
+                File selectedFile;
+                selectedFile = j.getSelectedFile().getAbsoluteFile();
+                if (r == JFileChooser.APPROVE_OPTION) {
+
+                    //huge performance impact here, the file gets read twice
+                    new Thread(() -> {
+                        Applicant newApplicant = JsonReaderWriter.jsonToModel(DataIO.readFile(selectedFile.getAbsolutePath()), Applicant.class);
+                        main.getController().addApplicant(newApplicant);
+                        updateModel();
+                    }).start();
+
                 }
             });
-            j.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            j.setPreferredSize(new Dimension(640, 480));
-            Action details = j.getActionMap().get("viewTypeDetails");
-            details.actionPerformed(null);
-            int r = j.showOpenDialog(null);
-            File selectedFile;
-            selectedFile = j.getSelectedFile().getAbsoluteFile();
-            if (r == JFileChooser.APPROVE_OPTION) {
 
-                //huge performance impact here, the file gets read twice
-                new Thread(() -> {
-                    Applicant newApplicant = JsonReaderWriter.jsonToModel(DataIO.readFile(selectedFile.getAbsolutePath()), Applicant.class);
-                    main.getController().addApplicant(newApplicant);
-                    updateModel();
-                }).start();
-
-            }
-
-        });
-        editApplicantButton.addActionListener(e -> {
-            int selectedRow = table.convertRowIndexToModel(table.getSelectedRow());
-            if (selectedRow == -1) {
-                return;
-            }
-            main.showEditApplicant(main.getController().getApplicants()[selectedRow], selectedRow);
-
-        });
+            editApplicantButton.addActionListener(e -> {
+                int selectedRow = table.convertRowIndexToModel(table.getSelectedRow());
+                if (selectedRow == -1) {
+                    return;
+                }
+                main.showEditApplicant(main.getController().getApplicants()[selectedRow], selectedRow);
+            });
+        }
 
         this.addComponentListener(new ComponentAdapter() {
             @Override
@@ -331,6 +329,35 @@ public class ApplicantListPage extends JPanel{
                 filterField.getText(),
                 skillFilters.toArray(new String[0])));
         table.setRowSorter(sorter);
+    }
+
+    public double getZoomFactor(){
+        return zoomFactor;
+    }
+
+    public void incrementKeyframe(double zoomFactor, float alpha){
+        this.zoomFactor += zoomFactor;
+        this.alpha += alpha;
+        main.getContentPane().validate();
+        main.getContentPane().repaint();
+    }
+
+    public void decrementKeyframe(double zoomFactor, float alpha){
+        this.zoomFactor -= zoomFactor;
+        this.alpha -= alpha;
+        main.getContentPane().validate();
+        main.getContentPane().repaint();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.translate(this.getWidth()/2, this.getHeight()/2);
+        g2.scale(zoomFactor, zoomFactor);
+        System.out.println("Alpha: " + alpha);
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+        g2.translate(-this.getWidth()/2, -this.getHeight()/2);
     }
 }
 

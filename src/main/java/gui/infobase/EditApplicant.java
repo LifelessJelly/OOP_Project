@@ -40,11 +40,16 @@ public class EditApplicant extends JPanel {
     JPanel updateChangesPanel;
     private JPanelImageButton discardChangesButton;
     private JPanelImageButton saveChangesButton;
+    private double zoomFactor;
+    private float alpha;
+
 
     public EditApplicant(Applicant applicant, int index, InfobaseMainframe main) {
         this.main = main;
         this.applicant = applicant;
         this.main.getController().setApplicantInstance(applicant, index);
+        this.zoomFactor = 1.2;
+        this.alpha = 0;
         initComponents();
         initListeners();
     }
@@ -330,7 +335,7 @@ public class EditApplicant extends JPanel {
         });
         discardChangesButton.addActionListener(e -> {
             if (JOptionPane.showConfirmDialog(null, main.getLocale("EditApplicant.JOptionPane.discardConfirm"), "", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
-                main.showApplicantListPage();
+                main.showApplicantListPageWithAnimation();
             }
         });
         addSkillButton.addActionListener(e -> {
@@ -340,6 +345,24 @@ public class EditApplicant extends JPanel {
         });
     }
 
+    public double getZoomFactor(){
+        return zoomFactor;
+    }
+
+    public void incrementKeyframe(double zoomFactor, float alpha){
+        this.zoomFactor -= zoomFactor;
+        this.alpha += alpha;
+        main.getContentPane().validate();
+        main.getContentPane().repaint();
+    }
+
+    public void decrementKeyframe(double zoomFactor, float alpha){
+        this.zoomFactor += zoomFactor;
+        this.alpha -= alpha;
+        main.getContentPane().validate();
+        main.getContentPane().repaint();
+    }
+
     private DefaultListModel<String> getSkillsModel(){
         DefaultListModel<String> skillsModel = new DefaultListModel<>();
         for (String skill : main.getController().getSkills()){
@@ -347,6 +370,14 @@ public class EditApplicant extends JPanel {
         }
         return skillsModel;
     }
-
-
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.translate(this.getWidth()/2, this.getHeight()/2);
+        g2.scale(zoomFactor, zoomFactor);
+        System.out.println("Alpha: " + alpha);
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+        g2.translate(-this.getWidth()/2, -this.getHeight()/2);
+    }
 }
