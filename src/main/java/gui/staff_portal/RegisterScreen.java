@@ -67,8 +67,8 @@ public class RegisterScreen extends JPanel {
 
         JLabel companyLogo = new JLabel(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.COMPANY_LOGO)));
         GridBagConstraints companyLogoConstraints = new GridBagConstraints(0, 0, 1, 1, 1, 1,
-                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
-                new Insets(75, 75, 0, 0), 0, 0);
+                GridBagConstraints.CENTER, GridBagConstraints.NONE,
+                new Insets(75, 0, 0, 0), 0, 0);
         registrationPanel.add(companyLogo, companyLogoConstraints);
 
         JPanel domainPanel = new JPanel(new GridBagLayout());
@@ -77,8 +77,8 @@ public class RegisterScreen extends JPanel {
         JLabel domainLabel = new JLabel("What job role are you assigned?");
         domainLabel.setFont(domainLabel.getFont().deriveFont(18f));
         GridBagConstraints domainLabelConstraints = new GridBagConstraints(0, 1, 1, 1, 1, 1,
-                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
-                new Insets(10, 75, 0, 0), 0, 0);
+                GridBagConstraints.CENTER, GridBagConstraints.NONE,
+                new Insets(10, 0, 0, 0), 0, 0);
         registrationPanel.add(domainLabel, domainLabelConstraints);
 
         ButtonGroup domainButtonGroup = new ButtonGroup();
@@ -88,7 +88,7 @@ public class RegisterScreen extends JPanel {
         hrButton.setFont(hrButton.getFont().deriveFont(18f));
         domainButtonGroup.add(hrButton);
         GridBagConstraints HRButtonConstraints = new GridBagConstraints(0, 0, 1, 1, 1, 1,
-                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
+                GridBagConstraints.CENTER, GridBagConstraints.NONE,
                 new Insets(0, 10, 0, 0), 0, 0);
         domainPanel.add(hrButton, HRButtonConstraints);
 
@@ -98,21 +98,21 @@ public class RegisterScreen extends JPanel {
         managerButton.setFont(managerButton.getFont().deriveFont(18f));
         domainButtonGroup.add(managerButton);
         GridBagConstraints ManagerButtonConstraints = new GridBagConstraints(1, 0, 1, 1, 1, 1,
-                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
+                GridBagConstraints.CENTER, GridBagConstraints.NONE,
                 new Insets(0, 10, 0, 0), 0, 0);
         domainPanel.add(managerButton, ManagerButtonConstraints);
 
 
         GridBagConstraints domainPanelConstraints = new GridBagConstraints(0, 2, 1, 1, 1, 1,
-                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
-                new Insets(20, 75, 0, 0), 0, 0);
+                GridBagConstraints.CENTER, GridBagConstraints.NONE,
+                new Insets(20, 0, 0, 0), 0, 0);
         registrationPanel.add(domainPanel, domainPanelConstraints);
 
-        JLabel displayNameLabel = new JLabel("DisplayName: ");
+        JLabel displayNameLabel = new JLabel("Display name: ");
         displayNameLabel.setFont(displayNameLabel.getFont().deriveFont(18f));
         GridBagConstraints displqyNameConstraints = new GridBagConstraints(0, 3, 1, 1, 1, 1,
-                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
-                new Insets(10, 75, 0, 0), 0, 0);
+                GridBagConstraints.CENTER, GridBagConstraints.NONE,
+                new Insets(10, 0, 0, 0), 0, 0);
         registrationPanel.add(displayNameLabel, displqyNameConstraints);
 
         displayNameField = new JTextField();
@@ -120,15 +120,15 @@ public class RegisterScreen extends JPanel {
         displayNameField.setMinimumSize(new Dimension(500, 50));
         displayNameField.setFont(displayNameField.getFont().deriveFont(18f));
         GridBagConstraints displayNameConstraints = new GridBagConstraints(0, 4, 1, 1, 1, 1,
-                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
-                new Insets(10, 75, 0, 0), 0, 0);
+                GridBagConstraints.CENTER, GridBagConstraints.NONE,
+                new Insets(10, 0, 0, 0), 0, 0);
         registrationPanel.add(displayNameField, displayNameConstraints);
 
         JLabel usernameLabel = new JLabel("Username: ");
         usernameLabel.setFont(usernameLabel.getFont().deriveFont(18f));
         GridBagConstraints usernameLabelConstraints = new GridBagConstraints(0, 5, 1, 1, 1, 1,
-                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
-                new Insets(10, 75, 0, 0), 0, 0);
+                GridBagConstraints.CENTER, GridBagConstraints.NONE,
+                new Insets(10, 0, 0, 0), 0, 0);
         registrationPanel.add(usernameLabel, usernameLabelConstraints);
 
         usernameField = new JTextField();
@@ -136,22 +136,22 @@ public class RegisterScreen extends JPanel {
         usernameField.setMinimumSize(new Dimension(500, 50));
         usernameField.setFont(usernameField.getFont().deriveFont(18f));
         GridBagConstraints usernameFieldConstraints = new GridBagConstraints(0, 6, 1, 1, 1, 1,
-                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
-                new Insets(10, 75, 0, 0), 0, 0);
+                GridBagConstraints.CENTER, GridBagConstraints.NONE,
+                new Insets(10, 0, 0, 0), 0, 0);
         registrationPanel.add(usernameField, usernameFieldConstraints);
 
         signedUpAlrWarningLabel = new JLabel("");
         signedUpAlrWarningLabel.setForeground(UNMET_REQUIREMENT_COLOUR);
         GridBagConstraints signedUpAlrWarningLabelConstraints = new GridBagConstraints(0, 7, 1, 1, 1, 1,
-                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
-                new Insets(10, 75, 0, 0), 0, 0);
+                GridBagConstraints.CENTER, GridBagConstraints.NONE,
+                new Insets(10, 0, 0, 0), 0, 0);
         registrationPanel.add(signedUpAlrWarningLabel, signedUpAlrWarningLabelConstraints);
 
         JLabel passwordLabel = new JLabel("Password: ");
         passwordLabel.setFont(passwordLabel.getFont().deriveFont(18f));
         GridBagConstraints passwordLabelConstraints = new GridBagConstraints(0, 8, 1, 1, 1, 1,
-                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
-                new Insets(10, 75, 0, 0), 0, 0);
+                GridBagConstraints.CENTER, GridBagConstraints.NONE,
+                new Insets(10, 0, 0, 0), 0, 0);
         registrationPanel.add(passwordLabel, passwordLabelConstraints);
 
         passwordField = new JPasswordField();
@@ -159,47 +159,47 @@ public class RegisterScreen extends JPanel {
         passwordField.setMinimumSize(new Dimension(500, 50));
         passwordField.setFont(passwordField.getFont().deriveFont(18f));
         GridBagConstraints passwordFieldConstraints = new GridBagConstraints(0, 9, 1, 1, 1, 1,
-                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
-                new Insets(10, 75, 0, 0), 0, 0);
+                GridBagConstraints.CENTER, GridBagConstraints.NONE,
+                new Insets(10, 0, 0, 0), 0, 0);
         registrationPanel.add(passwordField, passwordFieldConstraints);
 
         JLabel passwordRequirementLabel = new JLabel("Your password must include at least: ");
         passwordRequirementLabel.setFont(passwordRequirementLabel.getFont().deriveFont(18f));
         GridBagConstraints passwordRequirementConstraint = new GridBagConstraints(0, 10, 1, 1, 1, 1,
-                GridBagConstraints.NORTHWEST,GridBagConstraints.NONE,
-                new Insets(10, 75, 0, 0), 0, 0);
+                GridBagConstraints.CENTER,GridBagConstraints.NONE,
+                new Insets(10, 0, 0, 0), 0, 0);
         registrationPanel.add(passwordRequirementLabel, passwordRequirementConstraint);
 
         upperLowerCaseLabel = new JLabel("An upper case (A-Z) and lower case (a-z) alphabet");
         upperLowerCaseLabel.setFont(upperLowerCaseLabel.getFont().deriveFont(18f));
         upperLowerCaseLabel.setForeground(UNMET_REQUIREMENT_COLOUR);
         GridBagConstraints upperLowerCaseConstraints = new GridBagConstraints(0, 11, 1, 1, 1, 1,
-                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
-                new Insets(5, 75, 0, 0), 0, 0);
+                GridBagConstraints.CENTER, GridBagConstraints.NONE,
+                new Insets(5, 0, 0, 0), 0, 0);
         registrationPanel.add(upperLowerCaseLabel, upperLowerCaseConstraints);
 
         numberLabel = new JLabel("A number (0-9)");
         numberLabel.setFont(numberLabel.getFont().deriveFont(18f));
         numberLabel.setForeground(UNMET_REQUIREMENT_COLOUR);
         GridBagConstraints numberConstraints = new GridBagConstraints(0, 12, 1, 1, 1, 1,
-                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
-                new Insets(5, 75, 0, 0), 0, 0);
+                GridBagConstraints.CENTER, GridBagConstraints.NONE,
+                new Insets(5, 0, 0, 0), 0, 0);
         registrationPanel.add(numberLabel, numberConstraints);
 
         symbolLabel = new JLabel("A symbol (!@#$%^&*, etc.)");
         symbolLabel.setFont(symbolLabel.getFont().deriveFont(18f));
         symbolLabel.setForeground(UNMET_REQUIREMENT_COLOUR);
         GridBagConstraints symbolConstraints = new GridBagConstraints(0, 13, 1, 1, 1, 1,
-                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
-                new Insets(5, 75, 0, 0), 0, 0);
+                GridBagConstraints.CENTER, GridBagConstraints.NONE,
+                new Insets(5, 0, 0, 0), 0, 0);
         registrationPanel.add(symbolLabel, symbolConstraints);
 
         lengthLabel = new JLabel("A minimum of 10 characters");
         lengthLabel.setFont(lengthLabel.getFont().deriveFont(18f));
         lengthLabel.setForeground(UNMET_REQUIREMENT_COLOUR);
         GridBagConstraints lengthConstraints = new GridBagConstraints(0, 14, 1, 1, 1, 1,
-                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
-                new Insets(5, 75, 0, 0), 0, 0);
+                GridBagConstraints.CENTER, GridBagConstraints.NONE,
+                new Insets(5, 0, 0, 0), 0, 0);
         registrationPanel.add(lengthLabel, lengthConstraints);
 
         registerButton = new JButton("REGISTER");
