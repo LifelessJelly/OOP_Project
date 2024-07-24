@@ -22,8 +22,7 @@ public class DropShadowPanel extends JPanel {
         int topOpacity = 80;
         for (int i = 0; i < pixels; i++) {
             g.setColor(new Color(shade, shade, shade, (-topOpacity / pixels) * i + topOpacity));
-            System.out.println(topOpacity / (i * 2 + 2));
-            g.drawRect(i, i, this.getWidth() - ((i * 2) + 1), this.getHeight() - ((i * 2) + 1));
+            g.drawRect(i, i, this.getWidth() - ((i * 2) + 1 - pixels), this.getHeight() - ((i * 2) + 1 - pixels));
         }
     }
 }
