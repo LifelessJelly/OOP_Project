@@ -417,7 +417,7 @@ public class AddApplicant extends JPanel {
             String birthString = String.valueOf(dayComboBox.getSelectedIndex()) + ' ' + monthComboBox.getSelectedIndex() + ' ' + yearComboBox.getSelectedIndex();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH);
             LocalDate birthDate = LocalDate.parse(birthString, formatter);
-            Applicant edittedApplicant = new Applicant(name, localDate.toEpochDay(), LocalDate.now().getYear()-localDate.getYear(), email, nricFin, gender, ImageBase64.imageToBase64(image), editsDataStorageInstance.getSkills());
+
 
 
             main.getController().addApplicant(applicantNameField.getText(),			                    //adds name
@@ -431,7 +431,7 @@ public class AddApplicant extends JPanel {
                     //TODO add skill string array
                    );     //ADDS APPLICANT PIC
 
-            main.getController().addApplicant(applicantToBeAdded);
+
 
             //edit portion for reference
             /*main.getController().applyApplicantEdits(applicantNameField.getText(),			//UPDATES APPLICANT NAME
