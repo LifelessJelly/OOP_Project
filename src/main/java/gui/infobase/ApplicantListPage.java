@@ -290,15 +290,14 @@ public class ApplicantListPage extends JPanel{
             });
         }
 
-        this.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent arg0) {
-                //scaling of title font
-                float adjustedFontSizeBody= (float) main.getContentPane().getWidth() /50;
-                editApplicantButton.setFont(editApplicantButton.getFont().deriveFont(adjustedFontSizeBody));
-                System.out.println(table.getWidth()+"X"+ table.getHeight());
-            }
-        });
+//        this.addComponentListener(new ComponentAdapter() {
+//            @Override
+//            public void componentResized(ComponentEvent arg0) {
+//                //scaling of title font
+//                float adjustedFontSizeBody= (float) main.getContentPane().getWidth() /50;
+//                System.out.println(table.getWidth()+"X"+ table.getHeight());
+//            }
+//        });
     }
 
     private void updateModel(){
@@ -348,8 +347,6 @@ public class ApplicantListPage extends JPanel{
     public void decrementKeyframe(double zoomFactor, float alpha){
         this.zoomFactor -= zoomFactor;
         this.alpha -= alpha;
-        main.getContentPane().validate();
-        main.getContentPane().repaint();
     }
 
     @Override
@@ -358,7 +355,6 @@ public class ApplicantListPage extends JPanel{
         Graphics2D g2 = (Graphics2D) g;
         g2.translate(this.getWidth()/2, this.getHeight()/2);
         g2.scale(zoomFactor, zoomFactor);
-        System.out.println("Alpha: " + alpha);
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
         g2.translate(-this.getWidth()/2, -this.getHeight()/2);
     }
