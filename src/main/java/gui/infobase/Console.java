@@ -152,6 +152,8 @@ public class Console extends JPanel {
         layer = new ApplicantShowAndEditLayer(main);
         displayPanel.add(layer, "ApplicantShowAndEditLayer");
         card.show(displayPanel, "ApplicantShowAndEditLayer");
+        main.getContentPane().validate();
+        main.getContentPane().repaint();
     }
 
     public void showApplicantListPage(){
