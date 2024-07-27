@@ -77,6 +77,11 @@ public class InfobaseMainframe extends JFrame {
         console.showEditApplicant(applicant, index);
     }
 
+    //TODO the add Applicant switcher is here, might need to change
+    public void showAddApplicant(){
+        console.showAddApplicant();
+    }
+
     /**
      * Retrieves the translation for the specified key in the current language from the TranslationTable.
      *

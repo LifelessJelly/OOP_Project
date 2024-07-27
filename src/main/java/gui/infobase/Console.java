@@ -175,6 +175,15 @@ public class Console extends JPanel {
         System.gc();
     }
 
+    public void showAddApplicant(){
+        layer.switchToAddApplicantPage();
+        main.getContentPane().validate();
+        main.getContentPane().repaint();
+
+        System.gc();
+        //garbo
+    }
+
     public void showShortlistApplicantPage(){
         if (!(main.getContentPane().getComponent(main.getComponentCount()-1) instanceof ShortlistOrAcceptPage)) {
             ShortlistOrAcceptPage shortlistOrAcceptPage = new ShortlistOrAcceptPage(main);
@@ -194,5 +203,7 @@ public class Console extends JPanel {
         displayPanel.add(summaryPage, "SummaryPage");
         card.show(displayPanel, "SummaryPage");
     }
+
+
 
 }

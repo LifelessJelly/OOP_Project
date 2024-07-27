@@ -9,6 +9,7 @@ import java.awt.*;
 public class ApplicantShowAndEditLayer extends JLayeredPane {
     ApplicantListPage applicantListPage;
     EditApplicant editApplicant;
+    AddApplicant addApplicant;
     JPanel exitingPanel;
     InfobaseMainframe main;
     public ApplicantShowAndEditLayer(InfobaseMainframe main) {
@@ -61,9 +62,33 @@ public class ApplicantShowAndEditLayer extends JLayeredPane {
         }).start();
 
     }
+    public void switchToAddApplicantPage() {
+        addApplicant=new AddApplicant(main);
+        addApplicant.setBackground(new Color(0, 0, 0, 0));
+        this.add(addApplicant, new GridBagConstraints(0, 0, 1, 1, 1, 1,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+        this.remove(applicantListPage);
+        main.getContentPane().validate();
+        main.getContentPane().repaint();
+        /*new Timer(1, e -> {
+            if (applicantListPage.getZoomFactor() > 0.8) {
+                applicantListPage.decrementKeyframe(0.2 / 5, 1f / 5);
+                addApplicant.incrementKeyframe(0.2 / 5, 1f / 5);
+
+            } else {
+                this.remove(applicantListPage);
+                main.getContentPane().validate();
+                main.getContentPane().repaint();
+                ((Timer) e.getSource()).stop();
+            }
+        }).start();*/
+
+    }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponents(g);
     }
+
+
 }

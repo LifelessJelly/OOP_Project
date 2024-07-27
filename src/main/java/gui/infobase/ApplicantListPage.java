@@ -242,7 +242,8 @@ public class ApplicantListPage extends JPanel{
         //HR Staff button set
         if (main.getController().getUser().authorised(Staff.HR)) {
             addApplicantButton.addActionListener(e -> {
-                JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+                main.showAddApplicant();
+                /*JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
                 j.setFileFilter(new FileFilter() {
                     @Override
                     public boolean accept(File f) {
@@ -275,7 +276,9 @@ public class ApplicantListPage extends JPanel{
                         updateModel();
                     }).start();
 
-                }
+                } */
+
+
             });
 
             editApplicantButton.addActionListener(e -> {

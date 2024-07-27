@@ -50,6 +50,10 @@ public class InfobaseController {
         DataIO.writeFile(applicantDirectory + new String(SHA256.getHasherHex().hashString(String.valueOf(System.nanoTime()))) + "_Applicant.json", JsonReaderWriter.modelToJson(applicant));
     }
 
+    public void addApplicant(Applicant applicant){
+        applicantDataStorage.addApplicant(applicant);
+    }
+
     public void setApplicantInstance(Applicant applicant, int index){
         this.index = index;
         applicantInstance = applicant;
