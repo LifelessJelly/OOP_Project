@@ -40,7 +40,11 @@ public class InfobaseController {
         }
     }
 
-    public void addApplicant(Applicant applicant){
+    public void addApplicant(String name, int day, String month, int year,String email, String nric, String gender, String base64Img, String[] skills){
+        String birthString = String.valueOf(day) + ' ' + month + ' ' + year;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH);
+        LocalDate birthDate = LocalDate.parse(birthString, formatter);
+        Applicant applicant=new Applicant(name, birthDate.toEpochDay(), LocalDate.now().getYear()-birthDate.getYear(), email, nric, gender, base64Img, skills);
         applicantDataStorage.addApplicant(applicant);
         File applicantDirectory = new File(System.getProperty("user.dir") + "\\" + "applicants");
         DataIO.writeFile(applicantDirectory + new String(SHA256.getHasherHex().hashString(String.valueOf(System.nanoTime()))) + "_Applicant.json", JsonReaderWriter.modelToJson(applicant));
