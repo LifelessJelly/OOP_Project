@@ -359,8 +359,6 @@ public class EditApplicant extends JPanel {
     public void decrementKeyframe(double zoomFactor, float alpha){
         this.zoomFactor += zoomFactor;
         this.alpha -= alpha;
-        main.getContentPane().validate();
-        main.getContentPane().repaint();
     }
 
     private DefaultListModel<String> getSkillsModel(){
@@ -376,7 +374,6 @@ public class EditApplicant extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
         g2.translate(this.getWidth()/2, this.getHeight()/2);
         g2.scale(zoomFactor, zoomFactor);
-        System.out.println("Alpha: " + alpha);
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
         g2.translate(-this.getWidth()/2, -this.getHeight()/2);
     }
