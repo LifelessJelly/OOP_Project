@@ -52,6 +52,8 @@ public class AddApplicant extends JPanel {
     private Image placeholderpic= ImageBase64.base64ToImage("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")
             .getScaledInstance(120,120,Image.SCALE_SMOOTH);
     private Image currentImage;
+    private double zoomFactor;
+    private float alpha;
     DefaultListModel<String> currentSkillsModel = new DefaultListModel<>();
     //TODO: replace with the relevant placeholders
 
@@ -416,6 +418,11 @@ public class AddApplicant extends JPanel {
             }
         });
 
+        imageRemoveButton.addActionListener(e-> {
+            applicantImageButton.setIcon((Icon)placeholderpic);
+
+        });
+
         discardChangesButton.addActionListener(e -> {
             if (JOptionPane.showConfirmDialog(null, main.getLocale("EditApplicant.JOptionPane.discardConfirm"), "", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
                 main.showApplicantListPage();
@@ -471,5 +478,29 @@ public class AddApplicant extends JPanel {
         return skillsModel;
     }*/
 
+    public double getZoomFactor(){
+        return zoomFactor;
+    }
 
+    public void incrementKeyframe(double zoomFactor, float alpha){
+        this.zoomFactor -= zoomFactor;
+        this.alpha += alpha;
+        main.getContentPane().validate();
+        main.getContentPane().repaint();
+    }
+
+    public void decrementKeyframe(double zoomFactor, float alpha){
+        this.zoomFactor += zoomFactor;
+        this.alpha -= alpha;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.translate(this.getWidth()/2, this.getHeight()/2);
+        g2.scale(zoomFactor, zoomFactor);
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+        g2.translate(-this.getWidth()/2, -this.getHeight()/2);
+    }
 }
