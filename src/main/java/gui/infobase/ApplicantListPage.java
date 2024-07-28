@@ -41,6 +41,7 @@ public class ApplicantListPage extends JPanel{
     private JCheckBox communicationCheckBox;
     private JButton addApplicantButton;
     private JButton editApplicantButton;
+    private JButton removeApplicantButton;
     private double zoomFactor;
     private float alpha;
 
@@ -192,6 +193,12 @@ public class ApplicantListPage extends JPanel{
             GridBagConstraints editApplicantConstraints = new GridBagConstraints(1, 0, 1, 1, 0, 1,
                     GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
             buttonPanel.add(editApplicantButton, editApplicantConstraints);
+
+            removeApplicantButton=new JButton(new ImageIcon((ImageBase64.base64ToImage(ImageEmbedded.REMOVE_ICON)).getScaledInstance(60,60,Image.SCALE_SMOOTH)));
+            removeApplicantButton.setBorder(BorderFactory.createEmptyBorder());
+            GridBagConstraints removeApplicantConstraints = new GridBagConstraints(2, 0, 1, 1, 0, 1,
+                    GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
+            buttonPanel.add(removeApplicantButton, removeApplicantConstraints);
         }
         if (main.getController().getUser().authorised(Staff.MANAGER)){
             JButton shortlistApplicantButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.ADD_TO_SHORTLIST_ICON)));
@@ -288,6 +295,14 @@ public class ApplicantListPage extends JPanel{
                 }
                 main.showEditApplicant(main.getController().getApplicants()[selectedRow], selectedRow);
             });
+
+            //TODO: complete the remove applicant listener
+            removeApplicantButton.addActionListener(e -> {
+                int selectedRow = table.convertRowIndexToModel(table.getSelectedRow());
+                removeApplicant(selectedRow);
+                this.repaint();
+                this.revalidate();
+            });
         }
 
 //        this.addComponentListener(new ComponentAdapter() {
@@ -357,6 +372,11 @@ public class ApplicantListPage extends JPanel{
         g2.scale(zoomFactor, zoomFactor);
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
         g2.translate(-this.getWidth()/2, -this.getHeight()/2);
+    }
+
+    public void removeApplicant(int selectedRow){
+        main.getController().removeApplicant(selectedRow);
+
     }
 }
 

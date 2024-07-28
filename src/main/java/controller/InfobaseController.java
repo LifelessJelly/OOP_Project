@@ -54,6 +54,16 @@ public class InfobaseController {
         applicantDataStorage.addApplicant(applicant);
     }
 
+    public void removeApplicant(int index){
+        applicantDataStorage.removeApplicant(index);
+        File applicantDirectory = new File(System.getProperty("user.dir") + "\\" + "applicants");
+        File[] contents = applicantDirectory.listFiles();
+        Collections.reverse(Arrays.asList(contents));
+        File targetApplicant = contents[index];
+        targetApplicant.delete();
+
+    }
+
     public void setApplicantInstance(Applicant applicant, int index){
         this.index = index;
         applicantInstance = applicant;

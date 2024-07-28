@@ -4,6 +4,7 @@ import controller.InfobaseMainframe;
 import data.Applicant;
 import gui.ImageEmbedded;
 import gui.JPanelImageButton;
+import subsystems.ImageBase64;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,6 +44,7 @@ public class EditApplicant extends JPanel {
     private double zoomFactor;
     private float alpha;
 
+    private ImageIcon defaultIcon=new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.PLACEHOLDER).getScaledInstance(120,120,Image.SCALE_SMOOTH));
 
     public EditApplicant(Applicant applicant, int index, InfobaseMainframe main) {
         this.main = main;
@@ -322,6 +324,9 @@ public class EditApplicant extends JPanel {
     }
 
     private void initListeners() {
+        imageRemoveButton.addActionListener(e-> {
+            applicantImageButton.setIcon(defaultIcon);
+        });
         saveChangesButton.addActionListener(e -> {
             main.getController().applyApplicantEdits(applicantNameField.getText(),
                     dayComboBox.getItemAt(dayComboBox.getSelectedIndex()),
