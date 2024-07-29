@@ -11,7 +11,7 @@ public class RegistrationController {
 
     public RegistrationController() {
         registrator = new ApplicantRegistrator();
-        datastorage = new EditsDataStorage();
+        datastorage = new EditsDataStorage(null);
     }
 
     public void registerBasicInfo(String name, int day, String month, int year, String nricFin, String email, String gender){
