@@ -169,8 +169,8 @@ public class Console extends JPanel {
         System.gc();
     }
 
-    public void showEditApplicant(Applicant applicant, int index){
-        layer.switchToEditApplicantPage(applicant, index);
+    public void showEditApplicant(int index){
+        layer.switchToEditApplicantPage(index);
         main.getContentPane().validate();
         main.getContentPane().repaint();
 
@@ -178,9 +178,9 @@ public class Console extends JPanel {
     }
 
     public void showAddApplicant(){
-        layer.switchToAddApplicantPage();
-        main.getContentPane().validate();
-        main.getContentPane().repaint();
+        AddApplicant addApplicant = new AddApplicant(main);
+        displayPanel.add(addApplicant, "AddApplicant");
+        card.show(displayPanel, "AddApplicant");
 
         System.gc();
         //garbo
