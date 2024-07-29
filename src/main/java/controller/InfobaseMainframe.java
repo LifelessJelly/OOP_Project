@@ -73,8 +73,8 @@ public class InfobaseMainframe extends JFrame {
     }
 
 
-    public void showEditApplicant(Applicant applicant, int index) {
-        console.showEditApplicant(applicant, index);
+    public void showEditApplicant(int index) {
+        console.showEditApplicant(index);
     }
 
     //TODO the add Applicant switcher is here, might need to change
@@ -163,4 +163,5 @@ public class InfobaseMainframe extends JFrame {
     public void showApplicantListPageWithAnimation() {
         console.showApplicantWithAnimation();
     }
+
 }
