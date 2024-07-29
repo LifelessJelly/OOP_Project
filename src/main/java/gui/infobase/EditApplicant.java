@@ -1,18 +1,19 @@
 package gui.infobase;
 
 import controller.InfobaseMainframe;
-import data.Applicant;
+import gui.DateSelectorHelper;
 import gui.ImageEmbedded;
 import gui.JPanelImageButton;
 import subsystems.ImageBase64;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.time.Year;
+import java.io.File;
+import java.io.IOException;
 
 public class EditApplicant extends JPanel {
     InfobaseMainframe main;
-    Applicant applicant;
     JPanel picturePanel;
     JPanel detailsPanel;
     JButton applicantImageButton;
@@ -43,15 +44,15 @@ public class EditApplicant extends JPanel {
     private JPanelImageButton saveChangesButton;
     private double zoomFactor;
     private float alpha;
+    private Image currentImage;
+    private final ImageIcon defaultIcon=new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.PLACEHOLDER).getScaledInstance(120,120,Image.SCALE_SMOOTH));
 
-    private ImageIcon defaultIcon=new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.PLACEHOLDER).getScaledInstance(120,120,Image.SCALE_SMOOTH));
-
-    public EditApplicant(Applicant applicant, int index, InfobaseMainframe main) {
+    public EditApplicant(int index, InfobaseMainframe main) {
         this.main = main;
-        this.applicant = applicant;
-        this.main.getController().setApplicantInstance(applicant, index);
+        this.main.getController().setApplicantInstance(main.getController().getApplicants()[index], index);
         this.zoomFactor = 1.2;
         this.alpha = 0;
+        currentImage=main.getController().getImage();
         initComponents();
         initListeners();
     }
@@ -71,7 +72,7 @@ public class EditApplicant extends JPanel {
 
         //START INNER COMPONENTS
         {
-            applicantImageButton = new JButton(new ImageIcon(main.getController().getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH)));
+            applicantImageButton = new JButton(new ImageIcon(main.getController().getImage()));
             GridBagConstraints applicantImageButtonConstraints = new GridBagConstraints(
                     0, 0, 1, 1, 0, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.BOTH,
@@ -133,33 +134,30 @@ public class EditApplicant extends JPanel {
 
             //START INNER COMPONENTS
             {
-                dayComboBox = new JComboBox<>(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31});
+                dayComboBox = DateSelectorHelper.comboBoxGetBaseDates();
                 dayComboBox.setAlignmentX(Component.LEFT_ALIGNMENT);
                 dayComboBox.setFont(dayComboBox.getFont().deriveFont(18f));
-                dayComboBox.setSelectedIndex(Integer.parseInt(applicant.getBirthdate().substring(8, 10))-1);
+                dayComboBox.setSelectedIndex(Integer.parseInt(main.getController().getBirthdate().substring(8, 10))-1);
                 GridBagConstraints dayComboBoxConstraints = new GridBagConstraints(
                         0, 0, 1, 1, 0, 0,
                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                         new Insets(0, 0, 5, 0), 0, 0);
                 birthdayPanel.add(dayComboBox, dayComboBoxConstraints);
 
-                monthComboBox = new JComboBox<>(new String[]{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"});
+                monthComboBox = DateSelectorHelper.comboBoxGetBaseMonths();
                 monthComboBox.setAlignmentX(Component.LEFT_ALIGNMENT);
                 monthComboBox.setFont(monthComboBox.getFont().deriveFont(18f));
-                monthComboBox.setSelectedIndex(Integer.parseInt(applicant.getBirthdate().substring(5, 7))-1);
+                monthComboBox.setSelectedIndex(Integer.parseInt(main.getController().getBirthdate().substring(5, 7))-1);
                 GridBagConstraints monthComboBoxConstraints = new GridBagConstraints(
                         1, 0, 1, 1, 0, 0,
                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                         new Insets(0, 0, 5, 0), 0, 0);
                 birthdayPanel.add(monthComboBox, monthComboBoxConstraints);
 
-                yearComboBox = new JComboBox<>();
-                for (int i = Year.now().getValue(); i > 1899; --i) {
-                    yearComboBox.addItem(i);
-                }
+                yearComboBox = DateSelectorHelper.comboBoxGetBaseYears(1899);
                 yearComboBox.setAlignmentX(Component.LEFT_ALIGNMENT);
                 yearComboBox.setFont(yearComboBox.getFont().deriveFont(18f));
-                yearComboBox.setSelectedIndex(yearComboBox.getItemCount()-(Integer.parseInt(applicant.getBirthdate().substring(0, 4))-1899));
+                yearComboBox.setSelectedIndex(yearComboBox.getItemCount()-(Integer.parseInt(main.getController().getBirthdate().substring(0, 4))-1899));
                 GridBagConstraints yearComboBoxConstraints = new GridBagConstraints(
                         2, 0, 1, 1, 0, 0,
                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -326,16 +324,44 @@ public class EditApplicant extends JPanel {
     private void initListeners() {
         imageRemoveButton.addActionListener(e-> {
             applicantImageButton.setIcon(defaultIcon);
+            currentImage = defaultIcon.getImage();
+        });
+        applicantImageButton.addActionListener(e -> {
+            JFileChooser chooser = new JFileChooser();
+            chooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+            int clicked = chooser.showOpenDialog(this);
+
+            if (clicked == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = chooser.getSelectedFile();
+                String filename = selectedFile.getName().toLowerCase();
+                if(filename.endsWith(".jpg")||filename.endsWith(".jpeg")||filename.endsWith(".png")){
+                    Image scaledImage;
+                    try {
+                        scaledImage = ImageIO.read(selectedFile).getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    ImageIcon scaledIcon = new ImageIcon(scaledImage);
+                    currentImage = scaledIcon.getImage();
+                    applicantImageButton.setIcon(scaledIcon);
+
+                }
+                else{
+                    JOptionPane.showMessageDialog(null,"Please select a jpg, jpeg, or png","wrong file type",JOptionPane.ERROR_MESSAGE);
+                }
+            }
+
         });
         saveChangesButton.addActionListener(e -> {
+
             main.getController().applyApplicantEdits(applicantNameField.getText(),
                     dayComboBox.getItemAt(dayComboBox.getSelectedIndex()),
                     monthComboBox.getItemAt(monthComboBox.getSelectedIndex()),
                     yearComboBox.getItemAt(yearComboBox.getSelectedIndex()),
                     applicantNricField.getText(),
                     applicantEmailField.getText(),
-                    applicantGenderComboBox.getItemAt(applicantGenderComboBox.getSelectedIndex())
-            );
+                    applicantGenderComboBox.getItemAt(applicantGenderComboBox.getSelectedIndex()),
+                    ImageBase64.imageToBase64(currentImage));
             main.showApplicantListPage();
         });
         discardChangesButton.addActionListener(e -> {
@@ -348,6 +374,12 @@ public class EditApplicant extends JPanel {
             getSkillsModel();
             skillsList.setModel(getSkillsModel());
         });
+
+        dayComboBox.addActionListener(DateSelectorHelper.datesUpdater(dayComboBox, monthComboBox, yearComboBox));
+
+        monthComboBox.addActionListener(DateSelectorHelper.datesUpdater(dayComboBox, monthComboBox, yearComboBox));
+
+        yearComboBox.addActionListener(DateSelectorHelper.datesUpdater(dayComboBox, monthComboBox, yearComboBox));
     }
 
     public double getZoomFactor(){
@@ -373,6 +405,7 @@ public class EditApplicant extends JPanel {
         }
         return skillsModel;
     }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

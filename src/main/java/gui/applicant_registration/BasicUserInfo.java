@@ -1,6 +1,7 @@
 package gui.applicant_registration;
 
 import controller.RegistrationMainframe;
+import gui.DateSelectorHelper;
 import gui.SlidingPanel;
 
 import javax.swing.*;
@@ -146,41 +147,9 @@ public class BasicUserInfo extends SlidingPanel {
         yearBox.setFont(yearBox.getFont().deriveFont(18f));
         dateStuffPanel.add(yearBox, yearBoxConstraints);
 
-        monthBox.addActionListener(e -> {
-            int selectedDate = dayBox.getSelectedIndex()+1;
-            switch ((String)(Objects.requireNonNull(monthBox.getSelectedItem()))){
-                case "January":
-                case "March":
-                case "May":
-                case "July":
-                case "August":
-                case "October":
-                case "December":
-                    dayBox.setModel(new DefaultComboBoxModel<>(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31}));
-                    dayBox.setSelectedIndex(selectedDate-1);
+        monthBox.addActionListener(DateSelectorHelper.datesUpdater(dayBox, monthBox, yearBox));
 
-                    break;
-                case "April":
-                case "June":
-                case "September":
-                case "November":
-                    if (selectedDate > 30){
-                        selectedDate = 30;
-                    }
-                    dayBox.setModel(new DefaultComboBoxModel<>(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30}));
-                    dayBox.setSelectedIndex(selectedDate-1);
-                    break;
-                default: // February case
-                    handleFebruaryDates(selectedDate);
-            }
-
-        });
-
-        yearBox.addActionListener(e -> {
-            if (Objects.equals(monthBox.getSelectedItem(), "February")){
-                handleFebruaryDates(dayBox.getSelectedIndex()+1);
-            }
-        });
+        yearBox.addActionListener(DateSelectorHelper.datesUpdater(dayBox, monthBox, yearBox));
         this.add(dateStuffPanel, dateStuffConstraints);
 
         nricFinLabel = new JLabel("NRIC/FIN:");
@@ -297,28 +266,6 @@ public class BasicUserInfo extends SlidingPanel {
 
         
         this.setVisible(false);
-    }
-
-    private void handleFebruaryDates(int selectedDate){
-        boolean isLeapYear = false;
-        int selectedYear = (Integer)(Objects.requireNonNull(yearBox.getSelectedItem()));
-        if (selectedYear % 4 == 0 && selectedYear % 100 != 0 || selectedYear % 400 == 0){
-            isLeapYear = true;
-        }
-        if (selectedDate > 29 && isLeapYear){
-            selectedDate = 29;
-        }
-        else if (selectedDate > 28 && !isLeapYear){
-            selectedDate = 28;
-
-        }
-        if (isLeapYear){
-            dayBox.setModel(new DefaultComboBoxModel<>(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29}));
-        }
-        else {
-            dayBox.setModel(new DefaultComboBoxModel<>(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28}));
-        }
-        dayBox.setSelectedIndex(selectedDate-1);
     }
 
     private boolean isNRICFINValid(String nricFin){
