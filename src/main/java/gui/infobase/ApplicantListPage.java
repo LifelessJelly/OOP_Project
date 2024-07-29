@@ -1,31 +1,23 @@
 package gui.infobase;
 
 
-import controller.DataIO;
 import controller.InfobaseMainframe;
 import data.Applicant;
 import data.Staff;
 import gui.ImageEmbedded;
 import subsystems.ImageBase64;
-import subsystems.JsonReaderWriter;
 
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
-//import controller.MainFrame;
 
 public class ApplicantListPage extends JPanel{
     private final InfobaseMainframe main;
@@ -44,6 +36,8 @@ public class ApplicantListPage extends JPanel{
     private JButton removeApplicantButton;
     private double zoomFactor;
     private float alpha;
+    private JButton setInterviewDateButton;
+    private JButton shortlistApplicantButton;
 
     public ApplicantListPage(InfobaseMainframe mainframe) {
         this.main = mainframe;
@@ -53,8 +47,6 @@ public class ApplicantListPage extends JPanel{
 
         initComponents();
         initListeners();
-        //CREATE INSTANCE OF TABLEMODEL HERE
-        //DefaultTableModel model=new DefaultTableModel();
     }
 
     private void initComponents() {
@@ -67,7 +59,7 @@ public class ApplicantListPage extends JPanel{
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 60, 20, 20), 0, 0);
         this.add(applicantListLabel, staffListConstraints);
 
-//FROM HERE
+
         TableModel applicantModel = new ApplicantTableModel(main);
         table = new JTable(applicantModel);
         sorter = new TableRowSorter<>(applicantModel);
@@ -90,13 +82,13 @@ public class ApplicantListPage extends JPanel{
         table.getTableHeader().setBorder(BorderFactory.createEmptyBorder());
         table.setRowHeight(200);
         table.setMinimumSize(new Dimension(0, 100));
-        ////////
+
         table.getColumnModel().getColumn(0).setCellRenderer(new TableImageRender());
         table.getColumnModel().getColumn(1).setCellRenderer(new TableCellRender(main));
-        ////////
+
         table.setBorder(new MatteBorder(1, 1, 1, 1, Color.GRAY));
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        //UNTIL HERE
+
 
         GridBagConstraints scrollTableConstraints = new GridBagConstraints(0, 1, 1, 1, 1, 1,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 40, 0, 0), 0, 0);
@@ -172,7 +164,7 @@ public class ApplicantListPage extends JPanel{
             filterMenu.add(communicationCheckBox, communicationConstraints);
         }
         updateModel();
-        GridBagConstraints filterMenuConstraints = new GridBagConstraints(1, 1, 1, 1, 1, 1,
+        GridBagConstraints filterMenuConstraints = new GridBagConstraints(2, 1, 1, 1, 1, 1,
                 GridBagConstraints.EAST, GridBagConstraints.BOTH, new Insets(0, 200, 0, 0), 0, 0);
         filterMenu.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
         this.add(filterMenu, filterMenuConstraints);
@@ -184,38 +176,48 @@ public class ApplicantListPage extends JPanel{
         if (main.getController().getUser().authorised(Staff.HR)){
             addApplicantButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.ADD_APPLICANT_ICON)));
             addApplicantButton.setBorder(BorderFactory.createEmptyBorder());
-            GridBagConstraints addApplicantConstraints = new GridBagConstraints(0, 0, 1, 1, 1, 1,
-                    GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
+            addApplicantButton.setToolTipText("Add Applicant");
+            GridBagConstraints addApplicantConstraints = new GridBagConstraints(0, 0, 1, 1, 1, 0,
+                    GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
             buttonPanel.add(addApplicantButton, addApplicantConstraints);
 
             editApplicantButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.EDIT_ICON)));
             editApplicantButton.setBorder(BorderFactory.createEmptyBorder());
-            GridBagConstraints editApplicantConstraints = new GridBagConstraints(1, 0, 1, 1, 0, 1,
-                    GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
+            GridBagConstraints editApplicantConstraints = new GridBagConstraints(0, 1, 1, 1, 1, 0,
+                    GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
             buttonPanel.add(editApplicantButton, editApplicantConstraints);
 
             removeApplicantButton=new JButton(new ImageIcon((ImageBase64.base64ToImage(ImageEmbedded.REMOVE_ICON)).getScaledInstance(60,60,Image.SCALE_SMOOTH)));
             removeApplicantButton.setBorder(BorderFactory.createEmptyBorder());
-            GridBagConstraints removeApplicantConstraints = new GridBagConstraints(2, 0, 1, 1, 0, 1,
-                    GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
+            GridBagConstraints removeApplicantConstraints = new GridBagConstraints(0, 2, 1, 1, 1, 0,
+                    GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
             buttonPanel.add(removeApplicantButton, removeApplicantConstraints);
+
+            setInterviewDateButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.SET_INTERVIEW_ICON)));
+            setInterviewDateButton.setBorder(BorderFactory.createEmptyBorder());
+            GridBagConstraints setInterviewDateConstraints = new GridBagConstraints(0, 3, 1, 1, 1, 1,
+                    GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
+            buttonPanel.add(setInterviewDateButton, setInterviewDateConstraints);
+
         }
         if (main.getController().getUser().authorised(Staff.MANAGER)){
-            JButton shortlistApplicantButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.ADD_TO_SHORTLIST_ICON)));
+            shortlistApplicantButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.ADD_TO_SHORTLIST_ICON)));
 
             shortlistApplicantButton.setBorder(BorderFactory.createEmptyBorder());
-            GridBagConstraints shortlistApplicantConstraints = new GridBagConstraints(2, 0, 1, 1, 1, 1,
-                    GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
+            GridBagConstraints shortlistApplicantConstraints = new GridBagConstraints(0, 0, 1, 1, 1, 1,
+                    GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
             buttonPanel.add(shortlistApplicantButton, shortlistApplicantConstraints);
         }
 
-        GridBagConstraints buttonPanelConstraints = new GridBagConstraints(0, 2, 1, 1, 0, 0,
+        GridBagConstraints buttonPanelConstraints = new GridBagConstraints(1, 1, 1, 1, 0, 0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
 
         this.add(buttonPanel, buttonPanelConstraints);
     }
 
     private void initListeners() {
+
+
         filterField.getDocument().addDocumentListener(new DocumentListener() {
 
             @Override
@@ -236,8 +238,11 @@ public class ApplicantListPage extends JPanel{
         });
 
         waitingShortlist.addActionListener(e -> updateModel());
+
         shortlistedCheckBox.addActionListener(e -> updateModel());
+
         acceptedCheckBox.addActionListener(e -> updateModel());
+
         programmingCheckBox.addActionListener(e -> updateModel());
 
         industrialCheckBox.addActionListener(e -> updateModel());
@@ -250,42 +255,6 @@ public class ApplicantListPage extends JPanel{
         if (main.getController().getUser().authorised(Staff.HR)) {
             addApplicantButton.addActionListener(e -> {
                 main.showAddApplicant();
-                /*JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-                j.setFileFilter(new FileFilter() {
-                    @Override
-                    public boolean accept(File f) {
-                        if (f.isDirectory()) {
-                            return true;
-                        } else {
-                            String filename = f.getName().toLowerCase();
-                            return filename.endsWith(".json");
-                        }
-                    }
-
-                    @Override
-                    public String getDescription() {
-                        return "JSON Files (*.json)";
-                    }
-                });
-                j.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                j.setPreferredSize(new Dimension(640, 480));
-                Action details = j.getActionMap().get("viewTypeDetails");
-                details.actionPerformed(null);
-                int r = j.showOpenDialog(null);
-                File selectedFile;
-                selectedFile = j.getSelectedFile().getAbsoluteFile();
-                if (r == JFileChooser.APPROVE_OPTION) {
-
-                    //huge performance impact here, the file gets read twice
-                    new Thread(() -> {
-                        Applicant newApplicant = JsonReaderWriter.jsonToModel(DataIO.readFile(selectedFile.getAbsolutePath()), Applicant.class);
-                        main.getController().addApplicant(newApplicant);
-                        updateModel();
-                    }).start();
-
-                } */
-
-
             });
 
             editApplicantButton.addActionListener(e -> {
@@ -293,26 +262,33 @@ public class ApplicantListPage extends JPanel{
                 if (selectedRow == -1) {
                     return;
                 }
-                main.showEditApplicant(main.getController().getApplicants()[selectedRow], selectedRow);
+                main.showEditApplicant( selectedRow);
             });
 
-            //TODO: complete the remove applicant listener
             removeApplicantButton.addActionListener(e -> {
                 int selectedRow = table.convertRowIndexToModel(table.getSelectedRow());
-                removeApplicant(selectedRow);
-                this.repaint();
-                this.revalidate();
+                main.getController().removeApplicant(selectedRow);
+                main.getContentPane().validate();
+                main.getContentPane().repaint();
+            });
+
+            setInterviewDateButton.addActionListener(e -> {
+                int selectedRow = table.convertRowIndexToModel(table.getSelectedRow());
+                if (selectedRow == -1) {
+                    return;
+                }
+                if (main.getController().getApplicants()[selectedRow].getStatus() == Applicant.SHORTLISTED){
+
+                }
+            });
+
+        }
+        if (main.getController().getUser().authorised(Staff.MANAGER)) {
+            shortlistApplicantButton.addActionListener(e -> {
+                int selectedRow = table.convertRowIndexToModel(table.getSelectedRow());
+                main.getController().shortlistApplicant(selectedRow);
             });
         }
-
-//        this.addComponentListener(new ComponentAdapter() {
-//            @Override
-//            public void componentResized(ComponentEvent arg0) {
-//                //scaling of title font
-//                float adjustedFontSizeBody= (float) main.getContentPane().getWidth() /50;
-//                System.out.println(table.getWidth()+"X"+ table.getHeight());
-//            }
-//        });
     }
 
     private void updateModel(){
@@ -372,11 +348,6 @@ public class ApplicantListPage extends JPanel{
         g2.scale(zoomFactor, zoomFactor);
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
         g2.translate(-this.getWidth()/2, -this.getHeight()/2);
-    }
-
-    public void removeApplicant(int selectedRow){
-        main.getController().removeApplicant(selectedRow);
-
     }
 }
 
