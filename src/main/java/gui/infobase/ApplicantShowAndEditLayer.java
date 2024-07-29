@@ -40,31 +40,10 @@ public class ApplicantShowAndEditLayer extends JLayeredPane {
 
             }
         }).start();
-
     }
 
-    public void switchToAddApplicantPage() {
-        AddApplicant = new AddApplicant(main);
-        AddApplicant.setBackground(new Color(0, 0, 0, 0));
-        this.add(AddApplicant, new GridBagConstraints(0, 0, 1, 1, 1, 1,
-                GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-
-        new Timer(1, e -> {
-            if (applicantListPage.getZoomFactor() > 0.8) {
-                applicantListPage.decrementKeyframe(0.2 / 5, 1f / 5);
-                AddApplicant.incrementKeyframe(0.2 / 5, 1f / 5);
-
-            } else {
-                this.remove(applicantListPage);
-                main.getContentPane().validate();
-                main.getContentPane().repaint();
-                ((Timer) e.getSource()).stop();
-            }
-        }).start();
-    }
-
-    public void switchToEditApplicantPage(Applicant applicant, int index) {
-        editApplicant = new EditApplicant(applicant, index, main);
+    public void switchToEditApplicantPage(int index) {
+        editApplicant = new EditApplicant(index, main);
         editApplicant.setBackground(new Color(0, 0, 0, 0));
             this.add(editApplicant, new GridBagConstraints(0, 0, 1, 1, 1, 1,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
