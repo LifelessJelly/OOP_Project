@@ -1,7 +1,6 @@
 package controller;
 
 import data.*;
-import subsystems.ImageBase64;
 import subsystems.JsonReaderWriter;
 import subsystems.SHA256;
 
@@ -40,6 +39,7 @@ public class InfobaseController {
         }
     }
 
+
     public void addApplicant(String name, int day, String month, int year,String email, String nric, String gender, String base64Img, String[] skills){
         String birthString = String.valueOf(day) + ' ' + month + ' ' + year;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH);
@@ -50,14 +50,11 @@ public class InfobaseController {
         DataIO.writeFile(applicantDirectory + new String(SHA256.getHasherHex().hashString(String.valueOf(System.nanoTime()))) + "_Applicant.json", JsonReaderWriter.modelToJson(applicant));
     }
 
-    public void addApplicant(Applicant applicant){
-        applicantDataStorage.addApplicant(applicant);
-    }
-
     public void removeApplicant(int index){
         applicantDataStorage.removeApplicant(index);
         File applicantDirectory = new File(System.getProperty("user.dir") + "\\" + "applicants");
         File[] contents = applicantDirectory.listFiles();
+        assert contents != null;
         Collections.reverse(Arrays.asList(contents));
         File targetApplicant = contents[index];
         targetApplicant.delete();
@@ -68,8 +65,8 @@ public class InfobaseController {
         this.index = index;
         applicantInstance = applicant;
         image = applicant.getImage();
-        editsDataStorageInstance = new EditsDataStorage();
-        editsDataStorageInstance.importSkills(applicant.getSkills());
+        editsDataStorageInstance = new EditsDataStorage(applicant);
+
 
     }
 
@@ -95,23 +92,18 @@ public class InfobaseController {
     }
 
     public BufferedImage getImage() {
-        return applicantInstance.getImage();
+        return editsDataStorageInstance.getImage();
     }
-
-    public String getImageBase64() {
-        return applicantInstance.getImageBase64();
-    }
-
     public String getName() {
-        return applicantInstance.getName();
+        return editsDataStorageInstance.getName();
     }
 
     public String getNRIC() {
-        return applicantInstance.getNRIC();
+        return editsDataStorageInstance.getNric();
     }
 
     public String getEmail() {
-        return applicantInstance.getEmail();
+        return editsDataStorageInstance.getEmail();
     }
 
     public String[] getSkills() {
@@ -140,5 +132,9 @@ public class InfobaseController {
     public void acceptApplicant(int selectedRow) {
         Applicant applicantToAccept = applicantDataStorage.getApplicants()[selectedRow];
         applicantToAccept.setStatus(Applicant.ACCEPTED);
+    }
+
+    public String getBirthdate() {
+        return editsDataStorageInstance.getBirthdate();
     }
 }
