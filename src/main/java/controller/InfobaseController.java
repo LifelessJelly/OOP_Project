@@ -1,6 +1,7 @@
 package controller;
 
 import data.*;
+import subsystems.ImageBase64;
 import subsystems.JsonReaderWriter;
 import subsystems.SHA256;
 
@@ -19,7 +20,6 @@ public class InfobaseController {
     EditsDataStorage editsDataStorageInstance;
     ApplicantDataStorage applicantDataStorage;
     int index;
-    Image image;
 
     public InfobaseController(Staff loggedInStaffInstance) {
         this.loggedInStaffInstance = loggedInStaffInstance;
@@ -64,17 +64,16 @@ public class InfobaseController {
     public void setApplicantInstance(Applicant applicant, int index){
         this.index = index;
         applicantInstance = applicant;
-        image = applicant.getImage();
         editsDataStorageInstance = new EditsDataStorage(applicant);
 
 
     }
 
-    public void applyApplicantEdits(String name, int day, String month, int year, String nricFin, String email, String gender){
+    public void applyApplicantEdits(String name, int day, String month, int year, String nricFin, String email, String gender, String s){
         String dateString = String.valueOf(day) + ' ' + month + ' ' + year;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH);
         LocalDate localDate = LocalDate.parse(dateString, formatter);
-        Applicant edittedApplicant = new Applicant(name, localDate.toEpochDay(), LocalDate.now().getYear()-localDate.getYear(), email, nricFin, gender, ImageBase64.imageToBase64(image), editsDataStorageInstance.getSkills());
+        Applicant edittedApplicant = new Applicant(name, localDate.toEpochDay(), LocalDate.now().getYear()-localDate.getYear(), email, nricFin, gender, ImageBase64.imageToBase64(s), editsDataStorageInstance.getSkills());
         edittedApplicant.copyApplicantMetadata(applicantInstance);
         applicantDataStorage.editApplicant(index, edittedApplicant);
         File applicantDirectory = new File(System.getProperty("user.dir") + "\\" + "applicants");
@@ -125,8 +124,6 @@ public class InfobaseController {
     public void shortlistApplicant(int selectedRow) {
         Applicant applicantsToShortlist = applicantDataStorage.getApplicants()[selectedRow];
         applicantsToShortlist.setStatus(Applicant.SHORTLISTED);
-        new ParallelEmailSequnce("joseph_chiu@outlook.com", "Application to Operate On Peasants LLC", "Greetings, \n" +
-                " We are pleased to announce that you have been shortlisted for interview. Please report to the company building tomorrow 9am. We look forward to seeing you there").run();
     }
 
     public void acceptApplicant(int selectedRow) {
