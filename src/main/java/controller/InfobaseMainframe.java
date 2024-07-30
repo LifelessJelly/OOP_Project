@@ -114,10 +114,6 @@ public class InfobaseMainframe extends JFrame {
         new LoginMainframe();
     }
 
-    public void showShortlistPage() {
-        console.showShortlistPage();
-    }
-
     public void setTheme(int theme) {
         currentTheme = theme;
         Color mainthemeColour;
