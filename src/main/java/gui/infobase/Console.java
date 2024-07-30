@@ -1,7 +1,6 @@
 package gui.infobase;
 
 import controller.InfobaseMainframe;
-import data.Applicant;
 import data.Staff;
 import gui.DropShadowPanel;
 import gui.ImageEmbedded;
@@ -122,6 +121,7 @@ public class Console extends JPanel {
         displayPanel = new DropShadowPanel(10);
         displayPanel.setLayout(card);
         showApplicantListPage();
+//        showApplicantKeyingPage();
 
         GridBagConstraints displayPanelConstraints = new GridBagConstraints(1, 1, 1, 1, 1, 1,
                 GridBagConstraints.NORTHEAST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
@@ -186,24 +186,16 @@ public class Console extends JPanel {
         //garbo
     }
 
-    public void showShortlistApplicantPage(){
-        if (!(main.getContentPane().getComponent(main.getComponentCount()-1) instanceof ShortlistOrAcceptPage)) {
-            ShortlistOrAcceptPage shortlistOrAcceptPage = new ShortlistOrAcceptPage(main);
-            displayPanel.add(shortlistOrAcceptPage, "ShortlistOrApplicantPage");
-            card.show(displayPanel, "ShortlistOrApplicantPage");
-        }
-    }
-
-    public void showShortlistPage(){
-        ShortlistPage shortlistPage = new ShortlistPage(main);
-        displayPanel.add(shortlistPage, "ShortlistPage");
-        card.show(displayPanel, "ShortlistPage");
-    }
-
     public void showSummaryPage() {
         SummaryPage summaryPage = new SummaryPage(main);
         displayPanel.add(summaryPage, "SummaryPage");
         card.show(displayPanel, "SummaryPage");
+    }
+
+    public void showApplicantKeyingPage(){
+        ApplicantInfoKeyingPage keyingPage = new ApplicantInfoKeyingPage(0, main);
+        displayPanel.add(keyingPage, "ApplicantInfoKeyingPage");
+        card.show(displayPanel, "ApplicantInfoKeyingPage");
     }
 
 
