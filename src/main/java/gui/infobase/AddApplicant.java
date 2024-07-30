@@ -1,6 +1,7 @@
 package gui.infobase;
 
 import controller.InfobaseMainframe;
+import data.Applicant;
 import gui.DateSelectorHelper;
 import gui.ImageEmbedded;
 import gui.JPanelImageButton;
@@ -15,7 +16,6 @@ import java.util.ArrayList;
 
 public class AddApplicant extends JPanel {
     InfobaseMainframe main;
-    Applicant applicant;
     JPanel picturePanel;
     JPanel detailsPanel;
     JButton applicantImageButton;
