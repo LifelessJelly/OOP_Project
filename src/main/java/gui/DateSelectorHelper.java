@@ -20,6 +20,14 @@ public class DateSelectorHelper {
         return comboBox;
     }
 
+    public static JComboBox<Integer> comboBoxGetBaseYearsReverse(int generateUntilThisYear){
+        JComboBox<Integer> comboBox = new JComboBox<>();
+        for (int i = Year.now().getValue(); i < generateUntilThisYear; ++i) {
+            comboBox.addItem(i);
+        }
+        return comboBox;
+    }
+
     public static ActionListener datesUpdater(JComboBox<Integer> dayComboBox, JComboBox<String> monthComboBox, JComboBox<Integer> yearComboBox) {
         return e -> {
             int selectedDate = dayComboBox.getSelectedIndex() + 1;
