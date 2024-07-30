@@ -73,7 +73,7 @@ public class InfobaseController {
         String dateString = String.valueOf(day) + ' ' + month + ' ' + year;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH);
         LocalDate localDate = LocalDate.parse(dateString, formatter);
-        Applicant edittedApplicant = new Applicant(name, localDate.toEpochDay(), LocalDate.now().getYear()-localDate.getYear(), email, nricFin, gender, ImageBase64.imageToBase64(s), editsDataStorageInstance.getSkills());
+        Applicant edittedApplicant = new Applicant(name, localDate.toEpochDay(), LocalDate.now().getYear()-localDate.getYear(), email, nricFin, gender, s, editsDataStorageInstance.getSkills());
         edittedApplicant.copyApplicantMetadata(applicantInstance);
         applicantDataStorage.editApplicant(index, edittedApplicant);
         File applicantDirectory = new File(System.getProperty("user.dir") + "\\" + "applicants");

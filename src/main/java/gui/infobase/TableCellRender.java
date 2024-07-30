@@ -71,12 +71,12 @@ public class TableCellRender extends JTextArea implements TableCellRenderer {
         }
 
         return  nameText + applicant.getName() + '\n' +
-                birthDateText + applicant.getBirthdate() + '\n' +
+                //birthDateText + applicant.getBirthdate() + '\n' +
                 ageText + applicant.getAge() + '\n' +
-                NRICText + applicant.getNRIC() + '\n' +
+                //NRICText + applicant.getNRIC() + '\n' +
                 emailText + applicant.getEmail() + '\n' +
                 genderText + applicant.getGender() + '\n' +
-                skillText + String.join(", ", applicant.getSkills()) + '\n' +
+                //skillText + String.join(", ", applicant.getSkills()) + '\n' +
                 shortlistText + shortlistStatus + '\n';
     }
 }

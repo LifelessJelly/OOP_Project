@@ -2,20 +2,19 @@ package gui.infobase;
 
 import controller.InfobaseMainframe;
 import data.Applicant;
-import gui.DateSelectorHelper;
 import gui.ImageEmbedded;
 import gui.JPanelImageButton;
 import subsystems.ImageBase64;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
+import java.time.Year;
 import java.util.ArrayList;
 
 public class AddApplicant extends JPanel {
     InfobaseMainframe main;
+    Applicant applicant;
     JPanel picturePanel;
     JPanel detailsPanel;
     JButton applicantImageButton;
@@ -46,15 +45,21 @@ public class AddApplicant extends JPanel {
     ArrayList<String> currentSkillsList = new ArrayList<String>();
     private JPanelImageButton discardChangesButton;
     private JPanelImageButton addChangesButton;
-    private final ImageIcon defaultIcon=new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.PLACEHOLDER));
+    private ImageIcon defaultIcon=new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.PLACEHOLDER).getScaledInstance(120,120,Image.SCALE_SMOOTH));
 
     private Image currentImage;
-
+    private double zoomFactor;
+    private float alpha;
     DefaultListModel<String> currentSkillsModel = new DefaultListModel<>();
     //TODO: replace with the relevant placeholders
 
     public AddApplicant(InfobaseMainframe main) {
         this.main = main;
+        this.zoomFactor=1.2;
+        this.alpha=0;
+        //this.applicant = applicant;
+        //this.main.getController().setApplicantInstance(applicant, index);
+        //TODO: change to write instead of read
         initComponents();
         initListeners();
     }
@@ -157,7 +162,7 @@ public class AddApplicant extends JPanel {
 
                 //===DAY FIELD IN COMBOBOX===//
 
-                dayComboBox = DateSelectorHelper.comboBoxGetBaseDates();
+                dayComboBox = new JComboBox<>(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31});
                 dayComboBox.setAlignmentX(Component.LEFT_ALIGNMENT);
                 dayComboBox.setFont(dayComboBox.getFont().deriveFont(18f));
                 //TODO might need to set to 1, same for other fields.
@@ -170,7 +175,7 @@ public class AddApplicant extends JPanel {
 
                 //===MONTH FIELD IN COMBOBOX===//
 
-                monthComboBox = DateSelectorHelper.comboBoxGetBaseMonths();
+                monthComboBox = new JComboBox<>(new String[]{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"});
                 monthComboBox.setAlignmentX(Component.LEFT_ALIGNMENT);
                 monthComboBox.setFont(monthComboBox.getFont().deriveFont(18f));
                 monthComboBox.setSelectedIndex(0);
@@ -182,7 +187,10 @@ public class AddApplicant extends JPanel {
 
                 //===YEAR FIELD IN COMBOBOX===//
 
-                yearComboBox = DateSelectorHelper.comboBoxGetBaseYears(1899);
+                yearComboBox = new JComboBox<>();
+                for (int i = Year.now().getValue(); i > 1899; --i) {
+                    yearComboBox.addItem(i);
+                }
                 yearComboBox.setAlignmentX(Component.LEFT_ALIGNMENT);
                 yearComboBox.setFont(yearComboBox.getFont().deriveFont(18f));
                 yearComboBox.setSelectedIndex(0);
@@ -364,7 +372,7 @@ public class AddApplicant extends JPanel {
         {
 
             //===SAVE BUTTON===//
-
+            //TODO: change locale, add locale
             addChangesButton = new JPanelImageButton(main.getLocale("EditApplicant.JButton.save_changes"), ImageEmbedded.SAVE_CHANGES, ImageEmbedded.SAVE_CHANGES_COLOURED, 60, 60, JPanelImageButton.LEFT);
 
             GridBagConstraints addChangesConstraints = new GridBagConstraints(0, 0, 1, 1, 0, 0,
@@ -373,6 +381,7 @@ public class AddApplicant extends JPanel {
             updateChangesPanel.add(addChangesButton, addChangesConstraints);
 
             //==DISCARD BUTTON===//
+            //TODO: change locale, add locale (maybe? :|)
             discardChangesButton = new JPanelImageButton(main.getLocale("EditApplicant.JLabel.discard_changes"), ImageEmbedded.DISCARD_CHANGES, ImageEmbedded.DISCARD_CHANGES_COLOURED, 60, 60, JPanelImageButton.LEFT);
 
             GridBagConstraints discardChangesConstraints = new GridBagConstraints(0, 1, 1, 1, 0, 0,
@@ -385,22 +394,24 @@ public class AddApplicant extends JPanel {
 
 
 //===INITIALSE LISTENERS===//
-
+//TODO Listeners done so far: addImageButton, discardChangesButton, saveChangeButton, removeSkill,
+//yet todo: editskill, reset image
     private void initListeners() {
+        //TODO: add the yummy add function, the whatever at 0 thingy (see how :3)
         applicantImageButton.addActionListener(e -> {
             JFileChooser chooser = new JFileChooser();
-            chooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+            chooser.setCurrentDirectory(new File("user.dir"));
+            //FileNameExtensionFilter filter = new FileNameExtensionFilter("All Pictures only", "png", "jpg", "jpeg");
+            //chooser.addChoosableFileFilter(filter);
             int clicked = chooser.showOpenDialog(this);
+
 
             if (clicked == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = chooser.getSelectedFile();
                 if(typeChecker(selectedFile,"jpg")||typeChecker(selectedFile,"jpeg")||typeChecker(selectedFile,"png")){
-                    Image scaledImage;
-                    try {
-                        scaledImage = ImageIO.read(selectedFile).getScaledInstance(120, 120, Image.SCALE_SMOOTH);
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    ImageIcon icon = new ImageIcon(selectedFile.getAbsolutePath());
+                    Image imageFromIcon = icon.getImage();
+                    Image scaledImage = imageFromIcon.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
                     ImageIcon scaledIcon = new ImageIcon(scaledImage);
                     applicantImageButton.setIcon(scaledIcon);
                     currentImage = scaledIcon.getImage();
@@ -424,7 +435,7 @@ public class AddApplicant extends JPanel {
             }
         });
 
-
+        //TODO: modify to get current skills
         addSkillButton.addActionListener(e -> {
             currentSkillsList.add(skillTextField.getText());
             currentSkillsModel.addElement(skillTextField.getText());
@@ -442,30 +453,25 @@ public class AddApplicant extends JPanel {
         });
 
         addChangesButton.addActionListener(e -> {
-
-            String[] skillStringArray =new String[currentSkillsModel.getSize()];
-            for(int i=0; i<currentSkillsModel.getSize(); ++i) {
+            //TODO: change funtionality to add vs change, probably have to modify the applyApplicantEdits
+            String skillStringArray[]=new String[currentSkillsModel.getSize()];
+            for(int i=0;i<currentSkillsModel.getSize();++i) {
                 skillStringArray[i]=currentSkillsModel.getElementAt(i);
             }
 
-            main.getController().addApplicant(applicantNameField.getText(),                      //adds name
-                    dayComboBox.getItemAt(dayComboBox.getSelectedIndex()),                              //adds day
-                    monthComboBox.getItemAt(monthComboBox.getSelectedIndex()),                          //adds month
-                    yearComboBox.getItemAt(yearComboBox.getSelectedIndex()),                            //adds year
+            main.getController().addApplicant(applicantNameField.getText(),			                    //adds name
+                    dayComboBox.getItemAt(dayComboBox.getSelectedIndex()),				                //adds day
+                    monthComboBox.getItemAt(monthComboBox.getSelectedIndex()),				            //adds month
+                    yearComboBox.getItemAt(yearComboBox.getSelectedIndex()),				            //adds year
                     applicantEmailField.getText(),                                                      //adds email
-                    applicantNricField.getText(),                                                       //adds nric
+                    applicantNricField.getText(),							                            //adds nric
                     applicantGenderComboBox.getItemAt(applicantGenderComboBox.getSelectedIndex()),      //adds gender
                     ImageBase64.imageToBase64(currentImage),                                            //adds image (base64)
+                    //TODO add skill string array
                     skillStringArray);
 
             main.showApplicantListPage();								//goes back to list page
         });
-
-        dayComboBox.addActionListener(DateSelectorHelper.datesUpdater(dayComboBox, monthComboBox, yearComboBox));
-
-        monthComboBox.addActionListener(DateSelectorHelper.datesUpdater(dayComboBox, monthComboBox, yearComboBox));
-
-        yearComboBox.addActionListener(DateSelectorHelper.datesUpdater(dayComboBox, monthComboBox, yearComboBox));
 
     }
 
@@ -478,8 +484,33 @@ public class AddApplicant extends JPanel {
         return skillsModel;
     }*/
 
+    public double getZoomFactor(){
+        return zoomFactor;
+    }
+
+    public void incrementKeyframe(double zoomFactor, float alpha){
+        this.zoomFactor -= zoomFactor;
+        this.alpha += alpha;
+        main.getContentPane().validate();
+        main.getContentPane().repaint();
+    }
+
+    public void decrementKeyframe(double zoomFactor, float alpha){
+        this.zoomFactor += zoomFactor;
+        this.alpha -= alpha;
+    }
+
     private boolean typeChecker(File file, String extension){
         return file.getName().endsWith("." + extension);
     }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.translate(this.getWidth()/2, this.getHeight()/2);
+        g2.scale(zoomFactor, zoomFactor);
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+        g2.translate(-this.getWidth()/2, -this.getHeight()/2);
+    }
 }
