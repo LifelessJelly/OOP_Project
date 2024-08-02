@@ -85,13 +85,13 @@ public final class TranslationTable {
         put("en", "ApplicantListPage.JTable.applicantStatus", "Status:  ");
         put("cn", "ApplicantListPage.JTable.applicantStatus", "状态： ");
 
-        put("en", "ApplicantListPage.JTable.applicantShortlisted", "Shortlisted for interview");
+        put("en", "ApplicantListPage.JTable.applicantShortlisted", "Shortlisted (Date to be set)");
         put("cn", "ApplicantListPage.JTable.applicantShortlisted", "入围参加面试: ");
 
         put("en", "ApplicantListPage.JTable.applicantPending", "Pending");
         put("cn", "ApplicantListPage.JTable.applicantPending", "未决");
 
-        put("en", "ApplicantListPage.JTable.applicantAccepted", "Accepted");
+        put("en", "ApplicantListPage.JTable.applicantAccepted", "Accepted (Job to be set)");
         put("cn", "ApplicantListPage.JTable.applicantAccepted", "进入公司");
 
         put("en", "ApplicantListPage.JTable.applicantPendingShortlist", "Pending shortlist");
@@ -109,11 +109,17 @@ public final class TranslationTable {
         put("en", "ApplicantListPage.JCheckBox.waitingShortlist", "Waiting shortlist");
         put("cn", "ApplicantListPage.JCheckBox.waitingShortlist", "等待入围");
 
+        put("en", "ApplicantListPage.JCheckBox.shortlistedWaitingHR", "Shortlist (Interview date unknown)");
+
         put("en", "ApplicantListPage.JCheckBox.shortlisted", "Shortlisted");
         put("cn", "ApplicantListPage.JCheckBox.shortlisted", "入围了");
 
+        put("en", "ApplicantListPage.JCheckBox.acceptedWaitingManager", "Accepted (Job unknown)");
+
         put("en", "ApplicantListPage.JCheckBox.accepted", "Accepted");
         put("cn", "ApplicantListPage.JCheckBox.accepted", "进入公司");
+
+        put("en", "ApplicantListPage.JLabel.excludeSkill", "Exclude Skills: ");
 
         put("en", "EditApplicant.JOptionPane.discardConfirm", "Are you sure you want to discard the current changes?");
         put("cn", "EditApplicant.JOptionPane.discardConfirm", "您确定把当前的更改摒弃吗？");
