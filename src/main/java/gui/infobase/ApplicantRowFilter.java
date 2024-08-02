@@ -8,10 +8,6 @@ import java.util.Arrays;
 import java.util.regex.Pattern;
 
 public class ApplicantRowFilter extends RowFilter<TableModel, Integer> {
-    public static final int STAGE_ANY = 0;
-    public static final int  STAGE_AWAITING_SHORTLIST = 1;
-    public static final int  STAGE_AWAITING_ACCEPTANCE = 2;
-    public static final int STAGE_ACCEPTED = 3;
     private final Pattern namePattern;
     int[] filteredProcessStages;
     String[] skills;
@@ -60,19 +56,27 @@ public class ApplicantRowFilter extends RowFilter<TableModel, Integer> {
 
         for (int filteredStage : filteredProcessStages) {
             switch (filteredStage) {
-                case STAGE_ANY:
-                    return true;
-                case STAGE_AWAITING_SHORTLIST:
+                case Applicant.WAITING_SHORTLIST:
                     if (applicant.getStatus() == Applicant.WAITING_SHORTLIST) {
                         return true;
                     }
                     break;
-                case STAGE_AWAITING_ACCEPTANCE:
-                    if (applicant.getStatus() == Applicant.SHORTLISTED) {
+                case Applicant.SHORTLISTED_PENDING_DATE:
+                    if (applicant.getStatus() == Applicant.SHORTLISTED_PENDING_DATE) {
                         return true;
                     }
                     break;
-                case STAGE_ACCEPTED:
+                case Applicant.SHORTLISTED_TO_INTERVIEW:
+                    if (applicant.getStatus() == Applicant.SHORTLISTED_TO_INTERVIEW) {
+                        return true;
+                    }
+                    break;
+                case Applicant.ACCEPTED_WAITING_JOB:
+                    if (applicant.getStatus() == Applicant.ACCEPTED_WAITING_JOB) {
+                        return true;
+                    }
+                    break;
+                case Applicant.ACCEPTED:
                     if (applicant.getStatus() == Applicant.ACCEPTED) {
                         return true;
                     }
