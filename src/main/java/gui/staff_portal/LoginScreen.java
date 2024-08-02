@@ -241,14 +241,8 @@ public class LoginScreen extends JPanel {
         });
 
         loginButton.addActionListener(e -> {
-            int domainSelected = -1;
-            if (hrButton.isSelected()){
-                domainSelected = Staff.HR;
-            }
-            else if (managerButton.isSelected()){
-                domainSelected = Staff.MANAGER;
-            }
-            if (main.checkAuthorisation(usernameField.getText(), passwordField.getPassword(), domainSelected)) {
+
+            if (main.checkAuthorisation(usernameField.getText(), passwordField.getPassword())) {
                 usernameField.setText("");
                 passwordField.setText("");
                 badLoginWarnLabel.setText("");
@@ -277,7 +271,7 @@ public class LoginScreen extends JPanel {
     }
 
     private void updateLoginButton(){
-            loginButton.setEnabled(passwordIsFilled && usernameIsFilled && domainSelected);
+            loginButton.setEnabled(passwordIsFilled && usernameIsFilled);
         }
 
     }
