@@ -11,7 +11,7 @@ import java.io.IOException;
 public class LoginController {
     private Staff loggedInStaff;
 
-    public boolean verifyLogin(String username, char[] password, int domain) {
+    public boolean verifyLogin(String username, char[] password) {
         String path = System.getProperty("user.dir") + "\\" + "staff";
         File dir = new File(path);
         File[] files = dir.listFiles();
@@ -22,7 +22,7 @@ public class LoginController {
             if (file.getName().endsWith(".json")) {
                 String json = DataIO.readFile(file.getAbsolutePath());
                 Staff staff = JsonReaderWriter.jsonToModel(json, Staff.class);
-                if (staff.checkCredentials(username, password, domain)) {
+                if (staff.checkCredentials(username, password)) {
                     loggedInStaff = staff;
                     return true;
                 }
