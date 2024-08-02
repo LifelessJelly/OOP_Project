@@ -1,6 +1,7 @@
 package gui.infobase;
 
 import controller.InfobaseMainframe;
+import data.Applicant;
 
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
@@ -47,7 +48,7 @@ public class SummaryPage extends JPanel {
         table.setMinimumSize(new Dimension(0, 100));
         ////////
         table.getColumnModel().getColumn(0).setCellRenderer(new TableImageRender());
-        table.getColumnModel().getColumn(1).setCellRenderer(new TableCellRender(main));
+        table.getColumnModel().getColumn(1).setCellRenderer(new SummaryCellRenderer(main));
         ////////
         table.setBorder(new MatteBorder(1, 1, 1, 1, Color.GRAY));
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -57,7 +58,7 @@ public class SummaryPage extends JPanel {
         add(tableScroll, scrollTableConstraints);
 
         sorter.setRowFilter(new ApplicantRowFilter(
-                new int[]{ApplicantRowFilter.STAGE_ACCEPTED},
+                new int[]{Applicant.ACCEPTED},
                 "",
                 null));
         table.setRowSorter(sorter);
