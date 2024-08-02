@@ -37,6 +37,7 @@ public class JsonReaderWriter {
      * @return a generated json string based off the class model
      */
     public static <T> String modelToJson(T classModel){
+        System.out.println("json created");
         return gson.toJson(classModel);
     }
 }
