@@ -5,17 +5,23 @@ package data;
 import subsystems.ImageBase64;
 
 import java.awt.image.BufferedImage;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.Locale;
 
 public class Applicant{
 
     private final ApplicantDetails applicantDetails;
     private final String[] skills;
-    private ApplicantMetadata applicantMetadata;
+    private final ApplicantMetadata applicantMetadata;
     public static final int WAITING_SHORTLIST = 1;
-    public static final int SHORTLISTED = 2;
-    public static final int ACCEPTED = 3;
+    public static final int SHORTLISTED_PENDING_DATE = 2;
+    public static final int SHORTLISTED_TO_INTERVIEW = 3;
+    public static final int ACCEPTED_WAITING_JOB = 4;
+    public static final int ACCEPTED = 5;
 
     /**
      * Constructs a new Applicant object by copying the details, previous experiences, skills, and metadata from another Applicant object.
@@ -40,7 +46,7 @@ public class Applicant{
      * @param imageBase64 The base64 encoded image of the applicant.
      * @param skills The array of skills possessed by the applicant.
      */
-    public Applicant(String name, long birthdate, int age, String email, String nric, String gender, String imageBase64, String[] skills) {
+    public Applicant(String name, long birthdate, int age, String email, String nric, String gender, String imageBase64, String[] skills, String pdfBase64) {
         this.skills = skills;
         applicantMetadata = new ApplicantMetadata();
         applicantDetails = new ApplicantDetails();
@@ -51,6 +57,7 @@ public class Applicant{
         applicantDetails.nric = nric;
         applicantDetails.gender = gender;
         applicantDetails.imageBase64 = imageBase64;
+        applicantDetails.pdfBase64 = pdfBase64;
     }
 
     public Applicant(String name, long birthdate, int age, String email, String nric, String gender, String imageBase64, String[] skills, Applicant oldApplicant) {
@@ -64,6 +71,7 @@ public class Applicant{
         applicantDetails.nric = nric;
         applicantDetails.gender = gender;
         applicantDetails.imageBase64 = imageBase64;
+        applicantDetails.pdfBase64 = oldApplicant.getPdfBase64();
     }
 
 
@@ -100,6 +108,10 @@ public class Applicant{
         return applicantDetails.age;
     }
 
+    public String getPdfBase64(){
+        return applicantDetails.pdfBase64;
+    }
+
     public int getStatus(){
         return applicantMetadata.status;
     }
@@ -108,13 +120,21 @@ public class Applicant{
         applicantMetadata.status = status;
     }
 
-    //for editing
-    public void copyApplicantMetadata(Applicant previousApplicantInstance){
-        applicantMetadata = previousApplicantInstance.applicantMetadata;
-    }
-
     public String getGender() {
         return applicantDetails.gender;
+    }
+
+    public String getInterviewTime() {
+        DateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm", Locale.ENGLISH);
+        return formatter.format(new Date(applicantMetadata.interviewTime));
+    }
+
+    public void setInterviewTime(long time) {
+        applicantMetadata.interviewTime = time;
+    }
+
+    public void setJobRole(String applicantAssignedField) {
+        applicantMetadata.jobRoleAssigned = applicantAssignedField;
     }
 
 
@@ -127,6 +147,7 @@ public class Applicant{
         private String nric;
         private String imageBase64;
         private String email;
+        private String pdfBase64;
 
         /**
          * Default constructor for creating an empty ApplicantDetails object.
@@ -155,6 +176,7 @@ public class Applicant{
             this.nric = applicantDetailsToCopyFrom.nric;
             this.imageBase64 = applicantDetailsToCopyFrom.imageBase64;
             this.email = applicantDetailsToCopyFrom.email;
+            this.pdfBase64 = applicantDetailsToCopyFrom.pdfBase64;
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -163,18 +185,20 @@ public class Applicant{
     private static class ApplicantMetadata {
         private final long applicationDate;
         private int status;
-        private final long interviewDate;
+        private long interviewTime;
+        private String jobRoleAssigned;
 
         private ApplicantMetadata() {
             applicationDate = System.currentTimeMillis();
             status = WAITING_SHORTLIST;
-            interviewDate = -1;
+            interviewTime = -1;
         }
 
         private ApplicantMetadata(ApplicantMetadata applicantMetadataToCopyFrom) {
             this.applicationDate = applicantMetadataToCopyFrom.applicationDate;
             status = applicantMetadataToCopyFrom.status;
-            this.interviewDate = applicantMetadataToCopyFrom.interviewDate;
+            this.interviewTime = applicantMetadataToCopyFrom.interviewTime;
+            this.jobRoleAssigned = applicantMetadataToCopyFrom.jobRoleAssigned;
         }
     }
 }
