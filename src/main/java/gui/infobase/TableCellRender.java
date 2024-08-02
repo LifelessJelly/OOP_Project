@@ -46,6 +46,7 @@ public class TableCellRender extends JTextArea implements TableCellRenderer {
      * @return a formatted string with the applicant's details
      */
     private String printApplicantDetails(Applicant applicant){
+
         String nameText = main.getLocale("ApplicantListPage.JTable.applicantName");
         String birthDateText = main.getLocale("ApplicantListPage.JTable.applicantBirthDate");
         String ageText = main.getLocale("ApplicantListPage.JTable.applicantAge");
@@ -54,29 +55,38 @@ public class TableCellRender extends JTextArea implements TableCellRenderer {
         String genderText = main.getLocale("ApplicantListPage.JTable.applicantGender");
         String skillText = main.getLocale("ApplicantListPage.JTable.applicantSkills");
         String shortlistText = main.getLocale("ApplicantListPage.JTable.applicantStatus");
+        String interviewTimeText = "Interview Time: ";
         String shortlistStatus;
 
         switch (applicant.getStatus()){
             case Applicant.WAITING_SHORTLIST:
                 shortlistStatus = main.getLocale("ApplicantListPage.JTable.applicantPendingShortlist");
                 break;
-            case Applicant.SHORTLISTED:
+            case Applicant.SHORTLISTED_PENDING_DATE:
                 shortlistStatus = main.getLocale("ApplicantListPage.JTable.applicantShortlisted");
                 break;
-            case Applicant.ACCEPTED:
+            case Applicant.SHORTLISTED_TO_INTERVIEW:
+                shortlistStatus = "Shortlisted To Interview";
+                break;
+            case Applicant.ACCEPTED_WAITING_JOB:
                 shortlistStatus = main.getLocale("ApplicantListPage.JTable.applicantAccepted");
+                break;
+            case Applicant.ACCEPTED:
+                shortlistStatus = "Accepted";
                 break;
             default:
                 throw new IllegalArgumentException("This should not happen");
         }
 
         return  nameText + applicant.getName() + '\n' +
-                //birthDateText + applicant.getBirthdate() + '\n' +
+                birthDateText + applicant.getBirthdate() + '\n' +
                 ageText + applicant.getAge() + '\n' +
-                //NRICText + applicant.getNRIC() + '\n' +
+                NRICText + applicant.getNRIC() + '\n' +
                 emailText + applicant.getEmail() + '\n' +
                 genderText + applicant.getGender() + '\n' +
-                //skillText + String.join(", ", applicant.getSkills()) + '\n' +
-                shortlistText + shortlistStatus + '\n';
+                skillText + String.join(", ", applicant.getSkills()) + '\n' +
+                shortlistText + shortlistStatus + '\n' +
+                interviewTimeText + applicant.getInterviewTime();
+
     }
 }
