@@ -1,6 +1,7 @@
 package gui.infobase;
 
 import controller.InfobaseMainframe;
+import data.Applicant;
 import data.Staff;
 import gui.DropShadowPanel;
 import gui.ImageEmbedded;
@@ -183,7 +184,6 @@ public class Console extends JPanel {
         card.show(displayPanel, "AddApplicant");
 
         System.gc();
-        //garbo
     }
 
     public void showSummaryPage() {
@@ -192,8 +192,8 @@ public class Console extends JPanel {
         card.show(displayPanel, "SummaryPage");
     }
 
-    public void showApplicantKeyingPage(){
-        ApplicantInfoKeyingPage keyingPage = new ApplicantInfoKeyingPage(0, main);
+    public void showApplicantKeyingPage(int type, int index){
+        ApplicantInfoKeyingPage keyingPage = new ApplicantInfoKeyingPage(index, main, type);
         displayPanel.add(keyingPage, "ApplicantInfoKeyingPage");
         card.show(displayPanel, "ApplicantInfoKeyingPage");
     }
