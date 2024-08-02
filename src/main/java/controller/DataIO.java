@@ -25,9 +25,12 @@ public class DataIO {
         try {
             try (FileWriter fileWriter = new FileWriter(directoryOfFile)) {
                 fileWriter.write(content);
+                System.out.println("file written to " + directoryOfFile);
             }
         } catch (IOException ex) {
+            System.out.println("smth went wrong");
             throw new RuntimeException(ex);
+
         }
     }
 
