@@ -21,6 +21,7 @@ public class ApplicantRegistrator {
     private String gender;
     private String imageBase64;
     private String[] allSkills;
+    private String pdf;
 
     public void registerBasicInfo(String name, int day, String month, int year, String nricFin, String email, String gender) {
         this.name = name;
@@ -50,6 +51,6 @@ public class ApplicantRegistrator {
     }
 
     public Applicant createApplicant() {
-        return new Applicant(name, birthDate, age, email, nricFin, gender, imageBase64, allSkills);
+        return new Applicant(name, birthDate, age, email, nricFin, gender, imageBase64, allSkills, pdf);
     }
 }
