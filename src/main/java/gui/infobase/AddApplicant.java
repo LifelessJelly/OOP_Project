@@ -1,65 +1,63 @@
 package gui.infobase;
 
 import controller.InfobaseMainframe;
-import data.Applicant;
+import gui.DateSelectorHelper;
 import gui.ImageEmbedded;
 import gui.JPanelImageButton;
 import subsystems.ImageBase64;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.io.File;
-import java.time.Year;
-import java.util.ArrayList;
+import java.io.IOException;
 
 public class AddApplicant extends JPanel {
-    InfobaseMainframe main;
-    Applicant applicant;
-    JPanel picturePanel;
-    JPanel detailsPanel;
-    JButton applicantImageButton;
-    JButton imageRemoveButton;
-    JLabel applicantNameLabel;
-    JTextField applicantNameField;
-    JLabel applicantBirthday;
-    JPanel birthdayPanel;
-    JComboBox<Integer> dayComboBox;
-    JComboBox<String> monthComboBox;
-    JComboBox<Integer> yearComboBox;
-    JLabel applicantNricLabel;
-    JTextField applicantNricField;
-    JLabel applicantEmail;
-    JTextField applicantEmailField;
-    JLabel applicantGenderLabel;
-    JComboBox<String> applicantGenderComboBox;
-    JLabel skillsLabel;
-    JScrollPane skillPane;
-    JList<String> skillsList;
-    JPanel skillsButtonPanel;
-    JButton addSkillButton;
-    JButton removeSkillButton;
-    JButton editSkillButton;
-    JTextField skillTextField;
-    JPanel updateChangesPanel;
+    private InfobaseMainframe main;
+    private JPanel picturePanel;
+    private JPanel detailsPanel;
+    private JButton applicantImageButton;
+    private JButton imageRemoveButton;
+    private JLabel applicantNameLabel;
+    private JTextField applicantNameField;
+    private JLabel applicantBirthday;
+    private JPanel birthdayPanel;
+    private JComboBox<Integer> dayComboBox;
+    private JComboBox<String> monthComboBox;
+    private JComboBox<Integer> yearComboBox;
+    private JLabel applicantNricLabel;
+    private JTextField applicantNricField;
+    private JLabel applicantEmail;
+    private JTextField applicantEmailField;
+    private JLabel applicantGenderLabel;
+    private JComboBox<String> applicantGenderComboBox;
+    private JLabel skillsLabel;
+    private JScrollPane skillPane;
+    private JList<String> skillsList;
+    private JPanel skillsButtonPanel;
+    private JButton addSkillButton;
+    private JButton removeSkillButton;
+    private JButton editSkillButton;
+    private JTextField skillTextField;
+    private JPanel updateChangesPanel;
     //String[] currentSkillsArray=new String[];
-    ArrayList<String> currentSkillsList = new ArrayList<String>();
     private JPanelImageButton discardChangesButton;
     private JPanelImageButton addChangesButton;
-    private ImageIcon defaultIcon=new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.PLACEHOLDER).getScaledInstance(120,120,Image.SCALE_SMOOTH));
-
+    private final ImageIcon defaultIcon;
     private Image currentImage;
-    private double zoomFactor;
-    private float alpha;
+
     DefaultListModel<String> currentSkillsModel = new DefaultListModel<>();
     //TODO: replace with the relevant placeholders
 
     public AddApplicant(InfobaseMainframe main) {
+        this.defaultIcon = new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.DEFAULT_APPLICANT_IMAGE));
         this.main = main;
-        this.zoomFactor=1.2;
-        this.alpha=0;
-        //this.applicant = applicant;
-        //this.main.getController().setApplicantInstance(applicant, index);
-        //TODO: change to write instead of read
+        this.main.getController().setApplicantInstance(-1);
+        this.currentImage = ImageBase64.base64ToImage(ImageEmbedded.PLACEHOLDER);
         initComponents();
         initListeners();
     }
@@ -77,7 +75,7 @@ public class AddApplicant extends JPanel {
                 0, 0, 1, 1, 1, 1,
                 GridBagConstraints.NORTHEAST, GridBagConstraints.NONE,
                 new Insets(0, 0, 0, 5), 0, 0);
-        picturePanel.setBorder(BorderFactory.createLineBorder(Color.black));
+
 
         //START INNER COMPONENTS OF PANEL
         {
@@ -86,7 +84,6 @@ public class AddApplicant extends JPanel {
             //TODO: might need to change the image, add a placeholder image
             //TODO: replace with JFilechooser, maybe funtionality already inside
             applicantImageButton = new JButton(defaultIcon);
-            //applicantImageButton = new JButton(new ImageIcon(placeholderpic));
             GridBagConstraints applicantImageButtonConstraints = new GridBagConstraints(
                     0, 0, 1, 1, 0, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.BOTH,
@@ -100,6 +97,8 @@ public class AddApplicant extends JPanel {
                     GridBagConstraints.NORTH, GridBagConstraints.BOTH,
                     new Insets(0, 0, 5, 0), 0, 0);
             picturePanel.add(imageRemoveButton, imageRemoveButtonConstraints);
+
+
         }
         //END INNER COMPONENTS
 
@@ -162,7 +161,7 @@ public class AddApplicant extends JPanel {
 
                 //===DAY FIELD IN COMBOBOX===//
 
-                dayComboBox = new JComboBox<>(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31});
+                dayComboBox = DateSelectorHelper.comboBoxGetBaseDates();
                 dayComboBox.setAlignmentX(Component.LEFT_ALIGNMENT);
                 dayComboBox.setFont(dayComboBox.getFont().deriveFont(18f));
                 //TODO might need to set to 1, same for other fields.
@@ -175,7 +174,7 @@ public class AddApplicant extends JPanel {
 
                 //===MONTH FIELD IN COMBOBOX===//
 
-                monthComboBox = new JComboBox<>(new String[]{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"});
+                monthComboBox = DateSelectorHelper.comboBoxGetBaseMonths();
                 monthComboBox.setAlignmentX(Component.LEFT_ALIGNMENT);
                 monthComboBox.setFont(monthComboBox.getFont().deriveFont(18f));
                 monthComboBox.setSelectedIndex(0);
@@ -187,10 +186,7 @@ public class AddApplicant extends JPanel {
 
                 //===YEAR FIELD IN COMBOBOX===//
 
-                yearComboBox = new JComboBox<>();
-                for (int i = Year.now().getValue(); i > 1899; --i) {
-                    yearComboBox.addItem(i);
-                }
+                yearComboBox = DateSelectorHelper.comboBoxGetBaseYears(1899);
                 yearComboBox.setAlignmentX(Component.LEFT_ALIGNMENT);
                 yearComboBox.setFont(yearComboBox.getFont().deriveFont(18f));
                 yearComboBox.setSelectedIndex(0);
@@ -322,6 +318,7 @@ public class AddApplicant extends JPanel {
                 //===ADD BUTTON===//
 
                 addSkillButton = new JButton(main.getLocale("EditApplicant.JButton.add"));
+                addSkillButton.setEnabled(false);
                 addSkillButton.setFont(addSkillButton.getFont().deriveFont(18f));
                 addSkillButton.setHorizontalAlignment(SwingConstants.CENTER);
                 GridBagConstraints addSkillButtonConstraints = new GridBagConstraints(0, 0, 1, 1, 0, 0,
@@ -362,7 +359,7 @@ public class AddApplicant extends JPanel {
         }
         this.add(detailsPanel, detailsPanelConstraints);
 
-        //===UPDATE BUTTON PANEL===//
+
 
         updateChangesPanel = new JPanel();
         updateChangesPanel.setLayout(new GridBagLayout());
@@ -371,8 +368,6 @@ public class AddApplicant extends JPanel {
                 new Insets(0, 0, 5, 0), 0, 0);
         {
 
-            //===SAVE BUTTON===//
-            //TODO: change locale, add locale
             addChangesButton = new JPanelImageButton(main.getLocale("EditApplicant.JButton.save_changes"), ImageEmbedded.SAVE_CHANGES, ImageEmbedded.SAVE_CHANGES_COLOURED, 60, 60, JPanelImageButton.LEFT);
 
             GridBagConstraints addChangesConstraints = new GridBagConstraints(0, 0, 1, 1, 0, 0,
@@ -381,7 +376,6 @@ public class AddApplicant extends JPanel {
             updateChangesPanel.add(addChangesButton, addChangesConstraints);
 
             //==DISCARD BUTTON===//
-            //TODO: change locale, add locale (maybe? :|)
             discardChangesButton = new JPanelImageButton(main.getLocale("EditApplicant.JLabel.discard_changes"), ImageEmbedded.DISCARD_CHANGES, ImageEmbedded.DISCARD_CHANGES_COLOURED, 60, 60, JPanelImageButton.LEFT);
 
             GridBagConstraints discardChangesConstraints = new GridBagConstraints(0, 1, 1, 1, 0, 0,
@@ -393,33 +387,28 @@ public class AddApplicant extends JPanel {
     }
 
 
-//===INITIALSE LISTENERS===//
-//TODO Listeners done so far: addImageButton, discardChangesButton, saveChangeButton, removeSkill,
-//yet todo: editskill, reset image
     private void initListeners() {
-        //TODO: add the yummy add function, the whatever at 0 thingy (see how :3)
         applicantImageButton.addActionListener(e -> {
-            JFileChooser chooser = new JFileChooser();
-            chooser.setCurrentDirectory(new File("user.dir"));
-            //FileNameExtensionFilter filter = new FileNameExtensionFilter("All Pictures only", "png", "jpg", "jpeg");
-            //chooser.addChoosableFileFilter(filter);
-            int clicked = chooser.showOpenDialog(this);
+            JFileChooser chooser = getjFileChooser();
+            Action details = chooser.getActionMap().get("viewTypeDetails");
+            details.actionPerformed(null);
+            int r = chooser.showOpenDialog(null);
+            File selectedFile;
+            selectedFile = chooser.getSelectedFile().getAbsoluteFile();
+            if (selectedFile.length() > 16777216) {
+                JOptionPane.showMessageDialog(null, "Image size exceeds 16MiB", "Image too large", JOptionPane.ERROR_MESSAGE);
+            }
+            if (r == JFileChooser.APPROVE_OPTION) {
 
+                ImageIcon scaledIcon;
+                try {
+                    scaledIcon = new ImageIcon(ImageIO.read(selectedFile).getScaledInstance(120, 120, Image.SCALE_SMOOTH));
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
 
-            if (clicked == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = chooser.getSelectedFile();
-                if(typeChecker(selectedFile,"jpg")||typeChecker(selectedFile,"jpeg")||typeChecker(selectedFile,"png")){
-                    ImageIcon icon = new ImageIcon(selectedFile.getAbsolutePath());
-                    Image imageFromIcon = icon.getImage();
-                    Image scaledImage = imageFromIcon.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
-                    ImageIcon scaledIcon = new ImageIcon(scaledImage);
-                    applicantImageButton.setIcon(scaledIcon);
-                    currentImage = scaledIcon.getImage();
-                    applicantImageButton.setIcon(scaledIcon);
-                }
-                else{
-                    JOptionPane.showMessageDialog(null,"Please select a jpg, jpeg, or png","wrong file type",JOptionPane.ERROR_MESSAGE);
-                }
+                applicantImageButton.setIcon(scaledIcon);
+                currentImage = scaledIcon.getImage();
             }
 
         });
@@ -435,82 +424,125 @@ public class AddApplicant extends JPanel {
             }
         });
 
-        //TODO: modify to get current skills
+        skillsList.addListSelectionListener(e -> {
+            if (skillsList.getSelectedIndex() == -1){
+                removeSkillButton.setEnabled(false);
+                editSkillButton.setEnabled(false);
+                return;
+            }
+            removeSkillButton.setEnabled(true);
+            if (skillTextField.getDocument().getLength() > 0) {
+                editSkillButton.setEnabled(true);
+            }
+        });
+
+        skillTextField.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                removeUpdate(e);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                changedUpdate(e);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                if (skillTextField.getDocument().getLength() > 0) {
+                    addSkillButton.setEnabled(true);
+                    if (skillsList.getSelectedIndex() != -1) {
+                        editSkillButton.setEnabled(true);
+                    }
+                }
+                else {
+                    addSkillButton.setEnabled(false);
+                    editSkillButton.setEnabled(false);
+                }
+
+            }
+        });
+
         addSkillButton.addActionListener(e -> {
-            currentSkillsList.add(skillTextField.getText());
-            currentSkillsModel.addElement(skillTextField.getText());
-            //main.getController().addSkill(editSkillTextField.getText());
-            //getSkillsModel();
-            //currentSkillsList.setModel(getSkillsModel());
+            main.getController().addSkill(skillTextField.getText());
+            skillsList.setModel(getSkillsModel());
+            skillTextField.setText("");
+            addSkillButton.setEnabled(false);
         });
 
-        removeSkillButton.addActionListener(e->{
-            currentSkillsList.remove(skillsList.getSelectedIndex());
+        removeSkillButton.addActionListener(e -> {
+            main.getController().removeSkill(skillsList.getSelectedIndex());
+            skillsList.setModel(getSkillsModel());
+            removeSkillButton.setEnabled(false);
         });
 
-        editSkillButton.addActionListener(e-> {
-            currentSkillsList.set(skillsList.getSelectedIndex(), skillTextField.getText());
+        editSkillButton.addActionListener(e -> {
+            main.getController().editSkill(skillsList.getSelectedIndex(), skillTextField.getText());
+            skillsList.setModel(getSkillsModel());
+            skillTextField.setText("");
+            editSkillButton.setEnabled(false);
         });
 
         addChangesButton.addActionListener(e -> {
-            //TODO: change funtionality to add vs change, probably have to modify the applyApplicantEdits
-            String skillStringArray[]=new String[currentSkillsModel.getSize()];
-            for(int i=0;i<currentSkillsModel.getSize();++i) {
+
+            String[] skillStringArray =new String[currentSkillsModel.getSize()];
+            for(int i=0; i<currentSkillsModel.getSize(); ++i) {
                 skillStringArray[i]=currentSkillsModel.getElementAt(i);
             }
 
-            main.getController().addApplicant(applicantNameField.getText(),			                    //adds name
-                    dayComboBox.getItemAt(dayComboBox.getSelectedIndex()),				                //adds day
-                    monthComboBox.getItemAt(monthComboBox.getSelectedIndex()),				            //adds month
-                    yearComboBox.getItemAt(yearComboBox.getSelectedIndex()),				            //adds year
+            main.getController().addApplicant(applicantNameField.getText(),                      //adds name
+                    dayComboBox.getItemAt(dayComboBox.getSelectedIndex()),                              //adds day
+                    monthComboBox.getItemAt(monthComboBox.getSelectedIndex()),                          //adds month
+                    yearComboBox.getItemAt(yearComboBox.getSelectedIndex()),                            //adds year
                     applicantEmailField.getText(),                                                      //adds email
-                    applicantNricField.getText(),							                            //adds nric
+                    applicantNricField.getText(),                                                       //adds nric
                     applicantGenderComboBox.getItemAt(applicantGenderComboBox.getSelectedIndex()),      //adds gender
                     ImageBase64.imageToBase64(currentImage),                                            //adds image (base64)
-                    //TODO add skill string array
-                    skillStringArray);
+                    skillStringArray,
+                    "");
 
-            main.showApplicantListPage();								//goes back to list page
+            main.showApplicantListPage();                                                               //goes back to list page
         });
+
+        dayComboBox.addActionListener(DateSelectorHelper.datesUpdater(dayComboBox, monthComboBox, yearComboBox));
+
+        monthComboBox.addActionListener(DateSelectorHelper.datesUpdater(dayComboBox, monthComboBox, yearComboBox));
+
+        yearComboBox.addActionListener(DateSelectorHelper.datesUpdater(dayComboBox, monthComboBox, yearComboBox));
 
     }
 
-    /*private DefaultListModel<String> getSkillsModel(){
+    private static JFileChooser getjFileChooser() {
+        JFileChooser chooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        chooser.setFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                if (f.isDirectory()) {
+                    return true;
+                } else {
+                    String filename = f.getName().toLowerCase();
+                    return filename.endsWith(".jpg") || filename.endsWith(".png") || filename.endsWith(".jpeg");
+                }
+            }
+            @Override
+            public String getDescription() {
+                return "Image files (*.png, *.jpg, *.jpeg)";
+            }
+        });
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        chooser.setPreferredSize(new Dimension(640, 480));
+        return chooser;
+    }
+
+    private DefaultListModel<String> getSkillsModel(){
         DefaultListModel<String> skillsModel = new DefaultListModel<>();
         for (String skill : main.getController().getSkills()){
             skillsModel.addElement(skill);
         }
         //only required for when there is data passed through
         return skillsModel;
-    }*/
-
-    public double getZoomFactor(){
-        return zoomFactor;
     }
 
-    public void incrementKeyframe(double zoomFactor, float alpha){
-        this.zoomFactor -= zoomFactor;
-        this.alpha += alpha;
-        main.getContentPane().validate();
-        main.getContentPane().repaint();
-    }
 
-    public void decrementKeyframe(double zoomFactor, float alpha){
-        this.zoomFactor += zoomFactor;
-        this.alpha -= alpha;
-    }
-
-    private boolean typeChecker(File file, String extension){
-        return file.getName().endsWith("." + extension);
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
-        g2.translate(this.getWidth()/2, this.getHeight()/2);
-        g2.scale(zoomFactor, zoomFactor);
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-        g2.translate(-this.getWidth()/2, -this.getHeight()/2);
-    }
 }
