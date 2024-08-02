@@ -160,4 +160,7 @@ public class InfobaseMainframe extends JFrame {
         console.showApplicantWithAnimation();
     }
 
+    public void showApplicantKeyPage(int type, int index) {
+        console.showApplicantKeyingPage(type, index);
+    }
 }
