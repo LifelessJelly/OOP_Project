@@ -8,6 +8,10 @@ import subsystems.ImageBase64;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -38,21 +42,23 @@ public class EditApplicant extends JPanel {
     JButton addSkillButton;
     JButton removeSkillButton;
     JButton editSkillButton;
-    JTextField editSkillTextField;
+    JTextField skillTextField;
     JPanel updateChangesPanel;
     private JPanelImageButton discardChangesButton;
     private JPanelImageButton saveChangesButton;
     private double zoomFactor;
     private float alpha;
+    private final ImageIcon defaultIcon;
     private Image currentImage;
-    private final ImageIcon defaultIcon=new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.PLACEHOLDER).getScaledInstance(120,120,Image.SCALE_SMOOTH));
+
 
     public EditApplicant(int index, InfobaseMainframe main) {
+        this.defaultIcon = new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.DEFAULT_APPLICANT_IMAGE));
         this.main = main;
-        this.main.getController().setApplicantInstance(main.getController().getApplicants()[index], index);
+        this.main.getController().setApplicantInstance(index);
+        this.currentImage=main.getController().getImage();
         this.zoomFactor = 1.2;
         this.alpha = 0;
-        currentImage=main.getController().getImage();
         initComponents();
         initListeners();
     }
@@ -68,7 +74,7 @@ public class EditApplicant extends JPanel {
                 0, 0, 1, 1, 1, 1,
                 GridBagConstraints.NORTHEAST, GridBagConstraints.NONE,
                 new Insets(0, 0, 0, 5), 0, 0);
-        picturePanel.setBorder(BorderFactory.createLineBorder(Color.black));
+
 
         //START INNER COMPONENTS
         {
@@ -211,8 +217,7 @@ public class EditApplicant extends JPanel {
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 5, 0), 0, 0);
             detailsPanel.add(applicantGenderLabel, applicantGenderLabelConstraints);
-
-            applicantGenderComboBox = new JComboBox<>(new String[] {
+            String[] genderList = new String[] {
                     "Male",
                     "Female",
                     "Transgender Male",
@@ -226,8 +231,18 @@ public class EditApplicant extends JPanel {
                     "Xenogender",
                     "Third gender",
                     "Others"
-            });
+            };
+            applicantGenderComboBox = new JComboBox<>(genderList);
+            int stringIndex = 0;
+            for (int i = 0; i < genderList.length; i++) {
+                if (genderList[i].equals(main.getController().getGender())) {
+                    stringIndex = i;
+                }
+            }
+            applicantGenderComboBox.setSelectedItem(genderList[stringIndex]);
+
             applicantGenderComboBox.setFont(applicantGenderComboBox.getFont().deriveFont(18f));
+
             GridBagConstraints applicantGenderComboBoxConstraints = new GridBagConstraints(
                     0, 9, 1, 1, 0, 0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -264,6 +279,7 @@ public class EditApplicant extends JPanel {
                     new Insets(5, 0, 0, 0), 0, 0);
             {
                 addSkillButton = new JButton(main.getLocale("EditApplicant.JButton.add"));
+                addSkillButton.setEnabled(false);
                 addSkillButton.setFont(addSkillButton.getFont().deriveFont(18f));
                 addSkillButton.setHorizontalAlignment(SwingConstants.CENTER);
                 GridBagConstraints addSkillButtonConstraints = new GridBagConstraints(0, 0, 1, 1, 0, 0,
@@ -287,12 +303,12 @@ public class EditApplicant extends JPanel {
                         new Insets(0, 0, 5, 0), 0, 0);
                 skillsButtonPanel.add(editSkillButton, editSkillButtonConstraints);
 
-                editSkillTextField = new JTextField();
-                editSkillTextField.setFont(editSkillTextField.getFont().deriveFont(18f));
+                skillTextField = new JTextField();
+                skillTextField.setFont(skillTextField.getFont().deriveFont(18f));
                 GridBagConstraints editSkillTextFieldConstraints = new GridBagConstraints(0, 1, 3, 1, 0, 0,
                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                         new Insets(0, 0, 5, 0), 0, 0);
-                skillsButtonPanel.add(editSkillTextField, editSkillTextFieldConstraints);
+                skillsButtonPanel.add(skillTextField, editSkillTextFieldConstraints);
             }
             detailsPanel.add(skillsButtonPanel, skillsButtonPanelConstraints);
         }
@@ -323,33 +339,32 @@ public class EditApplicant extends JPanel {
 
     private void initListeners() {
         imageRemoveButton.addActionListener(e-> {
-            applicantImageButton.setIcon(defaultIcon);
-            currentImage = defaultIcon.getImage();
+            applicantImageButton.setIcon(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.DEFAULT_APPLICANT_IMAGE)));
+            currentImage = ImageBase64.base64ToImage(ImageEmbedded.DEFAULT_APPLICANT_IMAGE);
         });
         applicantImageButton.addActionListener(e -> {
-            JFileChooser chooser = new JFileChooser();
-            chooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-            int clicked = chooser.showOpenDialog(this);
-
-            if (clicked == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = chooser.getSelectedFile();
-                String filename = selectedFile.getName().toLowerCase();
-                if(filename.endsWith(".jpg")||filename.endsWith(".jpeg")||filename.endsWith(".png")){
-                    Image scaledImage;
-                    try {
-                        scaledImage = ImageIO.read(selectedFile).getScaledInstance(120, 120, Image.SCALE_SMOOTH);
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                    ImageIcon scaledIcon = new ImageIcon(scaledImage);
-                    currentImage = scaledIcon.getImage();
-                    applicantImageButton.setIcon(scaledIcon);
-
-                }
-                else{
-                    JOptionPane.showMessageDialog(null,"Please select a jpg, jpeg, or png","wrong file type",JOptionPane.ERROR_MESSAGE);
-                }
+            JFileChooser chooser = getjFileChooser();
+            Action details = chooser.getActionMap().get("viewTypeDetails");
+            details.actionPerformed(null);
+            int r = chooser.showOpenDialog(null);
+            File selectedFile;
+            selectedFile = chooser.getSelectedFile().getAbsoluteFile();
+            if (selectedFile.length() > 16777216) {
+                JOptionPane.showMessageDialog(null, "Image size exceeds 16MiB", "Image too large", JOptionPane.ERROR_MESSAGE);
             }
+            if (r == JFileChooser.APPROVE_OPTION) {
+
+                ImageIcon scaledIcon;
+                try {
+                    scaledIcon = new ImageIcon(ImageIO.read(selectedFile).getScaledInstance(120, 120, Image.SCALE_SMOOTH));
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                applicantImageButton.setIcon(scaledIcon);
+                currentImage = scaledIcon.getImage();
+            }
+
 
         });
         saveChangesButton.addActionListener(e -> {
@@ -362,17 +377,72 @@ public class EditApplicant extends JPanel {
                     applicantEmailField.getText(),
                     applicantGenderComboBox.getItemAt(applicantGenderComboBox.getSelectedIndex()),
                     ImageBase64.imageToBase64(currentImage));
-            main.showApplicantListPage();
+            main.showApplicantListPageWithAnimation();
         });
         discardChangesButton.addActionListener(e -> {
             if (JOptionPane.showConfirmDialog(null, main.getLocale("EditApplicant.JOptionPane.discardConfirm"), "", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
                 main.showApplicantListPageWithAnimation();
             }
         });
+
+        skillsList.addListSelectionListener(e -> {
+            if (skillsList.getSelectedIndex() == -1){
+                removeSkillButton.setEnabled(false);
+                editSkillButton.setEnabled(false);
+                return;
+            }
+            removeSkillButton.setEnabled(true);
+            if (skillTextField.getDocument().getLength() > 0) {
+                editSkillButton.setEnabled(true);
+            }
+        });
+
+        skillTextField.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                removeUpdate(e);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                changedUpdate(e);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                if (skillTextField.getDocument().getLength() > 0) {
+                    addSkillButton.setEnabled(true);
+                    if (skillsList.getSelectedIndex() != -1) {
+                        editSkillButton.setEnabled(true);
+                    }
+                }
+                else {
+                    addSkillButton.setEnabled(false);
+                    editSkillButton.setEnabled(false);
+                }
+
+            }
+        });
+
         addSkillButton.addActionListener(e -> {
-            main.getController().addSkill(editSkillTextField.getText());
-            getSkillsModel();
+            main.getController().addSkill(skillTextField.getText());
             skillsList.setModel(getSkillsModel());
+            skillTextField.setText("");
+            addSkillButton.setEnabled(false);
+        });
+
+        removeSkillButton.addActionListener(e -> {
+            main.getController().removeSkill(skillsList.getSelectedIndex());
+            skillsList.setModel(getSkillsModel());
+            removeSkillButton.setEnabled(false);
+        });
+
+        editSkillButton.addActionListener(e -> {
+            main.getController().editSkill(skillsList.getSelectedIndex(), skillTextField.getText());
+            skillsList.setModel(getSkillsModel());
+            skillTextField.setText("");
+            editSkillButton.setEnabled(false);
         });
 
         dayComboBox.addActionListener(DateSelectorHelper.datesUpdater(dayComboBox, monthComboBox, yearComboBox));
@@ -380,6 +450,28 @@ public class EditApplicant extends JPanel {
         monthComboBox.addActionListener(DateSelectorHelper.datesUpdater(dayComboBox, monthComboBox, yearComboBox));
 
         yearComboBox.addActionListener(DateSelectorHelper.datesUpdater(dayComboBox, monthComboBox, yearComboBox));
+    }
+
+    private static JFileChooser getjFileChooser() {
+        JFileChooser chooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        chooser.setFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                if (f.isDirectory()) {
+                    return true;
+                } else {
+                    String filename = f.getName().toLowerCase();
+                    return filename.endsWith(".jpg") || filename.endsWith(".png") || filename.endsWith(".jpeg");
+                }
+            }
+            @Override
+            public String getDescription() {
+                return "Image files (*.png, *.jpg, *.jpeg)";
+            }
+        });
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        chooser.setPreferredSize(new Dimension(640, 480));
+        return chooser;
     }
 
     public double getZoomFactor(){
