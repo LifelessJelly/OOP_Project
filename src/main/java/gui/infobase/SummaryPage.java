@@ -92,7 +92,7 @@ public class SummaryPage extends JPanel {
     private void JDialogSpawner(Applicant applicantInstance){
         JDialog extraDialog = new JDialog();
 
-        extraDialog.setTitle("Applicant extra info");
+        extraDialog.setTitle(applicantInstance.getName()+"'s extra info");
         extraDialog.setSize(300,300);
         extraDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         JTextArea textArea = new JTextArea();
