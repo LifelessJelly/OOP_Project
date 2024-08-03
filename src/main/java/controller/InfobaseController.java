@@ -49,6 +49,13 @@ public class InfobaseController {
         DataIO.writeFile(applicantDirectory + "\\" + new String(SHA256.getHasherHex().hashString(String.valueOf(System.nanoTime()))) + "_Applicant.json", JsonReaderWriter.modelToJson(applicant));
     }
 
+    public void addApplicant(Applicant applicant){
+        applicantDataStorage.addApplicant(applicant);
+        File applicantDirectory = new File(System.getProperty("user.dir") + "\\" + "applicants");
+        DataIO.writeFile(applicantDirectory + "\\" + new String(SHA256.getHasherHex().hashString(String.valueOf(System.nanoTime()))) + "_Applicant.json", JsonReaderWriter.modelToJson(applicant));
+        System.out.println("applicant added via object");
+    }
+
     public void removeApplicant(int index){
         applicantDataStorage.removeApplicant(index);
         File applicantDirectory = new File(System.getProperty("user.dir") + "\\" + "applicants");
