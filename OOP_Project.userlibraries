@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="activation-1.1">
+    <archive path="L:/SCHOOL SOFTWARE/subjects/OOP/JAVA files (Intell)/OOP_Project/src/main/java/activation-1.1.jar" />
+  </library>
+  <library name="gson-2.10.1">
+    <archive path="L:/SCHOOL SOFTWARE/subjects/OOP/JAVA files (Intell)/OOP_Project/src/main/java/gson-2.10.1.jar" />
+  </library>
+  <library name="javax.mail">
+    <archive path="L:/SCHOOL SOFTWARE/subjects/OOP/JAVA files (Intell)/OOP_Project/src/main/java/javax.mail.jar" />
+  </library>
+  <library name="Maven: com.google.code.gson:gson:2.10.1">
+    <archive path="C:/Users/onath/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar" />
+  </library>
+  <library name="activation-1.1 (2)">
+    <archive path="L:/SCHOOL SOFTWARE/subjects/OOP/JAVA files (Intell)/OOP_Project/src/main/java/activation-1.1.jar" />
+    <archive path="L:/SCHOOL SOFTWARE/subjects/OOP/JAVA files (Intell)/OOP_Project/src/main/java/flatlaf-3.4.1.jar" />
+    <archive path="L:/SCHOOL SOFTWARE/subjects/OOP/JAVA files (Intell)/OOP_Project/src/main/java/gson-2.10.1.jar" />
+    <archive path="L:/SCHOOL SOFTWARE/subjects/OOP/JAVA files (Intell)/OOP_Project/src/main/java/javax.mail.jar" />
+  </library>
+</eclipse-userlibraries>
+
