@@ -398,6 +398,7 @@ public class AddApplicant extends JPanel {
             if (selectedFile.length() > 16777216) {
                 JOptionPane.showMessageDialog(null, "Image size exceeds 16MiB", "Image too large", JOptionPane.ERROR_MESSAGE);
             }
+            //file processing
             if (r == JFileChooser.APPROVE_OPTION) {
 
                 ImageIcon scaledIcon;

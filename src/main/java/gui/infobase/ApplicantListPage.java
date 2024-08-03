@@ -1,23 +1,35 @@
 package gui.infobase;
 
 
+import controller.DataIO;
 import controller.InfobaseMainframe;
 import controller.PDFBase64;
 import data.Applicant;
 import data.Staff;
 import gui.ImageEmbedded;
 import subsystems.ImageBase64;
+import subsystems.JsonReaderWriter;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import com.google.gson.Gson;
+import java.io.FileReader;
+import java.io.IOException;
 
 
 public class ApplicantListPage extends JPanel{
@@ -43,7 +55,7 @@ public class ApplicantListPage extends JPanel{
     private JCheckBox acceptedWaitingManagerCheckBox;
     private JCheckBox shortlistedWaitingHRCheckBox;
     private JButton acceptApplicantButton;
-
+    private JButton addApplicantTextButton;
     public ApplicantListPage(InfobaseMainframe mainframe) {
         this.main = mainframe;
         this.setLayout(new GridBagLayout());
@@ -200,31 +212,38 @@ public class ApplicantListPage extends JPanel{
 
         //HR Staff button set
         if (main.getController().getUser().authorised(Staff.HR)){
+            addApplicantTextButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.ADD_APPLICANT_AS_JSON)));
+            addApplicantTextButton.setBorder(BorderFactory.createEmptyBorder());
+            addApplicantTextButton.setToolTipText("Add Applicant");
+            GridBagConstraints addApplicantTextConstraints = new GridBagConstraints(0, 0, 1, 1, 1, 0,
+                    GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
+            buttonPanel.add(addApplicantTextButton, addApplicantTextConstraints);
+
             addApplicantButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.ADD_APPLICANT_ICON)));
             addApplicantButton.setBorder(BorderFactory.createEmptyBorder());
             addApplicantButton.setToolTipText("Add Applicant");
-            GridBagConstraints addApplicantConstraints = new GridBagConstraints(0, 0, 1, 1, 1, 0,
+            GridBagConstraints addApplicantConstraints = new GridBagConstraints(0, 1, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
             buttonPanel.add(addApplicantButton, addApplicantConstraints);
 
             editApplicantButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.EDIT_ICON)));
             editApplicantButton.setBorder(BorderFactory.createEmptyBorder());
             editApplicantButton.setEnabled(false);
-            GridBagConstraints editApplicantConstraints = new GridBagConstraints(0, 1, 1, 1, 1, 0,
+            GridBagConstraints editApplicantConstraints = new GridBagConstraints(0, 2, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
             buttonPanel.add(editApplicantButton, editApplicantConstraints);
 
             removeApplicantButton=new JButton(new ImageIcon((ImageBase64.base64ToImage(ImageEmbedded.REMOVE_ICON))));
             removeApplicantButton.setBorder(BorderFactory.createEmptyBorder());
             removeApplicantButton.setEnabled(false);
-            GridBagConstraints removeApplicantConstraints = new GridBagConstraints(0, 2, 1, 1, 1, 0,
+            GridBagConstraints removeApplicantConstraints = new GridBagConstraints(0, 3, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
             buttonPanel.add(removeApplicantButton, removeApplicantConstraints);
 
             setInterviewDateButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.SET_INTERVIEW_ICON)));
             setInterviewDateButton.setBorder(BorderFactory.createEmptyBorder());
             setInterviewDateButton.setEnabled(false);
-            GridBagConstraints setInterviewDateConstraints = new GridBagConstraints(0, 3, 1, 1, 1, 0,
+            GridBagConstraints setInterviewDateConstraints = new GridBagConstraints(0, 4, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
             buttonPanel.add(setInterviewDateButton, setInterviewDateConstraints);
 
@@ -232,7 +251,7 @@ public class ApplicantListPage extends JPanel{
             acceptApplicantButton.setBorder(BorderFactory.createEmptyBorder());
             acceptApplicantButton.setToolTipText("Accept Applicant");
             acceptApplicantButton.setEnabled(false);
-            GridBagConstraints acceptApplicantConstraints = new GridBagConstraints(0, 4, 1, 1, 1, 1,
+            GridBagConstraints acceptApplicantConstraints = new GridBagConstraints(0, 5, 1, 1, 1, 1,
                     GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
             buttonPanel.add(acceptApplicantButton, acceptApplicantConstraints);
 
@@ -246,11 +265,19 @@ public class ApplicantListPage extends JPanel{
                     GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
             buttonPanel.add(shortlistApplicantButton, shortlistApplicantConstraints);
 
+            acceptApplicantButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.ACCEPT_ICON)));
+            acceptApplicantButton.setBorder(BorderFactory.createEmptyBorder());
+            acceptApplicantButton.setToolTipText("Accept Applicant");
+            acceptApplicantButton.setEnabled(false);
+            GridBagConstraints acceptApplicantConstraints = new GridBagConstraints(0, 1, 1, 1, 1, 0,
+                    GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
+            buttonPanel.add(acceptApplicantButton, acceptApplicantConstraints);
+
             setJobRoleButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.SET_JOB_ROLE_ICON)));
             setJobRoleButton.setBorder(BorderFactory.createEmptyBorder());
             setJobRoleButton.setToolTipText("Accept Applicant");
             setJobRoleButton.setEnabled(false);
-            GridBagConstraints setJobRoleConstraints = new GridBagConstraints(0, 1, 1, 1, 1, 1,
+            GridBagConstraints setJobRoleConstraints = new GridBagConstraints(0, 2, 1, 1, 1, 1,
                     GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
             buttonPanel.add(setJobRoleButton, setJobRoleConstraints);
         }
@@ -303,6 +330,27 @@ public class ApplicantListPage extends JPanel{
                 main.showAddApplicant();
             });
 
+            addApplicantTextButton.addActionListener(e-> {
+                JFileChooser chooser=getjFileChooser();
+                Action details = chooser.getActionMap().get("viewTypeDetails");
+                details.actionPerformed(null);
+                //detailed view of files
+                int r = chooser.showOpenDialog(null);
+                File selectedFile;
+                selectedFile = chooser.getSelectedFile().getAbsoluteFile();
+                String selectedJson=DataIO.readFile(selectedFile.getAbsolutePath());
+                Applicant applicantToBeWritten=JsonReaderWriter.jsonToModel(selectedJson,Applicant.class);
+                if (selectedFile.length() > 16777216) {
+                    JOptionPane.showMessageDialog(null, "File size exceeds 16MiB", "Text file too large", JOptionPane.ERROR_MESSAGE);
+                }
+
+                //file processing
+                if (r == JFileChooser.APPROVE_OPTION) {
+                   main.getController().addApplicant(applicantToBeWritten);
+                   main.getContentPane().validate();
+                   main.getContentPane().repaint();
+                }
+            });
             editApplicantButton.addActionListener(e -> {
                 int selectedRow = table.convertRowIndexToModel(table.getSelectedRow());
                 if (selectedRow == -1) {
@@ -358,6 +406,12 @@ public class ApplicantListPage extends JPanel{
                 updateModel();
                 shortlistApplicantButton.setEnabled(false);
             });
+            acceptApplicantButton.addActionListener(e -> {
+                int selectedRow = table.convertRowIndexToModel(table.getSelectedRow());
+                main.getController().acceptApplicant(selectedRow);
+                updateModel();
+                acceptApplicantButton.setEnabled(false);
+            });
             setJobRoleButton.addActionListener(e -> {
                 int selectedRow = table.convertRowIndexToModel(table.getSelectedRow());
                 if (selectedRow == -1) {
@@ -373,6 +427,7 @@ public class ApplicantListPage extends JPanel{
                     int status = main.getController().getApplicantAt(table.convertRowIndexToModel(table.getSelectedRow())).getStatus();
                     setJobRoleButton.setEnabled(status == Applicant.ACCEPTED_WAITING_JOB);
                     shortlistApplicantButton.setEnabled(status == Applicant.WAITING_SHORTLIST);
+                    acceptApplicantButton.setEnabled(status == Applicant.SHORTLISTED_TO_INTERVIEW);
                 }
                 else {
                     setJobRoleButton.setEnabled(false);
@@ -392,6 +447,27 @@ public class ApplicantListPage extends JPanel{
                 filterField.getText(),
                 skillFilters.toArray(new String[0])));
         table.setRowSorter(sorter);
+    }
+    private static JFileChooser getjFileChooser(){
+        JFileChooser chooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        chooser.setFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                if (f.isDirectory()) {
+                    return true;
+                } else {
+                    String filename = f.getName().toLowerCase();
+                    return filename.endsWith(".json");
+                }
+            }
+            @Override
+            public String getDescription() {
+                return "Text files (*.json)";
+            }
+        });
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        chooser.setPreferredSize(new Dimension(640, 480));
+        return chooser;
     }
 
     private List<String> getExcludes() {
