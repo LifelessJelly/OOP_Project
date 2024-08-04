@@ -4,7 +4,6 @@ import data.*;
 import subsystems.JsonReaderWriter;
 import subsystems.SHA256;
 
-import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.time.LocalDate;
@@ -49,9 +48,9 @@ public class InfobaseController {
         DataIO.writeFile(applicantDirectory + "\\" + new String(SHA256.getHasherHex().hashString(String.valueOf(System.nanoTime()))) + "_Applicant.json", JsonReaderWriter.modelToJson(applicant));
     }
 
-    public void addApplicant(Applicant applicant){
-        applicantDataStorage.addApplicant(applicant);
+    public void addApplicantModel(Applicant applicant){
         File applicantDirectory = new File(System.getProperty("user.dir") + "\\" + "applicants");
+        applicantDataStorage.addApplicant(applicant);
         DataIO.writeFile(applicantDirectory + "\\" + new String(SHA256.getHasherHex().hashString(String.valueOf(System.nanoTime()))) + "_Applicant.json", JsonReaderWriter.modelToJson(applicant));
         System.out.println("applicant added via object");
     }
@@ -73,9 +72,11 @@ public class InfobaseController {
         editsDataStorageInstance = new EditsDataStorage(getApplicantInstance());
     }
 
+
     public Applicant getApplicantInstance(){
         return applicantDataStorage.getApplicantAt(index);
     }
+
 
     public void applyApplicantEdits(String name, int day, String month, int year, String nricFin, String email, String gender, String s){
         String dateString = String.valueOf(day) + ' ' + month + ' ' + year;
