@@ -137,6 +137,10 @@ public class Applicant{
         applicantMetadata.jobRoleAssigned = applicantAssignedField;
     }
 
+    public String getJobRole(){
+        return applicantMetadata.jobRoleAssigned;
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private static class ApplicantDetails {
@@ -148,7 +152,6 @@ public class Applicant{
         private String imageBase64;
         private String email;
         private String pdfBase64;
-
         /**
          * Default constructor for creating an empty ApplicantDetails object.
          * Initializes all fields to default values.
