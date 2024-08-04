@@ -38,6 +38,7 @@ public class TableImageRender extends JLabel implements TableCellRenderer {
                 setForeground(table.getForeground());
 
             }
+            setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.LIGHT_GRAY));
         }
         else {
             setIcon(null);

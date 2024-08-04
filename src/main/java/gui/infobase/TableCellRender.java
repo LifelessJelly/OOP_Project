@@ -34,6 +34,7 @@ public class TableCellRender extends JTextArea implements TableCellRenderer {
                 setBackground(table.getBackground());
                 setForeground(table.getForeground());
             }
+            setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.LIGHT_GRAY));
         }
 
         return this;
