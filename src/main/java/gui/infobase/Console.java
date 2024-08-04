@@ -135,15 +135,7 @@ public class Console extends JPanel {
     private void initListeners() {
         viewApplicantButton.addActionListener(e -> showApplicantListPage());
         viewSummaryButton.addActionListener(e -> showSummaryPage());
-        settingsButton.addActionListener(e -> {
-            if (main.getLanguage().equals("en")){
-                main.setLanguage("cn");
-            }
-            else {
-                main.setLanguage("en");
-            }
-            main.reload();
-        });
+        settingsButton.addActionListener(e -> showSettingsPage());
         logout.addActionListener(e -> {
             main.logout();
         });
@@ -190,6 +182,12 @@ public class Console extends JPanel {
         SummaryPage summaryPage = new SummaryPage(main);
         displayPanel.add(summaryPage, "SummaryPage");
         card.show(displayPanel, "SummaryPage");
+    }
+
+    public void showSettingsPage(){
+        Settings settings=new Settings(main);
+        displayPanel.add(settings, "Settings");
+        card.show(displayPanel,"Settings");
     }
 
     public void showApplicantKeyingPage(int type, int index){
