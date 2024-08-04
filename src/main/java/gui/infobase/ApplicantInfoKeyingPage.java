@@ -374,7 +374,6 @@ public class ApplicantInfoKeyingPage extends JPanel {
                     System.out.println("choose a correct time dumbass");
                 } else {
                     main.getController().setInterviewTime(epoch);
-                    main.getController().confirmApplicantShortlist();
                     main.showApplicantListPage();
                 }
             });
@@ -382,7 +381,6 @@ public class ApplicantInfoKeyingPage extends JPanel {
         else if (stage == Applicant.ACCEPTED_WAITING_JOB) {
             saveChangesButton.addActionListener(e -> {
                 main.getController().setJobRole(applicantAssignedField.getText());
-                main.getController().confirmApplicantJob();
                 main.showApplicantListPage();
             });
         }
