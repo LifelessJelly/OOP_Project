@@ -56,7 +56,7 @@ public class AddApplicant extends JPanel {
     public AddApplicant(InfobaseMainframe main) {
         this.defaultIcon = new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.DEFAULT_APPLICANT_IMAGE));
         this.main = main;
-        this.main.getController().setApplicantInstance(-1);
+        this.main.getController().setApplicantInstance(0);
         this.currentImage = ImageBase64.base64ToImage(ImageEmbedded.PLACEHOLDER);
         initComponents();
         initListeners();
