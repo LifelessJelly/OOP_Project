@@ -1,6 +1,7 @@
 package gui.infobase;
 
 import controller.InfobaseMainframe;
+import controller.PDFBase64;
 import gui.DateSelectorHelper;
 import gui.ImageEmbedded;
 import gui.JPanelImageButton;
@@ -8,6 +9,7 @@ import subsystems.ImageBase64;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileFilter;
@@ -49,15 +51,18 @@ public class AddApplicant extends JPanel {
     private JPanelImageButton addChangesButton;
     private final ImageIcon defaultIcon;
     private Image currentImage;
+    private String pdfBase64;
 
     DefaultListModel<String> currentSkillsModel = new DefaultListModel<>();
+    private JButton addPDFButton;
+    private JLabel fileLocationLabel;
     //TODO: replace with the relevant placeholders
 
     public AddApplicant(InfobaseMainframe main) {
         this.defaultIcon = new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.DEFAULT_APPLICANT_IMAGE));
         this.main = main;
-        this.main.getController().setApplicantInstance(0);
-        this.currentImage = ImageBase64.base64ToImage(ImageEmbedded.PLACEHOLDER);
+        this.main.getController().setApplicantInstance(-1);
+        this.currentImage = ImageBase64.base64ToImage(ImageEmbedded.DEFAULT_APPLICANT_IMAGE);
         initComponents();
         initListeners();
     }
@@ -82,7 +87,7 @@ public class AddApplicant extends JPanel {
 
             //===ADD/REMOVE picture button "group"===//
             //TODO: might need to change the image, add a placeholder image
-            //TODO: replace with JFilechooser, maybe funtionality already inside
+            //TODO: replace with JFileChooser, maybe functionality already inside
             applicantImageButton = new JButton(defaultIcon);
             GridBagConstraints applicantImageButtonConstraints = new GridBagConstraints(
                     0, 0, 1, 1, 0, 0,
@@ -98,6 +103,19 @@ public class AddApplicant extends JPanel {
                     new Insets(0, 0, 5, 0), 0, 0);
             picturePanel.add(imageRemoveButton, imageRemoveButtonConstraints);
 
+            addPDFButton = new JButton(main.getLocale("AddApplicant.JButton.addPDF"));
+            addPDFButton.setFont(addPDFButton.getFont().deriveFont(18f));
+            GridBagConstraints addPDFButtonConstraints = new GridBagConstraints(0, 2, 1, 1, 0, 0,
+                    GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(50, 0, 5, 0), 0, 0);
+            picturePanel.add(addPDFButton, addPDFButtonConstraints);
+
+            fileLocationLabel = new JLabel("");
+            fileLocationLabel.setFont(fileLocationLabel.getFont().deriveFont(18f));
+            fileLocationLabel.setMaximumSize(new Dimension(20, 20));
+            fileLocationLabel.setPreferredSize(new Dimension(20, 20));
+            GridBagConstraints fileLocationLabelConstraints = new GridBagConstraints(0, 3, 1, 1, 0, 0,
+                    GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(0, 0, 5, 0), 0, 0);
+            picturePanel.add(fileLocationLabel, fileLocationLabelConstraints);
 
         }
         //END INNER COMPONENTS
@@ -388,8 +406,21 @@ public class AddApplicant extends JPanel {
 
 
     private void initListeners() {
+        addPDFButton.addActionListener(e -> {
+            JFileChooser chooser = getjFileChooser(getPDFFileFilter());
+            Action details = chooser.getActionMap().get("viewTypeDetails");
+            details.actionPerformed(null);
+            int r = chooser.showOpenDialog(null);
+            File selectedFile;
+            selectedFile = chooser.getSelectedFile().getAbsoluteFile();
+            if (r == JFileChooser.APPROVE_OPTION) {
+                pdfBase64 = PDFBase64.PDFToBase64(selectedFile);
+            }
+            fileLocationLabel.setText(selectedFile.getAbsolutePath());
+        });
+
         applicantImageButton.addActionListener(e -> {
-            JFileChooser chooser = getjFileChooser();
+            JFileChooser chooser = getjFileChooser(getImageFileFilter());
             Action details = chooser.getActionMap().get("viewTypeDetails");
             details.actionPerformed(null);
             int r = chooser.showOpenDialog(null);
@@ -486,21 +517,41 @@ public class AddApplicant extends JPanel {
         });
 
         addChangesButton.addActionListener(e -> {
+            if (JOptionPane.showConfirmDialog(null, main.getLocale("AddApplicant.JOptionPane.addConfirm"), "", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+                //do checks
+                boolean canContinue;
 
-            String[] skillStringArray = main.getController().getSkills();
+                // This would be much more readable in C than Java im sorry
+                // basically,
+                // canContinue = canContinue * checkEmptyFields(field)
 
-            main.getController().addApplicant(applicantNameField.getText(),                      //adds name
-                    dayComboBox.getItemAt(dayComboBox.getSelectedIndex()),                              //adds day
-                    monthComboBox.getItemAt(monthComboBox.getSelectedIndex()),                          //adds month
-                    yearComboBox.getItemAt(yearComboBox.getSelectedIndex()),                            //adds year
-                    applicantEmailField.getText(),                                                      //adds email
-                    applicantNricField.getText(),                                                       //adds nric
-                    applicantGenderComboBox.getItemAt(applicantGenderComboBox.getSelectedIndex()),      //adds gender
-                    ImageBase64.imageToBase64(currentImage),                                            //adds image (base64)
-                    skillStringArray,
-                    "");
+                canContinue = (checkEmptyFields(applicantNameField) ? 1 : 0) != 0;
+                canContinue = (((canContinue ? 1 : 0) * (checkEmptyFields(applicantEmailField) ? 1 : 0)) != 0);
+                canContinue = (((canContinue ? 1 : 0) * (checkEmptyFields(applicantNricField) ? 1 : 0)) != 0);
+                if (!canContinue) {
+                    JOptionPane.showMessageDialog(null, "Please fill in all fields", "", JOptionPane.ERROR_MESSAGE);
+                }
+                else if (!isNRICFINValid(applicantNricField.getText())) {
+                    JOptionPane.showMessageDialog(null, "NRIC number is invalid, please check applicant's NRIC number again", "", JOptionPane.ERROR_MESSAGE);
+                }
+                else {
 
-            main.showApplicantListPage();                                                               //goes back to list page
+                    String[] skillStringArray = main.getController().getSkills();
+
+                    main.getController().addApplicant(applicantNameField.getText(),                      //adds name
+                            dayComboBox.getItemAt(dayComboBox.getSelectedIndex()),                              //adds day
+                            monthComboBox.getItemAt(monthComboBox.getSelectedIndex()),                          //adds month
+                            yearComboBox.getItemAt(yearComboBox.getSelectedIndex()),                            //adds year
+                            applicantEmailField.getText(),                                                      //adds email
+                            applicantNricField.getText(),                                                       //adds nric
+                            applicantGenderComboBox.getItemAt(applicantGenderComboBox.getSelectedIndex()),      //adds gender
+                            ImageBase64.imageToBase64(currentImage),                                            //adds image (base64)
+                            skillStringArray,
+                            pdfBase64);
+
+                    main.showApplicantListPage(); //goes back to list page
+                }
+            }
         });
 
         dayComboBox.addActionListener(DateSelectorHelper.datesUpdater(dayComboBox, monthComboBox, yearComboBox));
@@ -511,23 +562,9 @@ public class AddApplicant extends JPanel {
 
     }
 
-    private static JFileChooser getjFileChooser() {
+    private static JFileChooser getjFileChooser(FileFilter fileFilter) {
         JFileChooser chooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-        chooser.setFileFilter(new FileFilter() {
-            @Override
-            public boolean accept(File f) {
-                if (f.isDirectory()) {
-                    return true;
-                } else {
-                    String filename = f.getName().toLowerCase();
-                    return filename.endsWith(".jpg") || filename.endsWith(".png") || filename.endsWith(".jpeg");
-                }
-            }
-            @Override
-            public String getDescription() {
-                return "Image files (*.png, *.jpg, *.jpeg)";
-            }
-        });
+        chooser.setFileFilter(fileFilter);
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         chooser.setPreferredSize(new Dimension(640, 480));
         return chooser;
@@ -541,6 +578,91 @@ public class AddApplicant extends JPanel {
         //only required for when there is data passed through
         return skillsModel;
     }
+    private static FileFilter getImageFileFilter() {
+       return new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                if (f.isDirectory()) {
+                    return true;
+                } else {
+                    String filename = f.getName().toLowerCase();
+                    return filename.endsWith(".jpg") || filename.endsWith(".png") || filename.endsWith(".jpeg");
+                }
+            }
+            @Override
+            public String getDescription() {
+                return "Image files (*.png, *.jpg, *.jpeg)";
+            }
+        };
+    }
 
+    private static FileFilter getPDFFileFilter() {
+        return new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                if (f.isDirectory()) {
+                    return true;
+                } else {
+                    String filename = f.getName().toLowerCase();
+                    return filename.endsWith(".pdf");
+                }
+            }
+            @Override
+            public String getDescription() {
+                return "PDF file (*.pdf)";
+            }
+        };
+    }
+
+    private static boolean checkEmptyFields(JTextField field){
+        Border passBorder = new JTextField().getBorder();
+        Border failBorder = BorderFactory.createLineBorder(new Color(173, 74, 59), 1, true);
+        if (field.getText().isEmpty()) {
+            field.setBorder(failBorder);
+            return false;
+        }
+        else {
+            field.setBorder(passBorder);
+            return true;
+        }
+    }
+    private boolean isNRICFINValid(String nricFin){
+        // information taken from https://www.ngiam.net/NRIC/ppframe.htm
+        nricFin = nricFin.toUpperCase();
+
+        if (nricFin.equals("ROOT")){
+            return true;
+        }
+
+        if ((nricFin.length() != 9) || (nricFin.charAt(0) != 'T' && nricFin.charAt(0) != 'S' && nricFin.charAt(0) != 'F' && nricFin.charAt(0) != 'G')){
+            return false;
+        }
+        int sum = 0;
+        int[] weights = new int[]{0, 2, 7, 6, 5, 4, 3, 2};
+        char[] checkDigit = getChars(nricFin);
+
+        for (int i = 1; i < nricFin.length()-1; ++i){
+            int digit = Character.getNumericValue(nricFin.charAt(i));
+            sum += digit * weights[i];
+        }
+        assert checkDigit != null;
+        char calculatedLetter = checkDigit[sum % 11];
+        return calculatedLetter == nricFin.charAt(nricFin.length() - 1);
+    }
+
+    private static char[] getChars(String nricFin) {
+        switch (nricFin.charAt(0)){
+            case 'T':
+                return new char[]{'G', 'F', 'E', 'D', 'C', 'B', 'A', 'J', 'Z', 'I', 'H'};
+            case 'S':
+                return new char[]{'J', 'Z', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'};
+            case 'G':
+                return new char[]{'R', 'Q', 'P', 'N', 'M', 'L', 'K', 'X', 'W', 'U', 'T'};
+            case 'F':
+                return new char[]{'X', 'W', 'U', 'T', 'R', 'Q', 'P', 'N', 'M', 'L', 'K'};
+        }
+        //should never reach here
+        return null;
+    }
 
 }
