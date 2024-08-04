@@ -78,6 +78,69 @@ public class ThemeTable {
         put(UNICORN, "DeleteApplicantIcon", ImageEmbedded.DeleteApplicantIcon.DELETEAPPLICANT_UNICORN);
         put(INK, "DeleteApplicantIcon", ImageEmbedded.DeleteApplicantIcon.DELETEAPPLICANT_INK);
 
+        put(BOREALIS, "ViewApplicantsIcon", ImageEmbedded.ViewApplicantsIcon.VIEWAPPLICANTS_BOREALIS);
+        put(CANDLE, "ViewApplicantsIcon", ImageEmbedded.ViewApplicantsIcon.VIEWAPPLICANTS_CANDLE);
+        put(NOSTALGIA, "ViewApplicantsIcon", ImageEmbedded.ViewApplicantsIcon.VIEWAPPLICANTS_NOSTALGIA);
+        put(NIGHT, "ViewApplicantsIcon", ImageEmbedded.ViewApplicantsIcon.VIEWAPPLICANTS_NIGHT);
+        put(MINT, "ViewApplicantsIcon", ImageEmbedded.ViewApplicantsIcon.VIEWAPPLICANTS_MINT);
+        put(TIDE, "ViewApplicantsIcon", ImageEmbedded.ViewApplicantsIcon.VIEWAPPLICANTS_TIDE);
+        put(UNICORN, "ViewApplicantsIcon", ImageEmbedded.ViewApplicantsIcon.VIEWAPPLICANTS_UNICORN);
+        put(INK, "ViewApplicantsIcon", ImageEmbedded.ViewApplicantsIcon.VIEWAPPLICANTS_INK);
+
+        put(BOREALIS, "SetInterviewIcon", ImageEmbedded.SetInterviewIcon.SETINTERVIEW_BOREALIS);
+        put(CANDLE, "SetInterviewIcon", ImageEmbedded.SetInterviewIcon.SETINTERVIEW_CANDLE);
+        put(NOSTALGIA, "SetInterviewIcon", ImageEmbedded.SetInterviewIcon.SETINTERVIEW_NOSTALGIA);
+        put(NIGHT, "SetInterviewIcon", ImageEmbedded.SetInterviewIcon.SETINTERVIEW_NIGHT);
+        put(MINT, "SetInterviewIcon", ImageEmbedded.SetInterviewIcon.SETINTERVIEW_MINT);
+        put(TIDE, "SetInterviewIcon", ImageEmbedded.SetInterviewIcon.SETINTERVIEW_TIDE);
+        put(UNICORN, "SetInterviewIcon", ImageEmbedded.SetInterviewIcon.SETINTERVIEW_UNICORN);
+        put(INK, "SetInterviewIcon", ImageEmbedded.SetInterviewIcon.SETINTERVIEW_INK);
+
+        put(BOREALIS, "AcceptApplicantIcon", ImageEmbedded.AcceptApplicantIcon.ACCEPTAPPLICANT_BOREALIS);
+        put(CANDLE, "AcceptApplicantIcon", ImageEmbedded.AcceptApplicantIcon.ACCEPTAPPLICANT_CANDLE);
+        put(NOSTALGIA, "AcceptApplicantIcon", ImageEmbedded.AcceptApplicantIcon.ACCEPTAPPLICANT_NOSTALGIA);
+        put(NIGHT, "AcceptApplicantIcon", ImageEmbedded.AcceptApplicantIcon.ACCEPTAPPLICANT_NIGHT);
+        put(MINT, "AcceptApplicantIcon", ImageEmbedded.AcceptApplicantIcon.ACCEPTAPPLICANT_MINT);
+        put(TIDE, "AcceptApplicantIcon", ImageEmbedded.AcceptApplicantIcon.ACCEPTAPPLICANT_TIDE);
+        put(UNICORN, "AcceptApplicantIcon", ImageEmbedded.AcceptApplicantIcon.ACCEPTAPPLICANT_UNICORN);
+        put(INK, "AcceptApplicantIcon", ImageEmbedded.AcceptApplicantIcon.ACCEPTAPPLICANT_INK);
+
+        put(BOREALIS, "ShortlistAddIcon", ImageEmbedded.ShortlistAddIcon.SHORTLISTADD_BOREALIS);
+        put(CANDLE, "ShortlistAddIcon", ImageEmbedded.ShortlistAddIcon.SHORTLISTADD_CANDLE);
+        put(NOSTALGIA, "ShortlistAddIcon", ImageEmbedded.ShortlistAddIcon.SHORTLISTADD_NOSTALGIA);
+        put(NIGHT, "ShortlistAddIcon", ImageEmbedded.ShortlistAddIcon.SHORTLISTADD_NIGHT);
+        put(MINT, "ShortlistAddIcon", ImageEmbedded.ShortlistAddIcon.SHORTLISTADD_MINT);
+        put(TIDE, "ShortlistAddIcon", ImageEmbedded.ShortlistAddIcon.SHORTLISTADD_TIDE);
+        put(UNICORN, "ShortlistAddIcon", ImageEmbedded.ShortlistAddIcon.SHORTLISTADD_UNICORN);
+        put(INK, "ShortlistAddIcon", ImageEmbedded.ShortlistAddIcon.SHORTLISTADD_INK);
+
+        put(BOREALIS, "SetJobRoleIcon", ImageEmbedded.SetJobRoleIcon.SETJOBROLE_BOREALIS);
+        put(CANDLE, "SetJobRoleIcon", ImageEmbedded.SetJobRoleIcon.SETJOBROLE_CANDLE);
+        put(NOSTALGIA, "SetJobRoleIcon", ImageEmbedded.SetJobRoleIcon.SETJOBROLE_NOSTALGIA);
+        put(NIGHT, "SetJobRoleIcon", ImageEmbedded.SetJobRoleIcon.SETJOBROLE_NIGHT);
+        put(MINT, "SetJobRoleIcon", ImageEmbedded.SetJobRoleIcon.SETJOBROLE_MINT);
+        put(TIDE, "SetJobRoleIcon", ImageEmbedded.SetJobRoleIcon.SETJOBROLE_TIDE);
+        put(UNICORN, "SetJobRoleIcon", ImageEmbedded.SetJobRoleIcon.SETJOBROLE_UNICORN);
+        put(INK, "SetJobRoleIcon", ImageEmbedded.SetJobRoleIcon.SETJOBROLE_INK);
+
+        put(BOREALIS, "ViewSummaryIcon", ImageEmbedded.ViewSummaryIcon.VIEWSUMMARY_BOREALIS);
+        put(CANDLE, "ViewSummaryIcon", ImageEmbedded.ViewSummaryIcon.VIEWSUMMARY_CANDLE);
+        put(NOSTALGIA, "ViewSummaryIcon", ImageEmbedded.ViewSummaryIcon.VIEWSUMMARY_NOSTALGIA);
+        put(NIGHT, "ViewSummaryIcon", ImageEmbedded.ViewSummaryIcon.VIEWSUMMARY_NIGHT);
+        put(MINT, "ViewSummaryIcon", ImageEmbedded.ViewSummaryIcon.VIEWSUMMARY_MINT);
+        put(TIDE, "ViewSummaryIcon", ImageEmbedded.ViewSummaryIcon.VIEWSUMMARY_TIDE);
+        put(UNICORN, "ViewSummaryIcon", ImageEmbedded.ViewSummaryIcon.VIEWSUMMARY_UNICORN);
+        put(INK, "ViewSummaryIcon", ImageEmbedded.ViewSummaryIcon.VIEWSUMMARY_INK);
+
+        put(BOREALIS, "ViewPDFIcon", ImageEmbedded.ViewApplicantPDFIcon.VIEWPDF_BOREALIS);
+        put(CANDLE, "ViewPDFIcon", ImageEmbedded.ViewApplicantPDFIcon.VIEWPDF_CANDLE);
+        put(NOSTALGIA, "ViewPDFIcon", ImageEmbedded.ViewApplicantPDFIcon.VIEWPDF_NOSTALGIA);
+        put(NIGHT, "ViewPDFIcon", ImageEmbedded.ViewApplicantPDFIcon.VIEWPDF_NIGHT);
+        put(MINT, "ViewPDFIcon", ImageEmbedded.ViewApplicantPDFIcon.VIEWPDF_MINT);
+        put(TIDE, "ViewPDFIcon", ImageEmbedded.ViewApplicantPDFIcon.VIEWPDF_TIDE);
+        put(UNICORN, "ViewPDFIcon", ImageEmbedded.ViewApplicantPDFIcon.VIEWPDF_UNICORN);
+        put(INK, "ViewPDFIcon", ImageEmbedded.ViewApplicantPDFIcon.VIEWPDF_INK);
+
 
     }
 
