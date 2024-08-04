@@ -114,7 +114,9 @@ public class InfobaseMainframe extends JFrame {
         new LoginMainframe();
     }
 
-    public void setTheme(int theme) {
+    public void
+
+    setTheme(int theme) {
         currentTheme = theme;
         Color mainthemeColour;
         if (theme <= NIGHT) {

@@ -197,6 +197,10 @@ public class InfobaseController {
         Applicant applicantToAssign = getApplicantInstance();
         applicantToAssign.setJobRole(applicantAssignedField);
     }
+    public String getJobRole(Applicant applicant){
+        return applicant.getJobRole();
+    }
+
 }
 
 class FileSortByDate implements Comparator<File> {

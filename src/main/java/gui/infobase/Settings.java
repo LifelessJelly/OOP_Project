@@ -102,16 +102,17 @@ public class Settings extends JPanel{
 
     private void initListeners(){
         themeComboBox.addActionListener(e->{
-            if((themeComboBox.getSelectedIndex()!=0)&&(languageComboBox.getSelectedIndex()!=0)){apply.setEnabled(true);}
+            if((themeComboBox.getSelectedIndex()!=0)){apply.setEnabled(true);}
         });
 
         apply.addActionListener(e->{
-            if(JOptionPane.showConfirmDialog(null, main.getLocale("EditApplicant.JOptionPane.discardConfirm"), "", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION)
-            {
-                main.setTheme(themeComboBox.getSelectedIndex());
-                main.setLanguage(Objects.requireNonNull(languageComboBox.getSelectedItem()).toString());
-                main.reload();
+            if(languageComboBox.getSelectedIndex()==0){
+                main.setLanguage(main.getLanguage());
+            } else {
+                main.setLanguage(languageComboBox.getSelectedItem().toString());
             }
+            main.setTheme(themeComboBox.getSelectedIndex());
+            main.reload();
         });
 
         discard.addActionListener(e->{
