@@ -1,6 +1,7 @@
 package gui.infobase;
 
 import controller.InfobaseMainframe;
+import sun.management.GarbageCollectionNotifInfoCompositeData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,12 +10,10 @@ import java.util.Objects;
 public class Settings extends JPanel{
     InfobaseMainframe main;
     private JLabel languageLabel;
-    private JComboBox languageComboBox;
+    private JComboBox<String> languageComboBox;
     private JLabel themeLabel;
-    private JComboBox themeComboBox;
+    private JComboBox<String> themeComboBox;
     private JButton apply;
-    private JButton discard;
-
 
 
     //TODO: LOOK BELOW there is a todo if uw do :))
@@ -35,91 +34,74 @@ public class Settings extends JPanel{
 
     private void initComponents(){
         languageLabel = new JLabel("Language");
-        GridBagConstraints gbc_languageLabel  = new GridBagConstraints();
-        gbc_languageLabel .anchor = GridBagConstraints.NORTHWEST;
-        gbc_languageLabel .insets = new Insets(0, 0, 5, 5);
-        gbc_languageLabel .gridx = 0;
-        gbc_languageLabel .gridy = 0;
-        add(languageLabel , gbc_languageLabel );
+        languageLabel.setFont(languageLabel.getFont().deriveFont(24f));
+        GridBagConstraints gbc_languageLabel  = new GridBagConstraints(0, 0, 1, 1, 1, 0,
+                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 50, 5, 0), 0, 0);
+        this.add(languageLabel , gbc_languageLabel );
 
-        languageComboBox = new JComboBox();
-        languageComboBox.addItem("===Select Language===");
-        languageComboBox.addItem("en");
-        languageComboBox.addItem("cn");
-        GridBagConstraints gbc_languageComboBox = new GridBagConstraints();
-        gbc_languageComboBox.anchor = GridBagConstraints.NORTHWEST;
-        gbc_languageComboBox.insets = new Insets(0, 0, 5, 5);
-        gbc_languageComboBox.gridx = 1;
-        gbc_languageComboBox.gridy = 0;
-        add(languageComboBox, gbc_languageComboBox);
+        languageComboBox = new JComboBox<>(new String[]{"English", "Chinese"});
+        languageComboBox.setMaximumSize(new Dimension(300, 50));
+        languageComboBox.setPreferredSize(new Dimension(300, 50));
+        String language = main.getLanguage();
+        switch (language){
+            case "en":
+                languageComboBox.setSelectedIndex(0);
+                break;
+            case "cn":
+                languageComboBox.setSelectedIndex(1);
+                break;
+        }
+        languageComboBox.setFont(languageComboBox.getFont().deriveFont(18f));
+        GridBagConstraints gbc_languageComboBox = new GridBagConstraints(0, 1, 1, 1, 1, 0,
+                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 50, 20, 0), 0, 0);
+        this.add(languageComboBox, gbc_languageComboBox);
 
-        themeLabel = new JLabel("Theme");
-        GridBagConstraints gbc_themeLabel = new GridBagConstraints();
-        gbc_themeLabel.anchor = GridBagConstraints.NORTHWEST;
-        gbc_themeLabel.insets = new Insets(0, 0, 5, 5);
-        gbc_themeLabel.gridx = 0;
-        gbc_themeLabel.gridy = 1;
-        add(themeLabel, gbc_themeLabel);
+        themeLabel = new JLabel("App Theme");
+        themeLabel.setFont(themeLabel.getFont().deriveFont(24f));
+        GridBagConstraints gbc_themeLabel = new GridBagConstraints(0, 2, 1, 1, 1, 0,
+                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 50, 5, 0), 0, 0);
+        this.add(themeLabel , gbc_themeLabel );
 
-        themeComboBox = new JComboBox();
-        themeComboBox.addItem("====Select Theme====");
-        themeComboBox.addItem("Borealis");
-        themeComboBox.addItem("Candle");
-        themeComboBox.addItem("Nostalgia");
-        themeComboBox.addItem("Night");
-        themeComboBox.addItem("Mint");
-        themeComboBox.addItem("Tide");
-        themeComboBox.addItem("Unicorn");
-        themeComboBox.addItem("Ink");
+        themeComboBox = new JComboBox<>(new String[]{"Borealis", "Candle", "Nostalgia", "Night", "Mint", "Tide", "Unicorn", "Ink"});
+        themeComboBox.setMaximumSize(new Dimension(300, 50));
+        themeComboBox.setPreferredSize(new Dimension(300, 50));
+        int theme = main.getCurrentTheme();
+        themeComboBox.setSelectedIndex(theme-1);
+        themeComboBox.setFont(themeComboBox.getFont().deriveFont(18f));
+        GridBagConstraints gbc_themeComboBox = new GridBagConstraints(0, 3, 1, 1, 1, 0,
+                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 50, 20, 0), 0, 0);
+        this.add(themeComboBox, gbc_themeComboBox);
 
-        //TODO maybe add? delete if not adding
-
-        themeComboBox.addItem("Legoshi :3");
-        GridBagConstraints gbc_themeComboBox = new GridBagConstraints();
-        gbc_themeComboBox.anchor = GridBagConstraints.NORTHWEST;
-        gbc_themeComboBox.insets = new Insets(0, 0, 5, 5);
-        gbc_themeComboBox.gridx = 1;
-        gbc_themeComboBox.gridy = 1;
-        add(themeComboBox, gbc_themeComboBox);
+        JPanel buttonContainer = new JPanel();
+        GridBagConstraints gbc_buttonContainer = new GridBagConstraints(0, 4, 1, 1, 1, 1,
+                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 50, 5, 0), 0, 0);
 
         apply = new JButton("Apply Changes");
-        apply.setEnabled(false);
-        GridBagConstraints gbc_apply = new GridBagConstraints();
-        gbc_apply.gridwidth = 2;
-        gbc_apply.insets = new Insets(0, 0, 5, 5);
-        gbc_apply.gridx = 0;
-        gbc_apply.gridy = 2;
-        add(apply, gbc_apply);
+        apply.setFont(apply.getFont().deriveFont(18f));
+        GridBagConstraints gbc_apply = new GridBagConstraints(0, 0, 1, 1, 1, 1,
+                GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 5, 0), 0, 0);
+        buttonContainer.add(apply, gbc_apply);
 
-        discard = new JButton("Discard Changes");
-        GridBagConstraints gbc_discard = new GridBagConstraints();
-        gbc_discard.gridwidth = 2;
-        gbc_discard.insets = new Insets(0, 0, 0, 5);
-        gbc_discard.gridx = 0;
-        gbc_discard.gridy = 3;
-        add(discard, gbc_discard);
+        this.add(buttonContainer, gbc_buttonContainer);
+
     }
 
     private void initListeners(){
-        themeComboBox.addActionListener(e->{
-            if((themeComboBox.getSelectedIndex()!=0)){apply.setEnabled(true);}
-        });
 
         apply.addActionListener(e->{
-            if(languageComboBox.getSelectedIndex()==0){
-                main.setLanguage(main.getLanguage());
-            } else {
-                main.setLanguage(languageComboBox.getSelectedItem().toString());
+            String language = (String) languageComboBox.getSelectedItem();
+            switch (Objects.requireNonNull(language)){
+                case "English":
+                    main.setLanguage("en");
+                    break;
+                case "Chinese":
+                    main.setLanguage("cn");
+                    break;
             }
-            main.setTheme(themeComboBox.getSelectedIndex());
+            main.changeTheme(themeComboBox.getSelectedIndex()+1);
             main.reload();
         });
 
-        discard.addActionListener(e->{
-            if(JOptionPane.showConfirmDialog(null, main.getLocale("EditApplicant.JOptionPane.discardConfirm"), "", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                main.reload();
-            }
-        });
     }
 
 }
