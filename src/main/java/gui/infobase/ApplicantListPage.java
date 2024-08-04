@@ -3,14 +3,13 @@ package gui.infobase;
 
 import controller.DataIO;
 import controller.InfobaseMainframe;
-import controller.PDFBase64;
 import data.Applicant;
 import data.Staff;
 import gui.ImageEmbedded;
+import gui.JButtonImage;
 import subsystems.ImageBase64;
 import subsystems.JsonReaderWriter;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
 import javax.swing.event.DocumentEvent;
@@ -21,15 +20,11 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import com.google.gson.Gson;
-import java.io.FileReader;
-import java.io.IOException;
 
 
 public class ApplicantListPage extends JPanel{
@@ -61,6 +56,7 @@ public class ApplicantListPage extends JPanel{
         this.setLayout(new GridBagLayout());
         this.zoomFactor = 1;
         this.alpha = 1;
+        this.setBackground(new Color(47, 47, 47));
 
         initComponents();
         initListeners();
@@ -212,29 +208,31 @@ public class ApplicantListPage extends JPanel{
 
         //HR Staff button set
         if (main.getController().getUser().authorised(Staff.HR)){
-            addApplicantTextButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.ADD_APPLICANT_AS_JSON)));
+            addApplicantTextButton = new JButtonImage(ImageEmbedded.AddApplicantJsonIcon.ADDJSON_OFF, ImageBase64.imageToBase64(main.getImage("AddApplicantJsonIcon")));
             addApplicantTextButton.setBorder(BorderFactory.createEmptyBorder());
-            addApplicantTextButton.setToolTipText("Add Applicant");
+            addApplicantTextButton.setToolTipText(main.getLocale("ApplicantListPage.ToolTip.addApplicantJSON"));
             GridBagConstraints addApplicantTextConstraints = new GridBagConstraints(0, 0, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
             buttonPanel.add(addApplicantTextButton, addApplicantTextConstraints);
 
-            addApplicantButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.ADD_APPLICANT_ICON)));
+            addApplicantButton = new JButtonImage(ImageEmbedded.AddApplicantIcon.ADDAPPLICANT_OFF, ImageBase64.imageToBase64(main.getImage("AddApplicantIcon")));
             addApplicantButton.setBorder(BorderFactory.createEmptyBorder());
-            addApplicantButton.setToolTipText("Add Applicant");
+            addApplicantButton.setToolTipText(main.getLocale("ApplicantListPage.ToolTip.addApplicant"));
             GridBagConstraints addApplicantConstraints = new GridBagConstraints(0, 1, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
             buttonPanel.add(addApplicantButton, addApplicantConstraints);
 
-            editApplicantButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.EDIT_ICON)));
+            editApplicantButton = new JButtonImage(ImageEmbedded.EditApplicantIcon.EDITAPPLICANT_OFF, ImageBase64.imageToBase64(main.getImage("EditApplicantIcon")));
             editApplicantButton.setBorder(BorderFactory.createEmptyBorder());
+            editApplicantButton.setToolTipText(main.getLocale("ApplicantListPage.ToolTip.editApplicantDisabled"));
             editApplicantButton.setEnabled(false);
             GridBagConstraints editApplicantConstraints = new GridBagConstraints(0, 2, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
             buttonPanel.add(editApplicantButton, editApplicantConstraints);
 
-            removeApplicantButton=new JButton(new ImageIcon((ImageBase64.base64ToImage(ImageEmbedded.REMOVE_ICON))));
+            removeApplicantButton=new JButtonImage(ImageEmbedded.DeleteApplicantIcon.DELETEAPPLICANT_OFF, ImageBase64.imageToBase64(main.getImage("DeleteApplicantIcon")));
             removeApplicantButton.setBorder(BorderFactory.createEmptyBorder());
+            removeApplicantButton.setToolTipText(main.getLocale("ApplicantListPage.ToolTip.removeApplicantDisabled"));
             removeApplicantButton.setEnabled(false);
             GridBagConstraints removeApplicantConstraints = new GridBagConstraints(0, 3, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
@@ -242,6 +240,7 @@ public class ApplicantListPage extends JPanel{
 
             setInterviewDateButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.SET_INTERVIEW_ICON)));
             setInterviewDateButton.setBorder(BorderFactory.createEmptyBorder());
+            setInterviewDateButton.setToolTipText(main.getLocale("ApplicantListPage.ToolTip.setInterviewDateDisabled"));
             setInterviewDateButton.setEnabled(false);
             GridBagConstraints setInterviewDateConstraints = new GridBagConstraints(0, 4, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
@@ -249,7 +248,7 @@ public class ApplicantListPage extends JPanel{
 
             acceptApplicantButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.ACCEPT_ICON)));
             acceptApplicantButton.setBorder(BorderFactory.createEmptyBorder());
-            acceptApplicantButton.setToolTipText("Accept Applicant");
+            acceptApplicantButton.setToolTipText(main.getLocale("ApplicantListPage.ToolTip.acceptApplicantDisabled"));
             acceptApplicantButton.setEnabled(false);
             GridBagConstraints acceptApplicantConstraints = new GridBagConstraints(0, 5, 1, 1, 1, 1,
                     GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
@@ -260,6 +259,7 @@ public class ApplicantListPage extends JPanel{
 
             shortlistApplicantButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.ADD_TO_SHORTLIST_ICON)));
             shortlistApplicantButton.setBorder(BorderFactory.createEmptyBorder());
+            shortlistApplicantButton.setToolTipText("Shortlist Applicant (Requires applicant to be waiting to be shortlisted)");
             shortlistApplicantButton.setEnabled(false);
             GridBagConstraints shortlistApplicantConstraints = new GridBagConstraints(0, 0, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
@@ -267,7 +267,7 @@ public class ApplicantListPage extends JPanel{
 
             acceptApplicantButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.ACCEPT_ICON)));
             acceptApplicantButton.setBorder(BorderFactory.createEmptyBorder());
-            acceptApplicantButton.setToolTipText("Accept Applicant");
+            acceptApplicantButton.setToolTipText("Accept Applicant (Requires applicant to be shortlisted for interview)");
             acceptApplicantButton.setEnabled(false);
             GridBagConstraints acceptApplicantConstraints = new GridBagConstraints(0, 1, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
@@ -275,7 +275,7 @@ public class ApplicantListPage extends JPanel{
 
             setJobRoleButton = new JButton(new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.SET_JOB_ROLE_ICON)));
             setJobRoleButton.setBorder(BorderFactory.createEmptyBorder());
-            setJobRoleButton.setToolTipText("Accept Applicant");
+            setJobRoleButton.setToolTipText("Set Job Role (Requires applicant to be accepted)");
             setJobRoleButton.setEnabled(false);
             GridBagConstraints setJobRoleConstraints = new GridBagConstraints(0, 2, 1, 1, 1, 1,
                     GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
@@ -312,9 +312,13 @@ public class ApplicantListPage extends JPanel{
 
         waitingShortlistCheckBox.addActionListener(e -> updateModel());
 
+        shortlistedWaitingHRCheckBox.addActionListener(e -> updateModel());
+
         shortlistedCheckBox.addActionListener(e -> updateModel());
 
         acceptedCheckBox.addActionListener(e -> updateModel());
+
+        acceptedWaitingManagerCheckBox.addActionListener(e -> updateModel());
 
         programmingCheckBox.addActionListener(e -> updateModel());
 
@@ -351,6 +355,7 @@ public class ApplicantListPage extends JPanel{
                    main.getContentPane().repaint();
                 }
             });
+
             editApplicantButton.addActionListener(e -> {
                 int selectedRow = table.convertRowIndexToModel(table.getSelectedRow());
                 if (selectedRow == -1) {
@@ -383,19 +388,34 @@ public class ApplicantListPage extends JPanel{
                 acceptApplicantButton.setEnabled(false);
             });
 
+            addApplicantButton.addMouseListener(getGraphicalUpdaters());
+            addApplicantTextButton.addMouseListener(getGraphicalUpdaters());
+            editApplicantButton.addMouseListener(getGraphicalUpdaters());
+            removeApplicantButton.addMouseListener(getGraphicalUpdaters());
+            setInterviewDateButton.addMouseListener(getGraphicalUpdaters());
+            acceptApplicantButton.addMouseListener(getGraphicalUpdaters());
+
             table.getSelectionModel().addListSelectionListener(e -> {
                 if (table.getSelectedRow() != -1) {
                     int status = main.getController().getApplicantAt(table.convertRowIndexToModel(table.getSelectedRow())).getStatus();
                     editApplicantButton.setEnabled(true);
-                    setInterviewDateButton.setEnabled(status == Applicant.SHORTLISTED_PENDING_DATE);
-                    acceptApplicantButton.setEnabled(status == Applicant.SHORTLISTED_TO_INTERVIEW);
+                    editApplicantButton.setToolTipText(main.getLocale("ApplicantListPage.ToolTip.editApplicantEnabled"));
                     removeApplicantButton.setEnabled(true);
+                    removeApplicantButton.setToolTipText(main.getLocale("ApplicantListPage.ToolTip.removeApplicantEnabled"));
+                    setInterviewDateButton.setEnabled(status == Applicant.SHORTLISTED_PENDING_DATE);
+                    setInterviewDateButton.setToolTipText(status == Applicant.SHORTLISTED_PENDING_DATE ? main.getLocale("ApplicantListPage.ToolTip.setInterviewDateEnabled") : main.getLocale("ApplicantListPage.ToolTip.setInterviewDateDisabled"));
+                    acceptApplicantButton.setEnabled(status == Applicant.SHORTLISTED_TO_INTERVIEW);
+                    acceptApplicantButton.setToolTipText(status == Applicant.SHORTLISTED_TO_INTERVIEW ? main.getLocale("ApplicantListPage.ToolTip.acceptApplicantEnabled") : main.getLocale("ApplicantListPage.ToolTip.acceptApplicantDisabled"));
                 }
                 else {
                     editApplicantButton.setEnabled(false);
+                    editApplicantButton.setToolTipText(main.getLocale("ApplicantListPage.ToolTip.editApplicantDisabled"));
                     setInterviewDateButton.setEnabled(false);
+                    setInterviewDateButton.setToolTipText(main.getLocale("ApplicantListPage.ToolTip.setInterviewDateDisabled"));
                     acceptApplicantButton.setEnabled(false);
+                    acceptApplicantButton.setToolTipText(main.getLocale("ApplicantListPage.ToolTip.acceptApplicantDisabled"));
                     removeApplicantButton.setEnabled(false);
+                    removeApplicantButton.setToolTipText(main.getLocale("ApplicantListPage.ToolTip.removeApplicantDisabled"));
                 }
             });
         }
@@ -422,16 +442,27 @@ public class ApplicantListPage extends JPanel{
                 }
             });
 
+            shortlistApplicantButton.addMouseListener(getGraphicalUpdaters());
+            acceptApplicantButton.addMouseListener(getGraphicalUpdaters());
+            setJobRoleButton.addMouseListener(getGraphicalUpdaters());
+
             table.getSelectionModel().addListSelectionListener(e -> {
                 if (table.getSelectedRow() != -1) {
                     int status = main.getController().getApplicantAt(table.convertRowIndexToModel(table.getSelectedRow())).getStatus();
                     setJobRoleButton.setEnabled(status == Applicant.ACCEPTED_WAITING_JOB);
+                    setJobRoleButton.setToolTipText("Set Job Role");
                     shortlistApplicantButton.setEnabled(status == Applicant.WAITING_SHORTLIST);
+                    shortlistApplicantButton.setToolTipText("Shortlist Applicant");
                     acceptApplicantButton.setEnabled(status == Applicant.SHORTLISTED_TO_INTERVIEW);
+                    acceptApplicantButton.setToolTipText("Accept Applicant");
                 }
                 else {
                     setJobRoleButton.setEnabled(false);
+                    setJobRoleButton.setToolTipText("Set Job Role (Requires applicant to be accepted)");
                     shortlistApplicantButton.setEnabled(false);
+                    shortlistApplicantButton.setToolTipText("Shortlist Applicant (Requires applicant to be waiting to be shortlisted)");
+                    acceptApplicantButton.setEnabled(false);
+                    acceptApplicantButton.setToolTipText("Accept Applicant (Requires applicant to be shortlisted for interview)");
                 }
             });
         }
@@ -450,6 +481,7 @@ public class ApplicantListPage extends JPanel{
     }
     private static JFileChooser getjFileChooser(){
         JFileChooser chooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        chooser.setAcceptAllFileFilterUsed(false);
         chooser.setFileFilter(new FileFilter() {
             @Override
             public boolean accept(File f) {
@@ -532,5 +564,46 @@ public class ApplicantListPage extends JPanel{
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
         g2.translate(-this.getWidth()/2, -this.getHeight()/2);
     }
+
+    private MouseAdapter getGraphicalUpdaters(){
+        return new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                mousePressed(e);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                mouseReleased(e);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                mouseDragged(e);
+            }
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                mouseMoved(e);
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                mouseEntered(e);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                main.getContentPane().validate();
+                main.getContentPane().repaint();
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                main.getContentPane().validate();
+                main.getContentPane().repaint();
+            }
+        };
+    }
 }
+
 
