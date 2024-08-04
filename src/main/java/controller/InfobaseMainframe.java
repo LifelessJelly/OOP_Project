@@ -18,7 +18,7 @@ public class InfobaseMainframe extends JFrame {
     private static final LookAndFeel darkMode = new FlatDarkLaf();
     private static final LookAndFeel lightMode = new FlatLightLaf();
     public static final int BOREALIS = 1; // Green/Blueish dark theme
-    public static final int PORNHUB = 2; // Your classic PornHub theme (please rename)
+    public static final int CANDLE = 2; // Your classic PornHub theme (please rename)
     public static final int NOSTALGIA = 3; // Greyscale dark theme
     public static final int NIGHT = 4; // Purple + dark theme
     public static final int MINT = 5; // Pastel green light theme
@@ -30,7 +30,7 @@ public class InfobaseMainframe extends JFrame {
 
 
     public InfobaseMainframe(Staff user){
-        setTheme(NIGHT);
+        setTheme(BOREALIS);
 
         this.controller = new InfobaseController(user);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -133,6 +133,7 @@ public class InfobaseMainframe extends JFrame {
             }
         }
         UIManager.put("Button.background", mainthemeColour);
+        UIManager.put("ToolTip.background", mainthemeColour);
         UIManager.put("CheckBox.background", mainthemeColour);
         UIManager.put("CheckBoxMenuItem.background", mainthemeColour);
         UIManager.put("ComboBox.background", mainthemeColour);
@@ -146,9 +147,7 @@ public class InfobaseMainframe extends JFrame {
         UIManager.put("ScrollPane.background", mainthemeColour);
         UIManager.put("ScrollBar.background", mainthemeColour);
         UIManager.put("Table.background", mainthemeColour);
-        UIManager.put("EditorPane.background", mainthemeColour);
-        UIManager.put("EditorPane.background", mainthemeColour);
-        UIManager.put("EditorPane.background", mainthemeColour);
+
         SwingUtilities.updateComponentTreeUI(this);
     }
 
