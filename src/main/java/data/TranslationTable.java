@@ -169,6 +169,16 @@ public final class TranslationTable {
         put("en", "ApplicantListPage.ToolTip.addApplicantJSON", "Add Applicant (JSON)");
         put("cn", "ApplicantListPage.ToolTip.addApplicantJSON", "Chinese goes here (JSON)");
 
+        put("en", "ApplicantListPage.ToolTip.viewApplicantPDFDisabled", "View Applicant PDF (Select an applicant)");
+        put("cn", "ApplicantListPage.ToolTip.viewApplicantPDFDisabled", "Chinese goes here (Chinese here also)");
+
+        put("en", "ApplicantListPage.ToolTip.viewApplicantPDFEnabled", "View Applicant PDF");
+        put("cn", "ApplicantListPage.ToolTip.viewApplicantPDFEnabled", "Chinese goes here");
+
+        put("en", "AddApplicant.JButton.addPDF", "Select Resume from computer (.pdf file)");
+        put("cn", "AddApplicant.JButton.addPDF", "Chinese goes here");
+
+
     }
 
     /**
