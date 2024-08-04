@@ -25,12 +25,12 @@ public class InfobaseMainframe extends JFrame {
     public static final int TIDE = 6; // cyan/blue light theme
     public static final int UNICORN = 7; //pink accent light theme
     public static final int INK = 8; // black and white theme
-    private int currentTheme = NIGHT;
+    private static int currentTheme = NIGHT;
 
 
 
     public InfobaseMainframe(Staff user){
-        setTheme(BOREALIS);
+        setTheme(currentTheme);
 
         this.controller = new InfobaseController(user);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,7 +47,7 @@ public class InfobaseMainframe extends JFrame {
 
 
     public void changeTheme(int theme){
-
+        currentTheme = theme;
     }
     /**
      * Retrieves the currently set language for translations.
@@ -114,9 +114,7 @@ public class InfobaseMainframe extends JFrame {
         new LoginMainframe();
     }
 
-    public void
-
-    setTheme(int theme) {
+    private void setTheme(int theme) {
         currentTheme = theme;
         Color mainthemeColour;
         if (theme <= NIGHT) {
@@ -151,6 +149,10 @@ public class InfobaseMainframe extends JFrame {
         UIManager.put("Table.background", mainthemeColour);
 
         SwingUtilities.updateComponentTreeUI(this);
+    }
+
+    public int getCurrentTheme(){
+        return currentTheme;
     }
 
     public boolean isDarkMode(){
