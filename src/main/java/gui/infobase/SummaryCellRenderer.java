@@ -55,6 +55,6 @@ public class SummaryCellRenderer extends JTextArea implements TableCellRenderer 
 
         return  nameText + applicant.getName() + '\n' +
                 ageText + applicant.getAge() + '\n' +
-                emailText + applicant.getEmail() + '\n'+
+                emailText + applicant.getEmail() + '\n';
     }
 }
