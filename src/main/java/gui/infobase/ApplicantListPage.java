@@ -346,7 +346,7 @@ public class ApplicantListPage extends JPanel{
 
                 //file processing
                 if (r == JFileChooser.APPROVE_OPTION) {
-                   main.getController().addApplicant(applicantToBeWritten);
+                   main.getController().addApplicantModel(applicantToBeWritten);
                    main.getContentPane().validate();
                    main.getContentPane().repaint();
                 }
