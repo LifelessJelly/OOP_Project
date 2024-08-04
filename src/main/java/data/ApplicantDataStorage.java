@@ -20,5 +20,10 @@ public class ApplicantDataStorage {
     public Applicant[] getApplicants() {
         return applicants.toArray(new Applicant[0]);
     }
-    public Applicant getApplicantAt(int index) {return applicants.get(index);}
+    public Applicant getApplicantAt(int index) {
+        if (index == -1){
+            return null;
+        }
+        return applicants.get(index);
+    }
 }
