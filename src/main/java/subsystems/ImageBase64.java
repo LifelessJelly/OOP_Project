@@ -47,7 +47,7 @@ public class ImageBase64 {
         bufferedImage.getGraphics().drawImage(image, 0, 0, null);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
-            ImageIO.write(bufferedImage, "jpeg", baos); //smaller file size to load faster
+            ImageIO.write(bufferedImage, "png", baos); //smaller file size to load faster
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
