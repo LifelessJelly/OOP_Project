@@ -4,19 +4,21 @@ import data.*;
 import subsystems.JsonReaderWriter;
 import subsystems.SHA256;
 
+import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Locale;
 
 public class InfobaseController {
     private final Staff loggedInStaffInstance;
     private EditsDataStorage editsDataStorageInstance;
     private final ApplicantDataStorage applicantDataStorage;
-    private int index;
+    private int referenceIndex;
 
     public InfobaseController(Staff loggedInStaffInstance) {
         this.loggedInStaffInstance = loggedInStaffInstance;
@@ -25,6 +27,7 @@ public class InfobaseController {
         File dir = new File(path);
         File[] files = dir.listFiles();
         assert files != null;
+        Arrays.sort(files, new FileSortByDate());
         for (File file : files) {
             if (file.getName().endsWith(".json")) {
                 String json = DataIO.readFile(file.getAbsolutePath());
@@ -60,31 +63,29 @@ public class InfobaseController {
         File applicantDirectory = new File(System.getProperty("user.dir") + "\\" + "applicants");
         File[] contents = applicantDirectory.listFiles();
         assert contents != null;
+        Arrays.sort(contents, new FileSortByDate());
         Collections.reverse(Arrays.asList(contents));
         File targetApplicant = contents[index];
         targetApplicant.delete();
-
     }
 
     // CALL THIS METHOD BEFORE INTERFACING WITH DATA METHODS
-    public void setApplicantInstance(int index){
-        this.index = index;
+    public void setApplicantInstance(int referenceIndex){
+        this.referenceIndex = referenceIndex;
         editsDataStorageInstance = new EditsDataStorage(getApplicantInstance());
     }
 
-
     public Applicant getApplicantInstance(){
-        return applicantDataStorage.getApplicantAt(index);
+        return applicantDataStorage.getApplicantAt(referenceIndex);
     }
-
 
     public void applyApplicantEdits(String name, int day, String month, int year, String nricFin, String email, String gender, String s){
         String dateString = String.valueOf(day) + ' ' + month + ' ' + year;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH);
         LocalDate localDate = LocalDate.parse(dateString, formatter);
         Applicant edittedApplicant = new Applicant(name, localDate.toEpochDay(), LocalDate.now().getYear()-localDate.getYear(), email, nricFin, gender, s, editsDataStorageInstance.getSkills(), getApplicantInstance());
-        applicantDataStorage.editApplicant(index, edittedApplicant);
-        overwriteIndex(index, edittedApplicant);
+        applicantDataStorage.editApplicant(referenceIndex, edittedApplicant);
+        overwriteIndex(referenceIndex, edittedApplicant);
     }
 
     private void overwriteIndex(int index, Applicant newApplicant){
@@ -105,6 +106,7 @@ public class InfobaseController {
     public BufferedImage getImage() {
         return getApplicantInstance().getImage();
     }
+
     public String getName() {
         return getApplicantInstance().getName();
     }
@@ -143,30 +145,30 @@ public class InfobaseController {
 
     public void shortlistApplicantForInterview(int selectedRow) {
         setApplicantInstance(selectedRow);
-        Applicant applicantsToShortlist = applicantDataStorage.getApplicantAt(index);
+        Applicant applicantsToShortlist = applicantDataStorage.getApplicantAt(referenceIndex);
         applicantsToShortlist.setStatus(Applicant.SHORTLISTED_PENDING_DATE);
-        applicantDataStorage.editApplicant(index, applicantsToShortlist);
-        overwriteIndex(index, applicantsToShortlist);
+        applicantDataStorage.editApplicant(referenceIndex, applicantsToShortlist);
+        overwriteIndex(referenceIndex, applicantsToShortlist);
     }
 
     public void confirmApplicantShortlist(){
         Applicant applicant = getApplicantInstance();
         applicant.setStatus(Applicant.SHORTLISTED_TO_INTERVIEW);
-        overwriteIndex(index, applicant);
+        overwriteIndex(referenceIndex, applicant);
     }
 
     public void confirmApplicantJob(){
         Applicant applicant = getApplicantInstance();
         applicant.setStatus(Applicant.ACCEPTED);
-        overwriteIndex(index, applicant);
+        overwriteIndex(referenceIndex, applicant);
     }
 
     public void acceptApplicant(int selectedRow) {
         setApplicantInstance(selectedRow);
-        Applicant applicantToAccept = applicantDataStorage.getApplicantAt(index);
+        Applicant applicantToAccept = applicantDataStorage.getApplicantAt(referenceIndex);
         applicantToAccept.setStatus(Applicant.ACCEPTED_WAITING_JOB);
-        applicantDataStorage.editApplicant(index, applicantToAccept);
-        overwriteIndex(index, applicantToAccept);
+        applicantDataStorage.editApplicant(referenceIndex, applicantToAccept);
+        overwriteIndex(referenceIndex, applicantToAccept);
     }
 
     public String getBirthdate() {
@@ -178,9 +180,9 @@ public class InfobaseController {
     }
 
     public void setInterviewTime(long time) {
-        Applicant applicantToInterview = applicantDataStorage.getApplicantAt(index);
+        Applicant applicantToInterview = applicantDataStorage.getApplicantAt(referenceIndex);
         applicantToInterview.setInterviewTime(time);
-        overwriteIndex(index, applicantToInterview);
+        overwriteIndex(referenceIndex, applicantToInterview);
     }
 
     public String getInterviewTime(){
@@ -194,5 +196,13 @@ public class InfobaseController {
     public void setJobRole(String applicantAssignedField) {
         Applicant applicantToAssign = getApplicantInstance();
         applicantToAssign.setJobRole(applicantAssignedField);
+    }
+}
+
+class FileSortByDate implements Comparator<File> {
+
+    @Override
+    public int compare(File o1, File o2) {
+        return (int) (o1.lastModified() - o2.lastModified());
     }
 }
