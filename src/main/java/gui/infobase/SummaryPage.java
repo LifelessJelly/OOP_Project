@@ -108,7 +108,8 @@ public class SummaryPage extends JPanel {
                         main.getLocale("ApplicantListPage.JTable.applicantNRIC")+applicantInstance.getNRIC()+'\n'+
                         main.getLocale("ApplicantListPage.JTable.applicantEmail")+applicantInstance.getEmail()+'\n'+
                         main.getLocale("ApplicantListPage.JTable.applicantGender")+applicantInstance.getGender()+'\n'+
-                        main.getLocale("ApplicantListPage.JTable.applicantSkills") + String.join(", ", applicantInstance.getSkills())
+                        main.getLocale("ApplicantListPage.JTable.applicantSkills") + String.join(", ", applicantInstance.getSkills())+'\n'+
+                        "Job role: "+applicantInstance.getJobRole()
         );
 
         JScrollPane txtAreaScroll = new JScrollPane();
