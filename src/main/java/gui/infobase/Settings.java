@@ -62,7 +62,7 @@ public class Settings extends JPanel{
         add(themeLabel, gbc_themeLabel);
 
         themeComboBox = new JComboBox();
-        themeComboBox.addItem("====Select  Theme====");
+        themeComboBox.addItem("====Select Theme====");
         themeComboBox.addItem("Borealis");
         themeComboBox.addItem("Candle");
         themeComboBox.addItem("Nostalgia");
@@ -117,7 +117,7 @@ public class Settings extends JPanel{
 
         discard.addActionListener(e->{
             if(JOptionPane.showConfirmDialog(null, main.getLocale("EditApplicant.JOptionPane.discardConfirm"), "", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                main.showApplicantListPageWithAnimation();
+                main.reload();
             }
         });
     }
