@@ -487,10 +487,7 @@ public class AddApplicant extends JPanel {
 
         addChangesButton.addActionListener(e -> {
 
-            String[] skillStringArray =new String[currentSkillsModel.getSize()];
-            for(int i=0; i<currentSkillsModel.getSize(); ++i) {
-                skillStringArray[i]=currentSkillsModel.getElementAt(i);
-            }
+            String[] skillStringArray = main.getController().getSkills();
 
             main.getController().addApplicant(applicantNameField.getText(),                      //adds name
                     dayComboBox.getItemAt(dayComboBox.getSelectedIndex()),                              //adds day
