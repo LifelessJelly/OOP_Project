@@ -105,7 +105,7 @@ public class Console extends JPanel {
         buttonSidePanel.add(viewSummaryButton, viewSummaryConstraints);
 
 
-        settingsButton = new JPanelImageButton("Settings", miau, miau, 60, 60, JPanelImageButton.BOTTOM);
+        settingsButton = new JPanelImageButton("Settings", ImageEmbedded.SettingsIcon.SETTINGS_OFF, ImageBase64.imageToBase64(main.getImage("SettingsIcon")), 60, 60, JPanelImageButton.BOTTOM);
         settingsButton.setButtonBackground(main.isDarkMode() ? Color.BLACK : Color.WHITE);
         GridBagConstraints settingsConstraints = new GridBagConstraints(0, 2, 1, 1, 1, 0,
                 GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
