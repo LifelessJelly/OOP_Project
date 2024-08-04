@@ -23,7 +23,7 @@ public class SummaryCellRenderer extends JTextArea implements TableCellRenderer 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean inFocus, int row, int column){
         if (value instanceof Applicant){
-            setText(printApplicantDetails(main.getController().getApplicantAt(row)));
+            setText(printApplicantDetails((Applicant)value));
             setSize(table.getColumnModel().getColumn(column).getWidth(),
                     getPreferredSize().height);
 
