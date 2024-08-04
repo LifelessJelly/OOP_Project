@@ -86,13 +86,13 @@ public final class TranslationTable {
         put("cn", "ApplicantListPage.JTable.applicantStatus", "状态： ");
 
         put("en", "ApplicantListPage.JTable.applicantShortlisted", "Shortlisted (Date to be set)");
-        put("cn", "ApplicantListPage.JTable.applicantShortlisted", "入围参加面试: ");
+        put("cn", "ApplicantListPage.JTable.applicantShortlisted", "入围参加面试 （日期未决定）");
 
         put("en", "ApplicantListPage.JTable.applicantPending", "Pending");
         put("cn", "ApplicantListPage.JTable.applicantPending", "未决");
 
-        put("en", "ApplicantListPage.JTable.applicantAccepted", "Accepted (Job to be set)");
-        put("cn", "ApplicantListPage.JTable.applicantAccepted", "进入公司");
+        put("en", "ApplicantListPage.JTable.applicantAccepted", "Accepted (Position to be set)");
+        put("cn", "ApplicantListPage.JTable.applicantAccepted", "进入公司 （公司位置未决定）");
 
         put("en", "ApplicantListPage.JTable.applicantPendingShortlist", "Pending shortlist");
         put("cn", "ApplicantListPage.JTable.applicantPendingShortlist", "入围未决定");
@@ -110,16 +110,19 @@ public final class TranslationTable {
         put("cn", "ApplicantListPage.JCheckBox.waitingShortlist", "等待入围");
 
         put("en", "ApplicantListPage.JCheckBox.shortlistedWaitingHR", "Shortlist (Interview date unknown)");
+        put("cn", "ApplicantListPage.JCheckBox.shortlistedWaitingHR", "Chinese goes here");
 
         put("en", "ApplicantListPage.JCheckBox.shortlisted", "Shortlisted");
         put("cn", "ApplicantListPage.JCheckBox.shortlisted", "入围了");
 
         put("en", "ApplicantListPage.JCheckBox.acceptedWaitingManager", "Accepted (Job unknown)");
+        put("cn", "ApplicantListPage.JCheckBox.acceptedWaitingManager", "Chinese goes here");
 
         put("en", "ApplicantListPage.JCheckBox.accepted", "Accepted");
         put("cn", "ApplicantListPage.JCheckBox.accepted", "进入公司");
 
         put("en", "ApplicantListPage.JLabel.excludeSkill", "Exclude Skills: ");
+        put("cn", "ApplicantListPage.JLabel.excludeSkill", "Chinese goes here");
 
         put("en", "EditApplicant.JOptionPane.discardConfirm", "Are you sure you want to discard the current changes?");
         put("cn", "EditApplicant.JOptionPane.discardConfirm", "您确定把当前的更改摒弃吗？");
@@ -136,6 +139,35 @@ public final class TranslationTable {
         put("en", "ShortlistPage.JCheckBox.communication", "Communication");
         put("cn", "ShortlistPage.JCheckBox.communication", "Communication");
 
+        put("en", "ApplicantListPage.ToolTip.editApplicantEnabled", "Edit Applicant");
+        put("cn", "ApplicantListPage.ToolTip.editApplicantEnabled", "Chinese goes here");
+
+        put("en", "ApplicantListPage.ToolTip.editApplicantDisabled", "Edit Applicant (Select an applicant)");
+        put("cn", "ApplicantListPage.ToolTip.editApplicantDisabled", "Chinese goes here (Chinese here also)");
+
+        put("en", "ApplicantListPage.ToolTip.setInterviewDateEnabled", "Set Interview Date");
+        put("cn", "ApplicantListPage.ToolTip.setInterviewDateEnabled", "Chinese goes here");
+
+        put("en", "ApplicantListPage.ToolTip.setInterviewDateDisabled", "Set Interview Date (Requires applicant to be shortlisted for interview by manager)");
+        put("cn", "ApplicantListPage.ToolTip.setInterviewDateDisabled", "Chinese goes here (Chinese here also)");
+
+        put("en", "ApplicantListPage.ToolTip.removeApplicantEnabled", "Remove Applicant");
+        put("cn", "ApplicantListPage.ToolTip.removeApplicantEnabled", "Chinese goes here");
+
+        put("en", "ApplicantListPage.ToolTip.removeApplicantDisabled", "Remove Applicant (Select an applicant)");
+        put("cn", "ApplicantListPage.ToolTip.removeApplicantDisabled", "Chinese goes here (Chinese here also)");
+
+        put("en", "ApplicantListPage.ToolTip.acceptApplicantEnabled", "Accept Applicant");
+        put("cn", "ApplicantListPage.ToolTip.acceptApplicantEnabled", "Chinese goes here");
+
+        put("en", "ApplicantListPage.ToolTip.acceptApplicantDisabled", "Accept Applicant (Requires applicant to pass the interview process)");
+        put("cn", "ApplicantListPage.ToolTip.acceptApplicantDisabled", "Chinese goes here (Chinese here also)");
+
+        put("en", "ApplicantListPage.ToolTip.addApplicant", "Add Applicant");
+        put("cn", "ApplicantListPage.ToolTip.addApplicant", "Chinese goes here");
+
+        put("en", "ApplicantListPage.ToolTip.addApplicantJSON", "Add Applicant (JSON)");
+        put("cn", "ApplicantListPage.ToolTip.addApplicantJSON", "Chinese goes here (JSON)");
 
     }
 
