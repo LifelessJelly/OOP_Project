@@ -13,6 +13,7 @@ public class InfobaseMainframe extends JFrame {
 
     private static String language = "en";
     private final InfobaseController controller;
+    private boolean isEditing;
     private CardLayout cardLayout;
     private Console console;
     private static final LookAndFeel darkMode = new FlatDarkLaf();
@@ -165,5 +166,13 @@ public class InfobaseMainframe extends JFrame {
 
     public void showApplicantKeyPage(int type, int index) {
         console.showApplicantKeyingPage(type, index);
+    }
+
+    public boolean isEditing() {
+        return isEditing;
+    }
+
+    public void setIsEditing(boolean b) {
+        isEditing = b;
     }
 }
