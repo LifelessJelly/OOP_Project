@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.Objects;
 
 public class Settings extends JPanel{
-    InfobaseMainframe main;
+    final InfobaseMainframe main;
     private JLabel languageLabel;
     private JComboBox<String> languageComboBox;
     private JLabel themeLabel;

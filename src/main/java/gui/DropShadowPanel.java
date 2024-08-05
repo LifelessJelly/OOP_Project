@@ -8,7 +8,7 @@ public class DropShadowPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    public int pixels;
+    public final int pixels;
 
     public DropShadowPanel(int pix) {
         this.pixels = pix;

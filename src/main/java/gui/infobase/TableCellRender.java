@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class TableCellRender extends JTextArea implements TableCellRenderer {
 
-    InfobaseMainframe main;
+    private final InfobaseMainframe main;
 
     public TableCellRender(InfobaseMainframe main) {
         this.main = main;
@@ -56,7 +56,7 @@ public class TableCellRender extends JTextArea implements TableCellRenderer {
         String genderText = main.getLocale("ApplicantListPage.JTable.applicantGender");
         String skillText = main.getLocale("ApplicantListPage.JTable.applicantSkills");
         String shortlistText = main.getLocale("ApplicantListPage.JTable.applicantStatus");
-        String interviewTimeText = "Interview Time: ";
+        String interviewTimeText = main.getLocale("ApplicantListPage.JTable.applicantInterviewTime");
         String shortlistStatus;
 
         switch (applicant.getStatus()){

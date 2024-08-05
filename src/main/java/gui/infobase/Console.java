@@ -157,10 +157,7 @@ public class Console extends JPanel {
             showSettingsPage();
         });
 
-        logout.addActionListener(e -> {
-            main.getController().removeTemp();
-            main.logout();
-        });
+        logout.addActionListener(e -> main.logout());
     }
 
     private void addApplicantLayeredPane(){

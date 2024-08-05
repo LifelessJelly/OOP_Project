@@ -14,8 +14,7 @@ public class InfobaseMainframe extends JFrame {
     private static String language = "en";
     private final InfobaseController controller;
     private boolean isEditing;
-    private CardLayout cardLayout;
-    private Console console;
+    private final Console console;
     private static final LookAndFeel darkMode = new FlatDarkLaf();
     private static final LookAndFeel lightMode = new FlatLightLaf();
     public static final int BOREALIS = 1; // Green/Blueish dark theme
@@ -36,7 +35,7 @@ public class InfobaseMainframe extends JFrame {
         this.controller = new InfobaseController(user);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
-        cardLayout = new CardLayout();
+        CardLayout cardLayout = new CardLayout();
         this.setLayout(cardLayout);
         this.setPreferredSize(new Dimension(1920, 1080));
         this.setLocationRelativeTo(null);
@@ -46,10 +45,17 @@ public class InfobaseMainframe extends JFrame {
         this.pack();
     }
 
-
+    /**
+     * Changes the current theme of the application.
+     * <p>
+     * This method updates the application's theme to the specified theme identifier.
+     *
+     * @param theme the integer identifier of the new theme to be set
+     */
     public void changeTheme(int theme){
         currentTheme = theme;
     }
+
     /**
      * Retrieves the currently set language for translations.
      *
@@ -66,19 +72,31 @@ public class InfobaseMainframe extends JFrame {
      * @param language The language code to set for translations.
      */
     public void setLanguage(String language) {
-        this.language = language;
+        InfobaseMainframe.language = language;
     }
 
     public void showApplicantListPage(){
         console.showApplicantListPage();
     }
 
-
+    /**
+     * Displays the edit interface for an applicant based on the specified index.
+     * <p>
+     * This method invokes the console's showEditApplicant method to present
+     * the editing options for the applicant at the given index.
+     *
+     * @param index the index of the applicant to be edited
+     */
     public void showEditApplicant(int index) {
         console.showEditApplicant(index);
     }
 
-    //TODO the add Applicant switcher is here, might need to change
+    /**
+     * Displays the interface for adding a new applicant.
+     * <p>
+     * This method invokes the console's showAddApplicant method to present
+     * the options for entering details of a new applicant.
+     */
     public void showAddApplicant(){
         console.showAddApplicant();
     }
@@ -89,15 +107,13 @@ public class InfobaseMainframe extends JFrame {
      * @param key The key identifying the translation to retrieve.
      * @return The translation corresponding to the provided key in the current language.
      */
-    //TODO alter this method to adhere to MVC (currently it's entity -> data)
+
     public String getLocale(String key){
-        TranslationKey translationKey = new TranslationKey(language, key);
-        return TranslationTable.getInstance().getTranslation(translationKey);
+        return controller.getLocale(language, key);
     }
 
     public Image getImage(String key){
-        ThemeKey themeKey = new ThemeKey(currentTheme, key);
-        return ThemeTable.getInstance().getImage(themeKey);
+        return controller.getImage(currentTheme, key);
     }
 
 
@@ -105,49 +121,76 @@ public class InfobaseMainframe extends JFrame {
         return controller;
     }
 
+    /**
+     * Reloads the current instance by disposing of it and creating a new
+     * instance of InfobaseMainframe.
+     * <p>
+     * This method first calls the dispose() method to release resources
+     * associated with the current instance, and then initializes a new
+     * InfobaseMainframe using the current user's information obtained
+     * from the controller.
+     */
     public void reload(){
         this.dispose();
+        controller.removeTemp();
         new InfobaseMainframe(controller.getUser());
     }
+
 
     public void logout(){
         this.dispose();
         new LoginMainframe();
     }
 
+    /**
+     * Sets the application's theme based on the specified theme identifier.
+     *
+     * <p>This method updates the current theme and applies the corresponding
+     * look and feel to the user interface. If the provided theme is less than
+     * or equal to {@code NIGHT}, a dark mode theme is applied; otherwise, a
+     * light mode theme is used. The background color for various UI components
+     * is also updated to match the selected theme.</p>
+     *
+     * @param theme an integer representing the theme to be set.
+     *              Values less than or equal to {@code NIGHT} will apply
+     *              dark mode, while values greater than {@code NIGHT} will
+     *              apply light mode.
+     * @throws RuntimeException if the look and feel cannot be set due to
+     *                          an unsupported look and feel exception.
+     */
     private void setTheme(int theme) {
         currentTheme = theme;
-        Color mainthemeColour;
+        Color mainThemeColour;
         if (theme <= NIGHT) {
             try {
                 UIManager.setLookAndFeel(darkMode);
-                mainthemeColour = new Color(47, 47, 47);
+                mainThemeColour = new Color(47, 47, 47);
             } catch (UnsupportedLookAndFeelException e) {
                 throw new RuntimeException(e);
             }
         } else {
             try {
                 UIManager.setLookAndFeel(lightMode);
-                mainthemeColour = Color.WHITE;
+                mainThemeColour = Color.WHITE;
             } catch (UnsupportedLookAndFeelException e) {
                 throw new RuntimeException(e);
             }
         }
-        UIManager.put("Button.background", mainthemeColour);
-        UIManager.put("ToolTip.background", mainthemeColour);
-        UIManager.put("CheckBox.background", mainthemeColour);
-        UIManager.put("CheckBoxMenuItem.background", mainthemeColour);
-        UIManager.put("ComboBox.background", mainthemeColour);
-        UIManager.put("ComboBox.buttonBackground", mainthemeColour);
-        UIManager.put("Desktop.background", mainthemeColour);
-        UIManager.put("EditorPane.background", mainthemeColour);
-        UIManager.put("FormattedTextField.background", mainthemeColour);
-        UIManager.put("Label.background", mainthemeColour);
-        UIManager.put("List.background", mainthemeColour);
-        UIManager.put("Panel.background", mainthemeColour);
-        UIManager.put("ScrollPane.background", mainthemeColour);
-        UIManager.put("ScrollBar.background", mainthemeColour);
-        UIManager.put("Table.background", mainthemeColour);
+        UIManager.put("Button.background", mainThemeColour);
+        UIManager.put("ToolTip.background", mainThemeColour);
+        UIManager.put("CheckBox.background", mainThemeColour);
+        UIManager.put("CheckBoxMenuItem.background", mainThemeColour);
+        UIManager.put("ComboBox.background", mainThemeColour);
+        UIManager.put("ComboBox.buttonBackground", mainThemeColour);
+        UIManager.put("Desktop.background", mainThemeColour);
+        UIManager.put("EditorPane.background", mainThemeColour);
+        UIManager.put("FormattedTextField.background", mainThemeColour);
+        UIManager.put("Label.background", mainThemeColour);
+        UIManager.put("List.background", mainThemeColour);
+        UIManager.put("Panel.background", mainThemeColour);
+        UIManager.put("ScrollPane.background", mainThemeColour);
+        UIManager.put("ScrollBar.background", mainThemeColour);
+        UIManager.put("Table.background", mainThemeColour);
 
         SwingUtilities.updateComponentTreeUI(this);
     }
@@ -160,10 +203,27 @@ public class InfobaseMainframe extends JFrame {
         return currentTheme <= NIGHT;
     }
 
+    /**
+     * Displays the applicant list page with an animation effect.
+     *
+     * <p>This method invokes the {@link Console#showApplicantWithAnimation()} method
+     * to present the applicant list in a visually engaging manner.</p>
+     */
     public void showApplicantListPageWithAnimation() {
         console.showApplicantWithAnimation();
     }
 
+    /**
+     * Displays the applicant keying page for a specific applicant type and index.
+     *
+     * <p>This method calls the {@link Console#showApplicantKeyingPage(int, int)} method
+     * to present the keying interface for the applicant identified by the given type and index.</p>
+     *
+     * @param type  an integer representing the type of applicant. This value determines
+     *              which category of applicants is being displayed.
+     * @param index an integer representing the index of the applicant within the specified type.
+     *              This value indicates which specific applicant's details are to be shown.
+     */
     public void showApplicantKeyPage(int type, int index) {
         console.showApplicantKeyingPage(type, index);
     }

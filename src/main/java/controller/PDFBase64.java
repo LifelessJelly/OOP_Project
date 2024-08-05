@@ -17,7 +17,7 @@ public class PDFBase64 {
      * @throws RuntimeException if an I/O error occurs while reading the file
      */
     public static String PDFToBase64(File pdfPath){
-        byte[] pdfBytes = null;
+        byte[] pdfBytes;
         try {
             pdfBytes = Files.readAllBytes(pdfPath.toPath());
         } catch (IOException e) {

@@ -25,33 +25,31 @@ public class ImageBase64 {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-//        Pattern pngPattern = Pattern.compile("png$", Pattern.CASE_INSENSITIVE);
-//        Pattern jpgPattern = Pattern.compile("jpg$", Pattern.CASE_INSENSITIVE);
-//        Pattern jpegPattern = Pattern.compile("jpeg$", Pattern.CASE_INSENSITIVE);
-//        String fileType = "";
-//        if (pngPattern.matcher(pathToImage).find()) {
-//            fileType = "png";
-//        }
-//        if (jpgPattern.matcher(pathToImage).find()) {
-//            fileType = "jpg";
-//        }
-//        if (jpegPattern.matcher(pathToImage).find()) {
-//            fileType = "jpeg";
-//        }
         return imageToBase64(image);
 
     }
 
+    /**
+     * Converts an {@link Image} object to a Base64 encoded string representation.
+     *
+     * <p>This method creates a {@link BufferedImage} from the provided {@link Image},
+     * draws the image onto the buffered image, and then writes it to a byte array output stream
+     * in PNG format. The resulting byte array is then encoded into a Base64 string.</p>
+     *
+     * @param image the {@link Image} to be converted to Base64. Must not be null.
+     * @return a Base64 encoded string representing the image.
+     * @throws RuntimeException if an I/O error occurs during the image writing process.
+     */
     public static String imageToBase64(Image image){
         BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
         bufferedImage.getGraphics().drawImage(image, 0, 0, null);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
-            ImageIO.write(bufferedImage, "png", baos); //smaller file size to load faster
+            ImageIO.write(bufferedImage, "png", baos);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        byte[] bytes = baos.toByteArray();                          //extract data as bytearray
+        byte[] bytes = baos.toByteArray();
         return Base64.getEncoder().encodeToString(bytes);
 
     }

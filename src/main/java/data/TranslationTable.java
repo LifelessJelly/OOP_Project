@@ -7,7 +7,7 @@ public final class TranslationTable {
 
     private static TranslationTable instance;
 
-    Map<TranslationKey, String> translationTable;
+    private final Map<TranslationKey, String> translationTable;
     /**
      * Constructor for TranslationTable class.
      * Initializes the translation table with the English and Chinese translations for various UI elements.
@@ -21,10 +21,10 @@ public final class TranslationTable {
         put("cn", "EditApplicant.JLabel.applicant_name", "姓名: ");
 
         put("en", "EditApplicant.JLabel.birth_date", "Date of birth: ");
-        put("cn", "EditApplicant.JLabel.birth_date", "生日: ");
+        put("cn", "EditApplicant.JLabel.birth_date", "出生日期: ");
 
         put("en", "EditApplicant.JLabel.nric", "NRIC: ");
-        put("cn", "EditApplicant.JLabel.nric", "身份证号码：");
+        put("cn", "EditApplicant.JLabel.nric", "身份证号：");
 
         put("en", "EditApplicant.JLabel.email", "Email: ");
         put("cn", "EditApplicant.JLabel.email", "电子邮件地址");
@@ -63,13 +63,13 @@ public final class TranslationTable {
         put("cn", "ApplicantListPage.JTable.applicantName", "姓名: ");
 
         put("en", "ApplicantListPage.JTable.applicantBirthDate", "Date of birth: ");
-        put("cn", "ApplicantListPage.JTable.applicantBirthDate", "生日： ");
+        put("cn", "ApplicantListPage.JTable.applicantBirthDate", "出生日期： ");
 
         put("en", "ApplicantListPage.JTable.applicantAge", "Age: ");
         put("cn", "ApplicantListPage.JTable.applicantAge", "年纪：");
 
         put("en", "ApplicantListPage.JTable.applicantNRIC", "NRIC: ");
-        put("cn", "ApplicantListPage.JTable.applicantNRIC", "身份证号码：");
+        put("cn", "ApplicantListPage.JTable.applicantNRIC", "身份证号：");
 
         put("en", "ApplicantListPage.JTable.applicantEmail", "Email: ");
         put("cn", "ApplicantListPage.JTable.applicantEmail", "电子邮件地址： ");
@@ -214,6 +214,12 @@ public final class TranslationTable {
 
         put("en", "ApplicantInfoKeyingPage.JLabel.selectTime", "Select a date and time for the interview to take place");
         put("cn", "ApplicantInfoKeyingPage.JLabel.selectTime", "请给面试约个时间和日期");
+
+        put("en", "ApplicantListPage.JTable.applicantInterviewTime", "Interview time:");
+        put("cn", "ApplicantListPage.JTable.applicantInterviewTime", "面试时间：");
+
+        put("en", "ApplicantListPage.JLabel.applicantList", "Applicant List");
+        put("cn", "ApplicantListPage.JLabel.applicantList", "申请者表");
 
 
     }

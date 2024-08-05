@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class SummaryCellRenderer extends JTextArea implements TableCellRenderer {
 
-    InfobaseMainframe main;
+    private final InfobaseMainframe main;
 
     public SummaryCellRenderer(InfobaseMainframe main) {
         this.main = main;

@@ -65,7 +65,7 @@ public class ApplicantListPage extends JPanel{
     }
 
     private void initComponents() {
-        JLabel applicantListLabel = new JLabel("Applicant List");
+        JLabel applicantListLabel = new JLabel(main.getLocale("ApplicantListPage.JLabel.applicantList"));
 
         applicantListLabel.setFont(applicantListLabel.getFont().deriveFont(22f));
         applicantListLabel.setFont(applicantListLabel.getFont().deriveFont(Font.BOLD));

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ApplicantDataStorage {
-    List<Applicant> applicants;
+    final List<Applicant> applicants;
     public ApplicantDataStorage() {
         applicants = new ArrayList<>();
     }

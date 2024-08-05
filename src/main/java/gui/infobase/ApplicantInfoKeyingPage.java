@@ -37,7 +37,7 @@ public class ApplicantInfoKeyingPage extends JPanel {
     private JPanel updateChangesPanel;
     private JPanelImageButton discardChangesButton;
     private JPanelImageButton saveChangesButton;
-    private int stage;
+    private final int stage;
     private JComboBox<Integer> hourComboBox;
     private JComboBox<Integer> minuteComboBox;
     private JTextField applicantAssignedField;

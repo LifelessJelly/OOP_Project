@@ -13,7 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class SummaryPage extends JPanel {
-    InfobaseMainframe main;
+    private final InfobaseMainframe main;
     private JLabel summaryListLabel;
     private TableModel applicantModel;
     private JTable table;

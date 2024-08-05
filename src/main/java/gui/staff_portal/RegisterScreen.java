@@ -18,7 +18,7 @@ import javax.swing.event.DocumentListener;
 
 public class RegisterScreen extends JPanel {
     private JButton registerButton;
-    private LoginMainframe main;
+    private final LoginMainframe main;
     private boolean passwordIsValid;
     private boolean usernameIsValid;
     private boolean displayNameIsValid;
@@ -335,15 +335,6 @@ public class RegisterScreen extends JPanel {
 
                 Font bodyFont=new Font("Comic Sans MS", Font.PLAIN, adjustedFontSizeBody);
                 Font smallBodyFont=new Font("Comic Sans MS", Font.PLAIN, (int)(Math.round(adjustedFontSizeBody*0.8)));
-
-//                    lblLoginPage.setFont(new Font("Comic Sans MS", Font.BOLD, adjustedFontSizeTitle));
-//                    lblUsername.setFont(bodyFont);
-//                    lblPassword.setFont(bodyFont);
-//                    lblValidTest.setFont(smallBodyFont);
-//                    rdbtnHr.setFont(smallBodyFont);
-//                    rdbtnManager.setFont(smallBodyFont);
-
-//                    btnLogin.setFont(bodyFont);
 
                 System.out.println(getWidth()+"X"+getHeight());
             }

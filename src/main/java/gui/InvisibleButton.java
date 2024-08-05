@@ -3,6 +3,8 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 
+
+//Makes button invisible (lazy to write Javadoc for this one)
 public class InvisibleButton extends JButton {
 
     public InvisibleButton() {

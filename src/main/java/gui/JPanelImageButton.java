@@ -6,6 +6,25 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * A custom JPanel that combines an image and text, functioning as a button.
+ *
+ * <p>This class allows for the creation of a panel containing an image and a text label,
+ * where the image can change based on mouse hover events. The position of the text relative
+ * to the image can be specified using predefined constants.</p>
+ *
+ * <p>The image is displayed using a base64 encoded string, which is converted to an ImageIcon.
+ * The panel uses a GridBagLayout to arrange its components.</p>
+ *
+ * <p>Mouse events are handled to change the image when the mouse enters or exits the invisible button area.</p>
+ *
+ * <p>Example usage:</p>
+ * <pre>
+ * JPanelImageButton button = new JPanelImageButton("Click Me", "base64ImageOff", "base64ImageOn", 100, 50, JPanelImageButton.LEFT);
+ * </pre>
+ *
+ * @see JPanel
+ */
 public class JPanelImageButton extends JPanel{
     public static final int LEFT = 0;
     public static final int RIGHT = 1;
@@ -15,6 +34,18 @@ public class JPanelImageButton extends JPanel{
     private final JLabel text;
     private final JLabel imageLabel;
 
+
+    /**
+     * Constructs a JPanelImageButton with specified text, images, dimensions, and position.
+     *
+     * @param textDisplayed the text to display on the button.
+     * @param base64ImageOff the base64 encoded string of the image to display when not hovered.
+     * @param base64ImageOn the base64 encoded string of the image to display when hovered.
+     * @param width the width of the image.
+     * @param height the height of the image.
+     * @param position the position of the text relative to the image (LEFT, RIGHT, TOP, BOTTOM).
+     * @throws IllegalArgumentException if the position is not one of the predefined constants.
+     */
     public JPanelImageButton(String textDisplayed, String base64ImageOff, String base64ImageOn, int width, int height, int position) {
         GridBagConstraints textPosConstraints;
 
@@ -76,19 +107,39 @@ public class JPanelImageButton extends JPanel{
         });
     }
 
+    /**
+     * Adds an ActionListener to the invisible button.
+     *
+     * @param actionListener the ActionListener to be added.
+     */
     public void addActionListener(ActionListener actionListener){
         invisibleButton.addActionListener(actionListener);
     }
 
+    /**
+     * Sets the size of the text box.
+     *
+     * @param size the new size for the text box.
+     */
     public void setTextBoxSize(Dimension size){
         text.setMinimumSize(size);
         text.setPreferredSize(size);
     }
 
+    /**
+     * Sets the font size of the text label.
+     *
+     * @param size the new font size.
+     */
     public void setFontSize(float size){
         text.setFont(text.getFont().deriveFont(size));
     }
 
+    /**
+     * Sets the background color of the button components.
+     *
+     * @param color the new background color.
+     */
     public void setButtonBackground(Color color){
         text.setBackground(color);
         imageLabel.setBackground(color);

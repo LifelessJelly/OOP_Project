@@ -3,8 +3,8 @@ package data;
 import java.util.Objects;
 
 public class ThemeKey {
-    private int themeId;
-    private String key;
+    private final int themeId;
+    private final String key;
 
     public ThemeKey(int themeId, String key) {
         this.themeId = themeId;

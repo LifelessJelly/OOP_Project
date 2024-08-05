@@ -12,18 +12,18 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-public class FileContentEncryptor {
+public class RSAEncryptor {
     //Uses file location name to generate a hash for the secret key
     /**
      * Encrypts a given plaintext using AES encryption with a secret key derived from the file location name.
      *
      * @param plainText the plaintext to be encrypted
-     * @param toFileLocation the file location name used to generate the secret key
+     * @param key the key used for encryption
      * @return a Base64 encoded string representing the encrypted plaintext
      * @throws RuntimeException if there are any issues during the encryption process
      */
-    public static String encrypt(String plainText, String toFileLocation) {
-        SecretKeySpec secretKeySpec = new SecretKeySpec(SHA256.getHasherByte().hashString(toFileLocation), "AES");
+    public static String encrypt(String plainText, String key) {
+        SecretKeySpec secretKeySpec = new SecretKeySpec(SHA256.getHasherByte().hashString(key), "AES");
         Cipher cipher;
         try {
             cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
@@ -39,12 +39,12 @@ public class FileContentEncryptor {
      * Decrypts a given ciphertext using AES decryption with a secret key derived from the file location name.
      *
      * @param cipherText the ciphertext to be decrypted
-     * @param fromFileLocation the file location name used to generate the secret key
+     * @param key the key used for decryption
      * @return the decrypted plaintext as a string
      * @throws RuntimeException if there are any issues during the decryption process
      */
-    public static String decrypt(String cipherText, String fromFileLocation) {
-        SecretKeySpec secretKeySpec = new SecretKeySpec(SHA256.getHasherByte().hashString(fromFileLocation), "AES");
+    public static String decrypt(String cipherText, String key) {
+        SecretKeySpec secretKeySpec = new SecretKeySpec(SHA256.getHasherByte().hashString(key), "AES");
         Cipher cipher;
         try {
             cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");

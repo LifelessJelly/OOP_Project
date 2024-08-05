@@ -7,11 +7,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ApplicantShowAndEditLayer extends JLayeredPane {
-    ApplicantListPage applicantListPage;
+    final ApplicantListPage applicantListPage;
     EditApplicant editApplicant;
     AddApplicant AddApplicant;
     JPanel exitingPanel;
-    InfobaseMainframe main;
+    final InfobaseMainframe main;
     public ApplicantShowAndEditLayer(InfobaseMainframe main) {
         super();
         this.main = main;

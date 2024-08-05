@@ -7,10 +7,25 @@ import javax.swing.table.TableModel;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
+/**
+ * A custom {@link RowFilter} for filtering {@link Applicant} entries in a {@link TableModel}.
+ *
+ * <p>This filter allows for filtering applicants based on their name, skills, and
+ * specified process stages. It uses a regular expression to match applicant names
+ * and checks if the applicant's skills are contained within a specified set of skills.</p>
+ *
+ * <p>The filter will include an applicant if:</p>
+ * <ul>
+ *     <li>The applicant's name matches the provided regex pattern.</li>
+ *     <li>The applicant's skills match the specified skills (if any).</li>
+ *     <li>The applicant's status is one of the filtered process stages.</li>
+ * </ul>
+ *
+ */
 public class ApplicantRowFilter extends RowFilter<TableModel, Integer> {
     private final Pattern namePattern;
-    int[] filteredProcessStages;
-    String[] skills;
+    final int[] filteredProcessStages;
+    final String[] skills;
 
     public ApplicantRowFilter(int[] filteredProcessStages, String regexNameMatch, String[] skills) {
         this.filteredProcessStages = filteredProcessStages;
@@ -25,21 +40,6 @@ public class ApplicantRowFilter extends RowFilter<TableModel, Integer> {
         if (!namePattern.matcher(applicant.getName()).find()){
             return false;
         }
-        //TODO uncomment this snippet once there is an all skills option
-//        if (skills != null) {
-//        boolean notFoundSkill = true;
-//
-//            for (String skill : skills) {
-//                String[] applicantSkills = applicant.getSkills();
-//                if (Arrays.asList(applicantSkills).contains(skill)) {
-//                    notFoundSkill = false;
-//                    break;
-//                }
-//            }
-//            if (notFoundSkill) {
-//                return false;
-//            }
-//        }
 
         if (applicant.getSkills().length != 0 && skills != null) {
             boolean allSkillsMatch = true;

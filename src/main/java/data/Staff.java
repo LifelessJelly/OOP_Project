@@ -41,14 +41,32 @@ public class Staff {
         return securityLevelRequired == this.securityLevel;
     }
 
-    //updates the staff credentials, creating a new String that has the hashed staff credentials
+    /**
+     * Updates the credentials for a staff member by hashing the provided username and password.
+     *
+     * <p>This method takes a username and a password (as a character array), hashes both using
+     * the SHA-256 algorithm, and stores the resulting hashes in the {@code staffCredentials} object.</p>
+     *
+     * @param username the username to be hashed and updated. Must not be null.
+     * @param password the password to be hashed and updated. Must not be null or empty.
+     * @throws NullPointerException if either the username or password is null.
+     */
     public void updateCredentials(String username, char[] password){
         staffCredentials.usernameHash = new String(SHA256.getHasherHex().hashString(username));
         staffCredentials.passwordHash = new String(SHA256.getHasherHex().hashString(new String(password)));
     }
 
-    //checks the staff credentials, returns a boolean value that signifies
-    // if the hashed username and password is equal to the stored hash
+    /**
+     * Checks the provided credentials against the stored username and password hashes.
+     *
+     * <p>This method hashes the given username and password using the SHA-256 algorithm
+     * and compares the resulting hashes with the stored values in the {@code staffCredentials} object.</p>
+     *
+     * @param username the username to be checked. Must not be null.
+     * @param password the password to be checked. Must not be null or empty.
+     * @return {@code true} if the provided credentials match the stored hashes; {@code false} otherwise.
+     * @throws NullPointerException if either the username or password is null.
+     */
     public boolean checkCredentials(String username, char[] password){
         return (new String(SHA256.getHasherHex().hashString(username)).equals(staffCredentials.usernameHash)
                 && new String(SHA256.getHasherHex().hashString(new String(password))).equals(staffCredentials.passwordHash));
@@ -58,6 +76,17 @@ public class Staff {
         return displayName;
     }
 
+    /**
+     * Checks if the provided username exists by comparing its hashed value
+     * with the stored username hash.
+     *
+     * <p>This method hashes the input username using SHA-256 and compares
+     * the resulting hash with the stored username hash in the staff credentials.</p>
+     *
+     * @param username the username to check for existence. Must not be null.
+     * @return {@code true} if the hashed username matches the stored username hash;
+     *         {@code false} otherwise.
+     */
     public boolean checkUsernameExists(String username){
         return new String(SHA256.getHasherHex().hashString(username)).equals(staffCredentials.usernameHash);
     }

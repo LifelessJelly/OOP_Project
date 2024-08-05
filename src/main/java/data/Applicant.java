@@ -23,11 +23,7 @@ public class Applicant{
     public static final int ACCEPTED_WAITING_JOB = 4;
     public static final int ACCEPTED = 5;
 
-    /**
-     * Constructs a new Applicant object by copying the details, previous experiences, skills, and metadata from another Applicant object.
-     *
-     * @param applicantToCopyFrom The Applicant object to copy the information from.
-     */
+    //Copy Constructor
     public Applicant(Applicant applicantToCopyFrom){
         this.applicantDetails = new ApplicantDetails(applicantToCopyFrom.applicantDetails);
         this.skills = Arrays.copyOf(applicantToCopyFrom.skills, applicantToCopyFrom.skills.length);
@@ -35,16 +31,23 @@ public class Applicant{
     }
 
     /**
-     * Constructs a new Applicant object with the specified details, skills, and previous experiences.
+     * Constructs a new {@link Applicant} instance with the specified details.
      *
-     * @param name The name of the applicant.
-     * @param birthdate The birthdate of the applicant.
-     * @param age The age of the applicant.
-     * @param email The email address of the applicant.
-     * @param nric The National Registration Identity Card (NRIC) of the applicant.
-     * @param gender The gender of the applicant.
-     * @param imageBase64 The base64 encoded image of the applicant.
-     * @param skills The array of skills possessed by the applicant.
+     * <p>This constructor initializes the applicant's metadata and details using the provided
+     * parameters. It creates a new instance of {@link ApplicantMetadata} and {@link ApplicantDetails}
+     * to store the applicant's information.</p>
+     *
+     * @param name the name of the applicant. Must not be null.
+     * @param birthdate the birthdate of the applicant in milliseconds since epoch.
+     * @param age the age of the applicant. Must be a non-negative integer.
+     * @param email the email address of the applicant. Must not be null.
+     * @param nric the National Registration Identity Card number of the applicant. Must not be null.
+     * @param gender the gender of the applicant. Must not be null.
+     * @param imageBase64 the Base64 encoded string representation of the applicant's image.
+     *                    Must not be null.
+     * @param skills an array of skills associated with the applicant. Must not be null.
+     * @param pdfBase64 the Base64 encoded string representation of the applicant's PDF document.
+     *                  Must not be null.
      */
     public Applicant(String name, long birthdate, int age, String email, String nric, String gender, String imageBase64, String[] skills, String pdfBase64) {
         this.skills = skills;
@@ -60,6 +63,25 @@ public class Applicant{
         applicantDetails.pdfBase64 = pdfBase64;
     }
 
+    /**
+     * Constructs a new {@link Applicant} instance with the specified details.
+     *
+     * <p>This constructor initializes the applicant's metadata and details using the provided
+     * parameters. It also copies the metadata and PDF base64 representation from an existing
+     * {@link Applicant} object if provided.</p>
+     *
+     * @param name the name of the applicant. Must not be null.
+     * @param birthdate the birthdate of the applicant in milliseconds since epoch.
+     * @param age the age of the applicant. Must be a non-negative integer.
+     * @param email the email address of the applicant. Must not be null.
+     * @param nric the National Registration Identity Card number of the applicant. Must not be null.
+     * @param gender the gender of the applicant. Must not be null.
+     * @param imageBase64 the Base64 encoded string representation of the applicant's image.
+     *                    Must not be null.
+     * @param skills an array of skills associated with the applicant. Must not be null.
+     * @param oldApplicant an existing {@link Applicant} object to copy metadata and PDF base64 from.
+     *                     Can be null, in which case only the provided parameters are used.
+     */
     public Applicant(String name, long birthdate, int age, String email, String nric, String gender, String imageBase64, String[] skills, Applicant oldApplicant) {
         this.skills = skills;
         applicantMetadata = oldApplicant.applicantMetadata;
@@ -125,6 +147,9 @@ public class Applicant{
     }
 
     public String getInterviewTime() {
+        if (applicantMetadata.interviewTime == -1){
+            return "---";
+        }
         DateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm", Locale.ENGLISH);
         return formatter.format(new Date(applicantMetadata.interviewTime));
     }
@@ -166,11 +191,7 @@ public class Applicant{
             this.email = "";
         }
 
-        /**
-         * Constructs a new ApplicantDetails object by copying the details from another ApplicantDetails object.
-         *
-         * @param applicantDetailsToCopyFrom The ApplicantDetails object to copy the information from.
-         */
+        //Copy Constructor
         private ApplicantDetails(ApplicantDetails applicantDetailsToCopyFrom) {
             this.name = applicantDetailsToCopyFrom.name;
             this.birthdate = applicantDetailsToCopyFrom.birthdate;
@@ -197,6 +218,7 @@ public class Applicant{
             interviewTime = -1;
         }
 
+        //Copy Constructor
         private ApplicantMetadata(ApplicantMetadata applicantMetadataToCopyFrom) {
             this.applicationDate = applicantMetadataToCopyFrom.applicationDate;
             status = applicantMetadataToCopyFrom.status;

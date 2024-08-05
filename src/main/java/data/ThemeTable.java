@@ -19,7 +19,7 @@ public class ThemeTable {
     public static final int UNICORN = 7; //pink accent light theme
     public static final int INK = 8; // black and white theme
 
-    Map<ThemeKey, Image> themeTable;
+    private final Map<ThemeKey, Image> themeTable;
 
     private ThemeTable() {
         themeTable = new HashMap<>();

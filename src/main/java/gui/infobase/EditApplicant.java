@@ -17,7 +17,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class EditApplicant extends JPanel {
-    InfobaseMainframe main;
+    final InfobaseMainframe main;
     JPanel picturePanel;
     JPanel detailsPanel;
     JButton applicantImageButton;

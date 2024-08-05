@@ -19,7 +19,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class AddApplicant extends JPanel {
-    private InfobaseMainframe main;
+    private final InfobaseMainframe main;
     private JPanel picturePanel;
     private JPanel detailsPanel;
     private JButton applicantImageButton;
@@ -53,10 +53,10 @@ public class AddApplicant extends JPanel {
     private Image currentImage;
     private String pdfBase64;
 
-    DefaultListModel<String> currentSkillsModel = new DefaultListModel<>();
+    private final DefaultListModel<String> currentSkillsModel = new DefaultListModel<>();
     private JButton addPDFButton;
     private JLabel fileLocationLabel;
-    //TODO: replace with the relevant placeholders
+
 
     public AddApplicant(InfobaseMainframe main) {
         this.defaultIcon = new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.DEFAULT_APPLICANT_IMAGE));

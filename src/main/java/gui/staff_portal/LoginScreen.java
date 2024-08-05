@@ -18,7 +18,6 @@ public class LoginScreen extends JPanel {
     private final LoginMainframe main;
     private boolean passwordIsFilled;
     private boolean usernameIsFilled;
-    private boolean domainSelected;
     private static final Color UNMET_REQUIREMENT_COLOUR = new Color(218, 67, 67);
     private JPasswordField passwordField;
     private JTextField usernameField;
@@ -177,14 +176,7 @@ public class LoginScreen extends JPanel {
                 Font bodyFont=new Font("Comic Sans MS", Font.PLAIN, adjustedFontSizeBody);
                 Font smallBodyFont=new Font("Comic Sans MS", Font.PLAIN, (int)(Math.round(adjustedFontSizeBody*0.8)));
 
-//                    lblLoginPage.setFont(new Font("Comic Sans MS", Font.BOLD, adjustedFontSizeTitle));
-//                    lblUsername.setFont(bodyFont);
-//                    lblPassword.setFont(bodyFont);
-//                    lblValidTest.setFont(smallBodyFont);
-//                    rdbtnHr.setFont(smallBodyFont);
-//                    rdbtnManager.setFont(smallBodyFont);
 
-//                    btnLogin.setFont(bodyFont);
 
                 System.out.println(getWidth()+"X"+getHeight());
             }
@@ -209,11 +201,16 @@ public class LoginScreen extends JPanel {
             main.showRegister();
             usernameField.setText("");
             passwordField.setText("");
-            domainSelected = false;
         });
 
     }
 
+    /**
+     * Updates the state of the login button based on the current input fields.
+     *
+     * <p>This method enables the login button if both the username and password fields
+     * are filled. If either field is empty, the login button is disabled.</p>
+     */
     private void updateLoginButton(){
         loginButton.setEnabled(passwordIsFilled && usernameIsFilled);
     }
