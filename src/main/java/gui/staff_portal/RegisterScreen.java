@@ -5,7 +5,7 @@ import controller.LoginMainframe;
 import data.Staff;
 import gui.ImageEmbedded;
 import gui.StretchIcon;
-import subsystems.ImageBase64;
+import controller.ImageBase64;
 
 import javax.swing.*;
 import java.awt.*;

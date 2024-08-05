@@ -1,6 +1,6 @@
 package gui;
 
-import subsystems.ImageBase64;
+import controller.ImageBase64;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;

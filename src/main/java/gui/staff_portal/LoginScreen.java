@@ -2,16 +2,14 @@ package gui.staff_portal;
 
 import com.formdev.flatlaf.ui.FlatLineBorder;
 import controller.LoginMainframe;
-import data.Staff;
 import gui.ImageEmbedded;
 import gui.StretchIcon;
-import subsystems.ImageBase64;
+import controller.ImageBase64;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import javax.swing.ButtonGroup;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 

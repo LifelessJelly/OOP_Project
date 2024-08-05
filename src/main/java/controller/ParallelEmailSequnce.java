@@ -1,7 +1,5 @@
 package controller;
 
-import subsystems.EmailSender;
-
 public class ParallelEmailSequnce implements Runnable{
     private final String toEmail;
     private final String subject;

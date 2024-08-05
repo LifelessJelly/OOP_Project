@@ -1,6 +1,6 @@
 package data;
 
-import subsystems.SHA256;
+import controller.SHA256;
 
 
 public class Staff {

@@ -1,7 +1,7 @@
 package data;
 
 import gui.ImageEmbedded;
-import subsystems.ImageBase64;
+import controller.ImageBase64;
 
 import java.awt.*;
 import java.util.HashMap;
