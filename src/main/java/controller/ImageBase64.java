@@ -1,4 +1,4 @@
-package subsystems;
+package controller;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
