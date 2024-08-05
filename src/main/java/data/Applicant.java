@@ -2,7 +2,7 @@ package data;
 
 //Class model implementation for applicants
 
-import subsystems.ImageBase64;
+import controller.ImageBase64;
 
 import java.awt.image.BufferedImage;
 import java.text.DateFormat;
