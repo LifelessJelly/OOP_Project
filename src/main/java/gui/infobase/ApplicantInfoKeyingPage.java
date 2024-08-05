@@ -17,8 +17,7 @@ public class ApplicantInfoKeyingPage extends JPanel {
     private final InfobaseMainframe main;
     private JPanel picturePanel;
     private JPanel detailsPanel;
-    private JButton applicantImageButton;
-    private JButton imageRemoveButton;
+    private JLabel applicantImageButton;
     private JLabel applicantNameLabel;
     private JTextField applicantNameField;
     private JLabel applicantBirthday;
@@ -65,8 +64,7 @@ public class ApplicantInfoKeyingPage extends JPanel {
 
         //START INNER COMPONENTS
         {
-            applicantImageButton = new JButton(new ImageIcon(main.getController().getImage()));
-            applicantImageButton.setEnabled(false);
+            applicantImageButton = new JLabel(new ImageIcon(main.getController().getImage()));
             GridBagConstraints applicantImageButtonConstraints = new GridBagConstraints(
                     0, 0, 1, 1, 0, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.BOTH,
@@ -284,7 +282,7 @@ public class ApplicantInfoKeyingPage extends JPanel {
 
         if (stage == Applicant.SHORTLISTED_PENDING_DATE){
             //TODO do translation
-            JLabel setDateLabel = new JLabel("Select a date for the interview to take place");
+            JLabel setDateLabel = new JLabel(main.getLocale("ApplicantInfoKeyingPage.JLabel.selectTime"));
             setDateLabel.setFont(setDateLabel.getFont().deriveFont(18f));
             setDateLabel.setHorizontalAlignment(SwingConstants.LEFT);
             GridBagConstraints setDateConstraints = new GridBagConstraints(0, 12, 1, 1, 0, 0,
@@ -364,17 +362,19 @@ public class ApplicantInfoKeyingPage extends JPanel {
     private void initListeners() {
         if (stage == Applicant.SHORTLISTED_PENDING_DATE) {
             saveChangesButton.addActionListener(e -> {
-                long epoch = getDateTimeEpoch(
-                        Objects.requireNonNull((Integer) yearComboBox.getSelectedItem()),
-                        Objects.requireNonNull((String) monthComboBox.getSelectedItem()),
-                        Objects.requireNonNull((Integer) dayComboBox.getSelectedItem()),
-                        Objects.requireNonNull((Integer) hourComboBox.getSelectedItem()),
-                        Objects.requireNonNull((Integer) minuteComboBox.getSelectedItem()));
-                if (epoch < System.currentTimeMillis()) {
-                    System.out.println("choose a correct time dumbass");
-                } else {
-                    main.getController().setInterviewTime(epoch);
-                    main.showApplicantListPage();
+                if (JOptionPane.showConfirmDialog(null, main.getLocale("ApplicantInfoKeyPage.JOptionPane.addConfirmInterview"), "", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+                    long epoch = getDateTimeEpoch(
+                            Objects.requireNonNull((Integer) yearComboBox.getSelectedItem()),
+                            Objects.requireNonNull((String) monthComboBox.getSelectedItem()),
+                            Objects.requireNonNull((Integer) dayComboBox.getSelectedItem()),
+                            Objects.requireNonNull((Integer) hourComboBox.getSelectedItem()),
+                            Objects.requireNonNull((Integer) minuteComboBox.getSelectedItem()));
+                    if (epoch < System.currentTimeMillis()) {
+                        JOptionPane.showMessageDialog(null, main.getLocale("ApplicantInfoKeyingPage.JOptionPane.timeError"), "", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        main.getController().setInterviewTime(epoch);
+                        main.showApplicantListPage();
+                    }
                 }
             });
         }
