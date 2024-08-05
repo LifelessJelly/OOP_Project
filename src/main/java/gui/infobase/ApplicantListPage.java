@@ -7,8 +7,8 @@ import data.Applicant;
 import data.Staff;
 import gui.ImageEmbedded;
 import gui.JButtonImage;
-import subsystems.ImageBase64;
-import subsystems.JsonReaderWriter;
+import controller.ImageBase64;
+import controller.JsonReaderWriter;
 
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
@@ -269,7 +269,7 @@ public class ApplicantListPage extends JPanel{
 
             shortlistApplicantButton = new JButtonImage(ImageEmbedded.ShortlistAddIcon.SHORTLISTADD_OFF, ImageBase64.imageToBase64(main.getImage("ShortlistAddIcon")));
             shortlistApplicantButton.setBorder(BorderFactory.createEmptyBorder());
-            shortlistApplicantButton.setToolTipText("Shortlist Applicant (Requires applicant to be waiting to be shortlisted)");
+            shortlistApplicantButton.setToolTipText(main.getLocale("ApplicantListPage.ToolTip.shortlistApplicantDisabled"));
             shortlistApplicantButton.setEnabled(false);
             GridBagConstraints shortlistApplicantConstraints = new GridBagConstraints(0, 0, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
@@ -277,7 +277,7 @@ public class ApplicantListPage extends JPanel{
 
             acceptApplicantButton = new JButtonImage(ImageEmbedded.AcceptApplicantIcon.ACCEPTAPPLICANT_OFF, ImageBase64.imageToBase64(main.getImage("AcceptApplicantIcon")));
             acceptApplicantButton.setBorder(BorderFactory.createEmptyBorder());
-            acceptApplicantButton.setToolTipText("Accept Applicant (Requires applicant to be shortlisted for interview)");
+            acceptApplicantButton.setToolTipText(main.getLocale("ApplicantListPage.ToolTip.acceptApplicantDisabled"));
             acceptApplicantButton.setEnabled(false);
             GridBagConstraints acceptApplicantConstraints = new GridBagConstraints(0, 1, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
@@ -285,7 +285,7 @@ public class ApplicantListPage extends JPanel{
 
             setJobRoleButton = new JButtonImage(ImageEmbedded.SetJobRoleIcon.SETJOBROLE_OFF, ImageBase64.imageToBase64(main.getImage("SetJobRoleIcon")));
             setJobRoleButton.setBorder(BorderFactory.createEmptyBorder());
-            setJobRoleButton.setToolTipText("Set Job Role (Requires applicant to be accepted)");
+            setJobRoleButton.setToolTipText(main.getLocale("ApplicantListPage.ToolTip.setJobRoleDisabled"));
             setJobRoleButton.setEnabled(false);
             GridBagConstraints setJobRoleConstraints = new GridBagConstraints(0, 2, 1, 1, 1, 0,
                     GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
@@ -350,11 +350,11 @@ public class ApplicantListPage extends JPanel{
         table.getSelectionModel().addListSelectionListener(e -> {
             if (table.getSelectedRow() != -1){
                 viewApplicantPDFButton.setEnabled(true);
-                viewApplicantPDFButton.setToolTipText("ApplicantListPage.ToolTip.viewApplicantPDFEnabled");
+                viewApplicantPDFButton.setToolTipText(main.getLocale("ApplicantListPage.ToolTip.viewApplicantPDFEnabled"));
             }
             else {
                 viewApplicantPDFButton.setEnabled(false);
-                viewApplicantPDFButton.setToolTipText("ApplicantListPage.ToolTip.viewApplicantPDFDisabled");
+                viewApplicantPDFButton.setToolTipText(main.getLocale("ApplicantListPage.ToolTip.viewApplicantPDFDisabled"));
             }
         });
 
@@ -480,19 +480,19 @@ public class ApplicantListPage extends JPanel{
                 if (table.getSelectedRow() != -1) {
                     int status = main.getController().getApplicantAt(table.convertRowIndexToModel(table.getSelectedRow())).getStatus();
                     setJobRoleButton.setEnabled(status == Applicant.ACCEPTED_WAITING_JOB);
-                    setJobRoleButton.setToolTipText("Set Job Role");
+                    setJobRoleButton.setToolTipText(status == Applicant.ACCEPTED_WAITING_JOB ? main.getLocale("ApplicantListPage.ToolTip.setJobRoleEnabled") : main.getLocale("ApplicantListPage.ToolTip.setJobRoleDisabled"));
                     shortlistApplicantButton.setEnabled(status == Applicant.WAITING_SHORTLIST);
-                    shortlistApplicantButton.setToolTipText("Shortlist Applicant");
+                    shortlistApplicantButton.setToolTipText(status == Applicant.WAITING_SHORTLIST ? main.getLocale("ApplicantListPage.ToolTip.shortlistApplicantEnabled") : main.getLocale("ApplicantListPage.ToolTip.shortlistApplicantDisabled"));
                     acceptApplicantButton.setEnabled(status == Applicant.SHORTLISTED_TO_INTERVIEW);
-                    acceptApplicantButton.setToolTipText("Accept Applicant");
+                    acceptApplicantButton.setToolTipText(status == Applicant.SHORTLISTED_TO_INTERVIEW ? main.getLocale("ApplicantListPage.ToolTip.acceptApplicantEnabled") : main.getLocale("ApplicantListPage.ToolTip.acceptApplicantDisabled"));
                 }
                 else {
                     setJobRoleButton.setEnabled(false);
-                    setJobRoleButton.setToolTipText("Set Job Role (Requires applicant to be accepted)");
+                    setJobRoleButton.setToolTipText(main.getLocale("ApplicantListPage.ToolTip.setJobRoleDisabled"));
                     shortlistApplicantButton.setEnabled(false);
-                    shortlistApplicantButton.setToolTipText("Shortlist Applicant (Requires applicant to be waiting to be shortlisted)");
+                    shortlistApplicantButton.setToolTipText(main.getLocale("ApplicantListPage.ToolTip.shortlistApplicantDisabled"));
                     acceptApplicantButton.setEnabled(false);
-                    acceptApplicantButton.setToolTipText("Accept Applicant (Requires applicant to be shortlisted for interview)");
+                    acceptApplicantButton.setToolTipText("ApplicantListPage.ToolTip.acceptApplicantDisabled");
                 }
             });
         }
