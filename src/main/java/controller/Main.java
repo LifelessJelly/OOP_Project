@@ -1,16 +1,6 @@
 package controller;
 
 
-import com.formdev.flatlaf.FlatLightLaf;
-import subsystems.ImageBase64;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-
-
 public class Main {
 
 
