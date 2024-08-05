@@ -5,7 +5,7 @@ import controller.PDFBase64;
 import gui.DateSelectorHelper;
 import gui.ImageEmbedded;
 import gui.JPanelImageButton;
-import subsystems.ImageBase64;
+import controller.ImageBase64;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
