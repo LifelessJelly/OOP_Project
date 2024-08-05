@@ -1,8 +1,6 @@
 package controller;
 
 import data.*;
-import subsystems.JsonReaderWriter;
-import subsystems.SHA256;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -197,6 +195,18 @@ public class InfobaseController {
     public void openPDF() {
         Applicant applicantToOpen = getApplicantInstance();
         PDFBase64.base64ToPdfAndOpen(applicantToOpen.getPdfBase64(), System.getProperty("user.dir") + "\\temp\\tempPDF.pdf");
+    }
+
+    public void removeTemp() {
+        File pdfFile = new File(System.getProperty("user.dir") + "\\temp");
+        File[] files = pdfFile.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.delete()){
+                    System.out.println("file in pdf temp deleted");
+                }
+            }
+        }
     }
 }
 
