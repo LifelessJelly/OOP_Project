@@ -324,6 +324,7 @@ public class InfobaseController {
         Applicant applicantToAssign = getApplicantInstance();
         applicantToAssign.setStatus(Applicant.ACCEPTED);
         applicantToAssign.setJobRole(applicantAssignedField);
+        overwriteIndex(referenceIndex, applicantToAssign);
     }
 
     /**

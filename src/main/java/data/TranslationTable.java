@@ -220,8 +220,6 @@ public final class TranslationTable {
 
         put("en", "ApplicantListPage.JLabel.applicantList", "Applicant List");
         put("cn", "ApplicantListPage.JLabel.applicantList", "申请者表");
-
-
     }
 
     /**
