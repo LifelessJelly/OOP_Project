@@ -269,34 +269,34 @@ public class InfobaseController {
     public String getGender() {
         return getApplicantInstance().getGender();
     }
-
-	/**
-	 * Sets the interview time for the applicant and sends a notification email.
+    
+    /**
+     * Sets the interview time for the applicant and sends a notification email.
      * <p> 
-	 * This method retrieves the current applicant instance, sets the specified
-	 * interview time, and sends an email to the applicant notifying them of their
-	 * interview details. The applicant's status is updated to
-	 * {@code SHORTLISTED_TO_INTERVIEW}, and the applicant's information is overwritten in
-	 * the reference index.
-	 *
-	 * @param time the time of the interview in milliseconds since epoch
-	 */
-	public void setInterviewTime(long time) {
-		Applicant applicantToInterview = getApplicantInstance();
-		applicantToInterview.setInterviewTime(time);
-		new Thread(() -> new EmailSender("joseph_chiu@outlook.com", "Yay you made it", "Esteemed Sir/Madam,\n"
-				+ "\n"
-				+ "It is with the utmost pleasure and profound elation that we convey to you the magnificent news of your acceptance into the illustrious ranks of Operate On Peasants LLC. Your presence is hereby requested for a grand interview at the appointed hour of "
-				+ applicantToInterview.getInterviewTime()
-				+ ". We implore you to assemble and present the requisite documents, including but not limited to, a meticulously crafted copy of your resume, your esteemed identification papers, and any other pertinent documentation.\n" +
-            "\n" +
-            "We eagerly anticipate the honor of your attendance.\n" +
-            "\n" +
-            "With the highest regard,\n" +
-            "Operate On Peasants LLC")).start();
-    applicantToInterview.setStatus(Applicant.SHORTLISTED_TO_INTERVIEW);
-    overwriteIndex(referenceIndex, applicantToInterview);
-}
+     * This method retrieves the current applicant instance, sets the specified
+     * interview time, and sends an email to the applicant notifying them of their
+     * interview details. The applicant's status is updated to
+     * {@code SHORTLISTED_TO_INTERVIEW}, and the applicant's information is overwritten in
+     * the reference index.
+     *
+     * @param time the time of the interview in milliseconds since epoch
+     */
+    public void setInterviewTime(long time) {
+        Applicant applicantToInterview = getApplicantInstance();
+        applicantToInterview.setInterviewTime(time);
+        new Thread(() -> new EmailSender(applicantToInterview.getEmail(), "Yay you made it", "Esteemed Sir/Madam,\n"
+                + "\n"
+                + "It is with the utmost pleasure and profound elation that we convey to you that your applicant profile stood out amongst the rest and therefore we at Operate On Peasants LLC, request you for a grand interview at the appointed hour of "
+                + applicantToInterview.getInterviewTime()
+                + ". We implore you to assemble and present the requisite documents, including but not limited to, a meticulously crafted copy of your resume, your esteemed identification papers, and any other pertinent documentation.\n" +
+                "\n" +
+                "We eagerly anticipate the honor of your attendance.\n" +
+                "\n" +
+                "With the highest regard,\n" +
+                "Operate On Peasants LLC")).start();
+        applicantToInterview.setStatus(Applicant.SHORTLISTED_TO_INTERVIEW);
+        overwriteIndex(referenceIndex, applicantToInterview);
+    }
 
     
     /**
@@ -314,15 +314,24 @@ public class InfobaseController {
     }
 
 
-	/**
-	 * Assigns a job role to the applicant and sets their status to accepted.
-	 *
-	 * @param applicantAssignedField the job role to be assigned to the applicant
-	 * @throws NullPointerException if the applicant instance is null
-	 */
+    /**
+     * Assigns a job role to the applicant and sets their status to accepted.
+     *
+     * @param applicantAssignedField the job role to be assigned to the applicant
+     * @throws NullPointerException if the applicant instance is null
+     */
     public void setJobRole(String applicantAssignedField) {
         Applicant applicantToAssign = getApplicantInstance();
         applicantToAssign.setStatus(Applicant.ACCEPTED);
+        new Thread(() -> new EmailSender(applicantToAssign.getEmail(), "Welcome", "Esteemed Sir/Madam,\n" +
+                "\n" +
+                "It is with the greatest excitement that we convey to you the magnificent news of your acceptance into the illustrious ranks of Operate On Peasants LLC. " +
+                "As previously discussed, we are delighted to announce that you have been appointed to the role of " + applicantToAssign.getJobRole() + " and are now officially part of our esteemed family.\n" +
+                "\n" +
+                "We eagerly await your first appearance and the opportunity to witness your contributions to our noble cause.\n" +
+                "\n" +
+                "With the highest regard,\n" +
+                "Operate On Peasants LLC")).start();
         applicantToAssign.setJobRole(applicantAssignedField);
         overwriteIndex(referenceIndex, applicantToAssign);
     }
