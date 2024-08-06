@@ -8,6 +8,7 @@ import controller.ImageBase64;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileFilter;
@@ -48,12 +49,10 @@ public class EditApplicant extends JPanel {
     private JPanelImageButton saveChangesButton;
     private double zoomFactor;
     private float alpha;
-    private final ImageIcon defaultIcon;
     private Image currentImage;
 
 
     public EditApplicant(int index, InfobaseMainframe main) {
-        this.defaultIcon = new ImageIcon(ImageBase64.base64ToImage(ImageEmbedded.DEFAULT_APPLICANT_IMAGE));
         this.main = main;
         this.main.getController().setApplicantInstance(index);
         this.currentImage=main.getController().getImage();
@@ -369,15 +368,34 @@ public class EditApplicant extends JPanel {
         });
         saveChangesButton.addActionListener(e -> {
 
-            main.getController().applyApplicantEdits(applicantNameField.getText(),
-                    dayComboBox.getItemAt(dayComboBox.getSelectedIndex()),
-                    monthComboBox.getItemAt(monthComboBox.getSelectedIndex()),
-                    yearComboBox.getItemAt(yearComboBox.getSelectedIndex()),
-                    applicantNricField.getText(),
-                    applicantEmailField.getText(),
-                    applicantGenderComboBox.getItemAt(applicantGenderComboBox.getSelectedIndex()),
-                    ImageBase64.imageToBase64(currentImage));
-            main.showApplicantListPageWithAnimation();
+            if (JOptionPane.showConfirmDialog(null, main.getLocale("EditApplicant.JOptionPane.editConfirm"), "", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+                //do checks
+                boolean canContinue;
+
+                // This would be much more readable in C than Java im sorry
+                // basically,
+                // canContinue = canContinue * checkEmptyFields(field)
+
+                canContinue = (checkEmptyFields(applicantNameField) ? 1 : 0) != 0;
+                canContinue = (((canContinue ? 1 : 0) * (checkEmptyFields(applicantEmailField) ? 1 : 0)) != 0);
+                canContinue = (((canContinue ? 1 : 0) * (checkEmptyFields(applicantNricField) ? 1 : 0)) != 0);
+                if (!canContinue) {
+                    JOptionPane.showMessageDialog(null, main.getLocale("AddApplicant.JOptionPane.emptyFieldError"), "", JOptionPane.ERROR_MESSAGE);
+                } else if (!isNRICFINValid(applicantNricField.getText())) {
+                    JOptionPane.showMessageDialog(null, main.getLocale("AddApplicant.JOptionPane.wrongNricError"), "", JOptionPane.ERROR_MESSAGE);
+                } else {
+
+                    main.getController().applyApplicantEdits(applicantNameField.getText(),
+                            dayComboBox.getItemAt(dayComboBox.getSelectedIndex()),
+                            monthComboBox.getItemAt(monthComboBox.getSelectedIndex()),
+                            yearComboBox.getItemAt(yearComboBox.getSelectedIndex()),
+                            applicantNricField.getText(),
+                            applicantEmailField.getText(),
+                            applicantGenderComboBox.getItemAt(applicantGenderComboBox.getSelectedIndex()),
+                            ImageBase64.imageToBase64(currentImage));
+                    main.showApplicantListPageWithAnimation();
+                }
+            }
         });
         discardChangesButton.addActionListener(e -> {
             if (JOptionPane.showConfirmDialog(null, main.getLocale("EditApplicant.JOptionPane.discardConfirm"), "", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
@@ -507,4 +525,56 @@ public class EditApplicant extends JPanel {
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
         g2.translate(-this.getWidth()/2, -this.getHeight()/2);
     }
+
+    private static boolean checkEmptyFields(JTextField field){
+        Border passBorder = new JTextField().getBorder();
+        Border failBorder = BorderFactory.createLineBorder(new Color(173, 74, 59), 1, true);
+        if (field.getText().isEmpty()) {
+            field.setBorder(failBorder);
+            return false;
+        }
+        else {
+            field.setBorder(passBorder);
+            return true;
+        }
+    }
+    private boolean isNRICFINValid(String nricFin){
+        // information taken from https://www.ngiam.net/NRIC/ppframe.htm
+        nricFin = nricFin.toUpperCase();
+
+        if (nricFin.equals("ROOT")){
+            return true;
+        }
+
+        if ((nricFin.length() != 9) || (nricFin.charAt(0) != 'T' && nricFin.charAt(0) != 'S' && nricFin.charAt(0) != 'F' && nricFin.charAt(0) != 'G')){
+            return false;
+        }
+        int sum = 0;
+        int[] weights = new int[]{0, 2, 7, 6, 5, 4, 3, 2};
+        char[] checkDigit = getChars(nricFin);
+
+        for (int i = 1; i < nricFin.length()-1; ++i){
+            int digit = Character.getNumericValue(nricFin.charAt(i));
+            sum += digit * weights[i];
+        }
+        assert checkDigit != null;
+        char calculatedLetter = checkDigit[sum % 11];
+        return calculatedLetter == nricFin.charAt(nricFin.length() - 1);
+    }
+
+    private static char[] getChars(String nricFin) {
+        switch (nricFin.charAt(0)){
+            case 'T':
+                return new char[]{'G', 'F', 'E', 'D', 'C', 'B', 'A', 'J', 'Z', 'I', 'H'};
+            case 'S':
+                return new char[]{'J', 'Z', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'};
+            case 'G':
+                return new char[]{'R', 'Q', 'P', 'N', 'M', 'L', 'K', 'X', 'W', 'U', 'T'};
+            case 'F':
+                return new char[]{'X', 'W', 'U', 'T', 'R', 'Q', 'P', 'N', 'M', 'L', 'K'};
+        }
+        //should never reach here
+        return null;
+    }
+
 }

@@ -241,7 +241,18 @@ public final class TranslationTable {
 
         put("en", "Settings.JButton.applyChanges", "Apply Changes");
         put("cn", "Settings.JButton.applyChanges", "保存");
+
+        put("en", "EditApplicant.JOptionPane.editConfirm", "Are you sure you want to apply changes?");
+        put("cn", "EditApplicant.JOptionPane.editConfirm", "确定保存新的信息?");
+
+        put("en", "AddApplicant.JOptionPane.emptyFieldError", "Please fill in all fields");
+        put("cn", "AddApplicant.JOptionPane.emptyFieldError", "请填出每个空盒");
+
+        put("en", "AddApplicant.JOptionPane.wrongNricError", "NRIC number is invalid, please check applicant's NRIC number again");
+        put("cn", "AddApplicant.JOptionPane.wrongNricError", "身份证号是无效的， 请再检查申请者的身份证号");
     }
+
+
 
     /**
      * Returns the instance of the TranslationTable class.
