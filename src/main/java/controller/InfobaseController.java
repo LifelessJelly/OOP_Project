@@ -120,7 +120,13 @@ public class InfobaseController {
         }
     }
 
-    // CALL THIS METHOD BEFORE INTERFACING WITH DATA METHODS
+    /**
+     * sets the applicant instance to be used in any given class,
+     * used for manipulation (editing)
+     *
+     * @param referenceIndex gets the applicant's index in the list of applicant objects
+     *
+     */
     public void setApplicantInstance(int referenceIndex){
         this.referenceIndex = referenceIndex;
         editsDataStorageInstance = new EditsDataStorage(getApplicantInstance());

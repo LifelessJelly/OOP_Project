@@ -12,6 +12,12 @@ import java.nio.file.Paths;
 //store every applicant's data discretely
 public class DataIO {
 
+    /**
+     * gets path to any given file
+     *
+     * @param pathToFile the file's path in the directory
+     *
+     */
     public static String readFile(String pathToFile) {
         try {
             return new String(Files.readAllBytes(Paths.get(pathToFile)));
@@ -20,7 +26,13 @@ public class DataIO {
         }
     }
 
-    //TODO add write method
+    /**
+     * writes a file to a directory
+     *
+     * @param directoryOfFile gets file directory
+     * @param content content of folder in string
+     *
+     */
     public static void writeFile(String directoryOfFile, String content) {
         try {
             try (FileWriter fileWriter = new FileWriter(directoryOfFile)) {
