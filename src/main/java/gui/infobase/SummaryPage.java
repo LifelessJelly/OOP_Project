@@ -72,7 +72,7 @@ public class SummaryPage extends JPanel {
                 null));
         table.setRowSorter(sorter);
 
-        summaryListLabel.setText("Applicant Summary- "+(sorter.getViewRowCount())+" applicants accepted");
+        summaryListLabel.setText(main.getLocale("SummaryPage.JLabel.summaryListLabel1")+(sorter.getViewRowCount())+main.getLocale("SummaryPage.JLabel.summaryListLabel2"));
     }
 
     private void initListeners(){
@@ -92,7 +92,7 @@ public class SummaryPage extends JPanel {
     private void JDialogSpawner(Applicant applicantInstance){
         JDialog extraDialog = new JDialog();
 
-        extraDialog.setTitle(applicantInstance.getName()+"'s extra info");
+        extraDialog.setTitle(applicantInstance.getName()+main.getLocale("SummaryPage.JLabel.extraInfo"));
         extraDialog.setSize(300,300);
         extraDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         JTextArea textArea = new JTextArea();
@@ -109,7 +109,7 @@ public class SummaryPage extends JPanel {
                         main.getLocale("ApplicantListPage.JTable.applicantEmail")+applicantInstance.getEmail()+'\n'+
                         main.getLocale("ApplicantListPage.JTable.applicantGender")+applicantInstance.getGender()+'\n'+
                         main.getLocale("ApplicantListPage.JTable.applicantSkills") + String.join(", ", applicantInstance.getSkills())+'\n'+
-                        "Job role: "+applicantInstance.getJobRole()
+                        main.getLocale("ApplicantListPage.JTable.applicantJobRole")+applicantInstance.getJobRole()
         );
 
         JScrollPane txtAreaScroll = new JScrollPane();

@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.Objects;
 
 public class Settings extends JPanel{
-    final InfobaseMainframe main;
+    private final InfobaseMainframe main;
     private JLabel languageLabel;
     private JComboBox<String> languageComboBox;
     private JLabel themeLabel;
@@ -33,13 +33,13 @@ public class Settings extends JPanel{
     }
 
     private void initComponents(){
-        languageLabel = new JLabel("Language");
+        languageLabel = new JLabel(main.getLocale("Settings.JLabel.language"));
         languageLabel.setFont(languageLabel.getFont().deriveFont(24f));
         GridBagConstraints gbc_languageLabel  = new GridBagConstraints(0, 0, 1, 1, 1, 0,
                 GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 50, 5, 0), 0, 0);
         this.add(languageLabel , gbc_languageLabel );
 
-        languageComboBox = new JComboBox<>(new String[]{"English", "Chinese"});
+        languageComboBox = new JComboBox<>(new String[]{"English", "中文"});
         languageComboBox.setMaximumSize(new Dimension(300, 50));
         languageComboBox.setPreferredSize(new Dimension(300, 50));
         String language = main.getLanguage();
@@ -56,7 +56,7 @@ public class Settings extends JPanel{
                 GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 50, 20, 0), 0, 0);
         this.add(languageComboBox, gbc_languageComboBox);
 
-        themeLabel = new JLabel("App Theme");
+        themeLabel = new JLabel(main.getLocale("Settings.JLabel.theme"));
         themeLabel.setFont(themeLabel.getFont().deriveFont(24f));
         GridBagConstraints gbc_themeLabel = new GridBagConstraints(0, 2, 1, 1, 1, 0,
                 GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 50, 5, 0), 0, 0);
@@ -76,7 +76,7 @@ public class Settings extends JPanel{
         GridBagConstraints gbc_buttonContainer = new GridBagConstraints(0, 4, 1, 1, 1, 1,
                 GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 50, 5, 0), 0, 0);
 
-        apply = new JButton("Apply Changes");
+        apply = new JButton(main.getLocale("Settings.JButton.applyChanges"));
         apply.setFont(apply.getFont().deriveFont(18f));
         GridBagConstraints gbc_apply = new GridBagConstraints(0, 0, 1, 1, 1, 1,
                 GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 5, 0), 0, 0);
@@ -94,7 +94,7 @@ public class Settings extends JPanel{
                 case "English":
                     main.setLanguage("en");
                     break;
-                case "Chinese":
+                case "中文":
                     main.setLanguage("cn");
                     break;
             }

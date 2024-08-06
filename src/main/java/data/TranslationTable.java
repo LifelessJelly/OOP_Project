@@ -220,6 +220,27 @@ public final class TranslationTable {
 
         put("en", "ApplicantListPage.JLabel.applicantList", "Applicant List");
         put("cn", "ApplicantListPage.JLabel.applicantList", "申请者表");
+
+        put("en", "ApplicantListPage.JTable.applicantJobRole", "Job role: ");
+        put("cn", "ApplicantListPage.JTable.applicantJobRole", "工作： ");
+
+        put("en", "SummaryPage.JLabel.summaryListLabel1", "Applicant Summary- ");
+        put("cn", "SummaryPage.JLabel.summaryListLabel1", "申请者简介- ");
+
+        put("en", "SummaryPage.JLabel.summaryListLabel2", " Applicants accepted");
+        put("cn", "SummaryPage.JLabel.summaryListLabel2", "位进入公司");
+
+        put("en", "SummaryPage.JLabel.extraInfo", "'s extra info");
+        put("cn", "SummaryPage.JLabel.extraInfo", "的其它信息");
+
+        put("en", "Settings.JLabel.language", "Language");
+        put("cn", "Settings.JLabel.language", "语言");
+
+        put("en", "Settings.JLabel.theme", "App theme");
+        put("cn", "Settings.JLabel.theme", "程序外貌");
+
+        put("en", "Settings.JButton.applyChanges", "Apply Changes");
+        put("cn", "Settings.JButton.applyChanges", "保存");
     }
 
     /**
