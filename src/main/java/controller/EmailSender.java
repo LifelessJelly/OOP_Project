@@ -1,5 +1,7 @@
 package controller;
 
+import data.EmailCredential;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -16,8 +18,9 @@ public class EmailSender {
      * @param body The body content of the email.
      */
     public EmailSender(String toEmail, String subject, String body){
-        final String fromEmail = RSAEncryptor.decrypt("MADKD5gc1TJOb1WyBwABxc2OqK15yn4+DVxrh5IkLY9n/Y77josQl0uSEUKkNUuK", "e50f6732cf7bfab4fbcd991790a631734a92def836c33fa4083e0daa825edbb1");
-        final String password = RSAEncryptor.decrypt("GUaP9vKIS/LmQ2L7mk1DFA==", "e50f6732cf7bfab4fbcd991790a631734a92def836c33fa4083e0daa825edbb1");
+        EmailCredential credentials = JsonReaderWriter.jsonToModel(DataIO.readFile(System.getProperty("user.dir") + "\\email.config"), EmailCredential.class);
+        final String fromEmail = credentials.getUsername();
+        final String password = credentials.getPassword();
         System.out.println("TLSEmail Start");
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.office365.com"); //SMTP Host
