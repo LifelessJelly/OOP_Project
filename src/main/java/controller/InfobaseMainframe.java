@@ -185,6 +185,7 @@ public class InfobaseMainframe extends JFrame {
         UIManager.put("Desktop.background", mainThemeColour);
         UIManager.put("EditorPane.background", mainThemeColour);
         UIManager.put("FormattedTextField.background", mainThemeColour);
+        UIManager.put("OptionPane.background", mainThemeColour);
         UIManager.put("Label.background", mainThemeColour);
         UIManager.put("List.background", mainThemeColour);
         UIManager.put("Panel.background", mainThemeColour);
