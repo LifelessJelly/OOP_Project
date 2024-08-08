@@ -256,6 +256,19 @@ public final class TranslationTable {
 
         put("en", "ApplicantListPage.JTable.applicantAcceptedSuccess", "Accepted");
         put("cn", "ApplicantListPage.JTable.applicantAcceptedSuccess", "进入公司");
+
+        put("en", "ApplicantInfoKeyingPage.JButton.editSystemEmail", "Edit System Email");
+        put("cn", "ApplicantInfoKeyingPage.JButton.editSystemEmail", "更改程序电子邮件地址");
+
+        put("en", "ApplicantInfoKeyingPage.JOptionPane.prompt", "You don't have an email config file set up. Please set up your email config file. (Make sure you have access to the above email)");
+        put("cn", "ApplicantInfoKeyingPage.JOptionPane.prompt", "这程序的电子邮件地址还没被设置， 请设置您的电子邮件 (确保电子邮件能接到)");
+
+        put("en", "ApplicantInfoKeyingPage.JOptionPane.username", "Username: ");
+        put("cn", "ApplicantInfoKeyingPage.JOptionPane.username", "用户名： ");
+
+        put("en", "ApplicantInfoKeyingPage.JOptionPane.password", "Password: ");
+        put("cn", "ApplicantInfoKeyingPage.JOptionPane.password", "密码： ");
+
     }
 
 
