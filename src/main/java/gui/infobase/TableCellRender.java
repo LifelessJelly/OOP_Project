@@ -67,13 +67,13 @@ public class TableCellRender extends JTextArea implements TableCellRenderer {
                 shortlistStatus = main.getLocale("ApplicantListPage.JTable.applicantShortlisted");
                 break;
             case Applicant.SHORTLISTED_TO_INTERVIEW:
-                shortlistStatus = "Shortlisted To Interview";
+                shortlistStatus = main.getLocale("ApplicantListPage.JTable.applicantShortlistSuccess");
                 break;
             case Applicant.ACCEPTED_WAITING_JOB:
                 shortlistStatus = main.getLocale("ApplicantListPage.JTable.applicantAccepted");
                 break;
             case Applicant.ACCEPTED:
-                shortlistStatus = "Accepted";
+                shortlistStatus = main.getLocale("ApplicantListPage.JTable.applicantAcceptedSuccess");
                 break;
             default:
                 throw new IllegalArgumentException("This should not happen");

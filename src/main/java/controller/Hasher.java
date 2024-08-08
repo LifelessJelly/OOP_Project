@@ -8,7 +8,7 @@ import java.security.NoSuchAlgorithmException;
 public class Hasher {
     private final boolean isHexRepresented;
     public Hasher(boolean isHexRepresentation){
-        this.isHexRepresented = isHexRepresentation;             //setting of hex representation bool?
+        this.isHexRepresented = isHexRepresentation;
     }
 
     /**

@@ -250,6 +250,12 @@ public final class TranslationTable {
 
         put("en", "AddApplicant.JOptionPane.wrongNricError", "NRIC number is invalid, please check applicant's NRIC number again");
         put("cn", "AddApplicant.JOptionPane.wrongNricError", "身份证号是无效的， 请再检查申请者的身份证号");
+
+        put("en", "ApplicantListPage.JTable.applicantShortlistSuccess", "Shortlisted To Interview");
+        put("cn", "ApplicantListPage.JTable.applicantShortlistSuccess", "未参加面试");
+
+        put("en", "ApplicantListPage.JTable.applicantAcceptedSuccess", "Accepted");
+        put("cn", "ApplicantListPage.JTable.applicantAcceptedSuccess", "进入公司");
     }
 
 

@@ -8,6 +8,10 @@
 	</contentEntry>
 	<levels>
 		<level name="Maven: com.google.code.gson:gson:2.10.1" value="project"/>
-		<level name="activation-1.1 (2)" value="project"/>
+		<level name="libraries" value="project"/>
+		<level name="activation-1.1" value="project"/>
+		<level name="flatlaf-3.4.1" value="project"/>
+		<level name="gson-2.10.1" value="project"/>
+		<level name="javax.mail" value="project"/>
 	</levels>
 </component>
