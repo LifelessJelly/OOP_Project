@@ -44,13 +44,22 @@ public class PDFBase64 {
         byte[] pdfBytes = Base64.getDecoder().decode(base64String);
         File pdfFile = new File(pdfPath);
         File[] files = pdfFile.getParentFile().listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (file.delete()){
-                    System.out.println("file in pdf temp deleted");
-                }
+        if (files == null) {
+            if (pdfFile.getParentFile().mkdir()) {
+                System.out.println("temp directory created");
+                files = pdfFile.getParentFile().listFiles();
+            }
+            else {
+                throw new RuntimeException("Application does not have permissions to create a directory in location");
             }
         }
+        assert files != null;
+        for (File file : files) {
+            if (file.delete()){
+                System.out.println("file in pdf temp deleted");
+            }
+        }
+
         try (FileOutputStream fos = new FileOutputStream(pdfFile)) {
                 fos.write(pdfBytes);
                 fos.flush();

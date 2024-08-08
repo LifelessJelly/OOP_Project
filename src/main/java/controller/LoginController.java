@@ -65,14 +65,22 @@ public class LoginController {
         String path = System.getProperty("user.dir") + "\\" + "staff";
         File dir = new File(path);
         File[] files = dir.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (file.getName().endsWith(".json")) {
-                    String json = DataIO.readFile(file.getAbsolutePath());
-                    Staff staff = JsonReaderWriter.jsonToModel(json, Staff.class);
-                    if (staff.checkUsernameExists(username)) {
-                        return false;
-                    }
+        if (files == null) {
+            if (dir.mkdir()) {
+                System.out.println("staff directory created");
+                files = dir.listFiles();
+            }
+            else {
+                throw new RuntimeException("Application does not have permissions to create a directory in location");
+            }
+        }
+        assert files != null;
+        for (File file : files) {
+            if (file.getName().endsWith(".json")) {
+                String json = DataIO.readFile(file.getAbsolutePath());
+                Staff staff = JsonReaderWriter.jsonToModel(json, Staff.class);
+                if (staff.checkUsernameExists(username)) {
+                    return false;
                 }
             }
         }

@@ -38,6 +38,15 @@ public class InfobaseController {
         this.applicantDataStorage = new ApplicantDataStorage();
         File dir = new File(path);
         File[] files = dir.listFiles();
+        if (files == null) {
+            if(dir.mkdir()) {
+                System.out.println("applicant directory created");
+                files = dir.listFiles();
+            }
+            else {
+                throw new RuntimeException("Application does not have permissions to create a directory in location");
+            }
+        }
         assert files != null;
         Arrays.sort(files, new FileSortByDate());
         for (File file : files) {
