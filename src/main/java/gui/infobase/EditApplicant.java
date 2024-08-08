@@ -326,7 +326,7 @@ public class EditApplicant extends JPanel {
                     new Insets(0, 0, 5, 0), 0, 0);
             updateChangesPanel.add(saveChangesButton, saveChangesConstraints);
 
-            discardChangesButton = new JPanelImageButton(main.getL  ocale("EditApplicant.JLabel.discard_changes"), ImageEmbedded.DISCARD_CHANGES, ImageEmbedded.DISCARD_CHANGES_COLOURED, 60, 60, JPanelImageButton.LEFT);
+            discardChangesButton = new JPanelImageButton(main.getLocale("EditApplicant.JLabel.discard_changes"), ImageEmbedded.DISCARD_CHANGES, ImageEmbedded.DISCARD_CHANGES_COLOURED, 60, 60, JPanelImageButton.LEFT);
 
             GridBagConstraints discardChangesConstraints = new GridBagConstraints(0, 1, 1, 1, 0, 0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
