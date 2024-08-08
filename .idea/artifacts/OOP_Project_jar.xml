@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="OOP_Project:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/OOP_Project_jar</output-path>
+    <root id="archive" name="OOP_Project.jar">
+      <element id="module-output" name="OOP_Project" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/main/resources/activation-1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/main/resources/flatlaf-3.4.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/main/resources/gson-2.10.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/main/resources/javax.mail.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
