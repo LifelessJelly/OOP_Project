@@ -1,13 +1,17 @@
 package gui.infobase;
 
+import controller.DataIO;
 import controller.InfobaseMainframe;
+import controller.JsonReaderWriter;
 import data.Applicant;
+import data.EmailCredential;
 import gui.DateSelectorHelper;
 import gui.ImageEmbedded;
 import gui.JPanelImageButton;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,6 +45,7 @@ public class ApplicantInfoKeyingPage extends JPanel {
     private JComboBox<Integer> hourComboBox;
     private JComboBox<Integer> minuteComboBox;
     private JTextField applicantAssignedField;
+    private JButton editSystemEmailButton;
 
     public ApplicantInfoKeyingPage(int index, InfobaseMainframe main, int stage) {
         this.main = main;
@@ -277,6 +282,12 @@ public class ApplicantInfoKeyingPage extends JPanel {
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 5, 0), 0, 0);
             updateChangesPanel.add(discardChangesButton, discardChangesConstraints);
+
+            editSystemEmailButton = new JButton(main.getLocale("ApplicantInfoKeyingPage.JButton.editSystemEmail"));
+            editSystemEmailButton.setFont(editSystemEmailButton.getFont().deriveFont(18f));
+            GridBagConstraints editSystemEmailButtonConstraints = new GridBagConstraints(0, 2, 1, 1, 0, 0,
+                    GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 5, 0), 0, 0);
+            updateChangesPanel.add(editSystemEmailButton, editSystemEmailButtonConstraints);
         }
         this.add(updateChangesPanel, updateChangesPanelConstraints);
 
@@ -360,28 +371,50 @@ public class ApplicantInfoKeyingPage extends JPanel {
     }
 
     private void initListeners() {
+        editSystemEmailButton.addActionListener(e -> {
+            EmailBoxPopup(false);
+        });
+
         if (stage == Applicant.SHORTLISTED_PENDING_DATE) {
             saveChangesButton.addActionListener(e -> {
-                if (JOptionPane.showConfirmDialog(null, main.getLocale("ApplicantInfoKeyPage.JOptionPane.addConfirmInterview"), "", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
-                    long epoch = getDateTimeEpoch(
-                            Objects.requireNonNull((Integer) yearComboBox.getSelectedItem()),
-                            Objects.requireNonNull((String) monthComboBox.getSelectedItem()),
-                            Objects.requireNonNull((Integer) dayComboBox.getSelectedItem()),
-                            Objects.requireNonNull((Integer) hourComboBox.getSelectedItem()),
-                            Objects.requireNonNull((Integer) minuteComboBox.getSelectedItem()));
-                    if (epoch < System.currentTimeMillis()) {
-                        JOptionPane.showMessageDialog(null, main.getLocale("ApplicantInfoKeyingPage.JOptionPane.timeError"), "", JOptionPane.ERROR_MESSAGE);
-                    } else {
-                        main.getController().setInterviewTime(epoch);
-                        main.showApplicantListPage();
+                //Check if credential file is there
+                String dir = System.getProperty("user.dir") + "\\email.config";
+                File dirFile = new File(dir);
+                boolean pass = true;
+                if (!dirFile.exists()) {
+                    pass = EmailBoxPopup(true);
+                }
+                if (pass) {
+                    if (JOptionPane.showConfirmDialog(null, main.getLocale("ApplicantInfoKeyPage.JOptionPane.addConfirmInterview"), "", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+                        long epoch = getDateTimeEpoch(
+                                Objects.requireNonNull((Integer) yearComboBox.getSelectedItem()),
+                                Objects.requireNonNull((String) monthComboBox.getSelectedItem()),
+                                Objects.requireNonNull((Integer) dayComboBox.getSelectedItem()),
+                                Objects.requireNonNull((Integer) hourComboBox.getSelectedItem()),
+                                Objects.requireNonNull((Integer) minuteComboBox.getSelectedItem()));
+                        if (epoch < System.currentTimeMillis()) {
+                            JOptionPane.showMessageDialog(null, main.getLocale("ApplicantInfoKeyingPage.JOptionPane.timeError"), "", JOptionPane.ERROR_MESSAGE);
+                        } else {
+                            main.getController().setInterviewTime(epoch);
+                            main.showApplicantListPage();
+                        }
                     }
                 }
             });
         }
         else if (stage == Applicant.ACCEPTED_WAITING_JOB) {
             saveChangesButton.addActionListener(e -> {
-                main.getController().setJobRole(applicantAssignedField.getText());
-                main.showApplicantListPage();
+                //Check if credential file is there
+                String dir = System.getProperty("user.dir") + "\\email.config";
+                File dirFile = new File(dir);
+                boolean pass = true;
+                if (!dirFile.exists()) {
+                    pass = EmailBoxPopup(true);
+                }
+                if (pass) {
+                    main.getController().setJobRole(applicantAssignedField.getText());
+                    main.showApplicantListPage();
+                }
             });
         }
         discardChangesButton.addActionListener(e -> {
@@ -409,5 +442,66 @@ public class ApplicantInfoKeyingPage extends JPanel {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private boolean EmailBoxPopup(boolean promptNeeded){
+        JPanel inputPanel = new JPanel();
+        inputPanel.setLayout(new GridBagLayout());
+
+        JLabel usernameLabel = new JLabel(main.getLocale("ApplicantInfoKeyingPage.JOptionPane.username"));
+        usernameLabel.setFont(usernameLabel.getFont().deriveFont(18f));
+        usernameLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        GridBagConstraints usernameLabelConstraints = new GridBagConstraints(0, 0, 1, 1, 1, 0,
+                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 0, 5, 0), 0, 0);
+        inputPanel.add(usernameLabel, usernameLabelConstraints);
+
+        JTextField usernameField = new JTextField();
+        usernameField.setMinimumSize(new Dimension(400, 40));
+        usernameField.setPreferredSize(new Dimension(400, 40));
+        usernameField.setFont(usernameField.getFont().deriveFont(18f));
+        usernameField.setHorizontalAlignment(SwingConstants.LEFT);
+        GridBagConstraints usernameFieldConstraints = new GridBagConstraints(0, 1, 1, 1, 1, 0,
+                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 0, 5, 0), 0, 0);
+        inputPanel.add(usernameField, usernameFieldConstraints);
+
+        JLabel passwordLabel = new JLabel(main.getLocale("ApplicantInfoKeyingPage.JOptionPane.password"));
+        passwordLabel.setFont(passwordLabel.getFont().deriveFont(18f));
+        passwordLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        GridBagConstraints passwordLabelConstraints = new GridBagConstraints(0, 2, 1, 1, 1, 0,
+                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 0, 5, 0), 0, 0);
+        inputPanel.add(passwordLabel, passwordLabelConstraints);
+
+        JPasswordField passwordField = new JPasswordField();
+        passwordField.setMinimumSize(new Dimension(400, 40));
+        passwordField.setPreferredSize(new Dimension(400, 40));
+        passwordField.setFont(passwordField.getFont().deriveFont(18f));
+        passwordField.setHorizontalAlignment(SwingConstants.LEFT);
+        GridBagConstraints passwordFieldConstraints = new GridBagConstraints(0, 3, 1, 1, 1, 1,
+                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 0, 5, 0), 0, 0);
+        inputPanel.add(passwordField, passwordFieldConstraints);
+
+        if (promptNeeded){
+            JLabel promptLabel = new JLabel(main.getLocale("ApplicantInfoKeyingPage.JOptionPane.prompt"));
+            promptLabel.setForeground(new Color(173, 74, 59));
+            GridBagConstraints promptConstraints = new GridBagConstraints(0, 4, 1, 1, 1, 1,
+                    GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 0, 5, 0), 0, 0);
+            inputPanel.add(promptLabel, promptConstraints);
+        }
+        int option = JOptionPane.showConfirmDialog(null, inputPanel, "", JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.OK_OPTION) {
+            writeToConfig(usernameField.getText(), passwordField.getPassword());
+            return true;
+        }
+        return false;
+    }
+
+    private void writeToConfig(String username, char[] password){
+        String dir = System.getProperty("user.dir") + "\\email.config";
+        File dirFile = new File(dir);
+        if (dirFile.delete()) {
+            System.out.println("file deleted");
+        }
+        DataIO.writeFile(dirFile.getAbsolutePath(),
+                JsonReaderWriter.modelToJson(new EmailCredential(username, new String(password))));
     }
 }
