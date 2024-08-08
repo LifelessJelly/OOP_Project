@@ -23,8 +23,8 @@ public class LoginMainframe extends JFrame {
         }
         loginController = new LoginController();
         this.cardLayout = new CardLayout();
-        this.loginPanel = new LoginScreen(this);
-        this.registerPanel = new RegisterScreen(this);
+
+
         this.setLayout(this.cardLayout);
         this.setTitle("Operate On Peasants Login Page");
         this.setPreferredSize(new Dimension(1920, 1080));
@@ -44,6 +44,7 @@ public class LoginMainframe extends JFrame {
      * login screen to the content pane and makes it visible.</p>
      */
     public void showLogin(){
+        this.loginPanel = new LoginScreen(this);
         this.getContentPane().add(loginPanel, "LoginScreen");
         cardLayout.show(this.getContentPane(), "LoginScreen");
     }
@@ -57,6 +58,7 @@ public class LoginMainframe extends JFrame {
      * registration screen to the content pane and makes it visible.</p>
      */
     public void showRegister(){
+        this.registerPanel = new RegisterScreen(this);
         this.getContentPane().add(registerPanel, "RegisterScreen");
         cardLayout.show(this.getContentPane(), "RegisterScreen");
     }
