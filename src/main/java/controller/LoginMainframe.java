@@ -24,7 +24,7 @@ public class LoginMainframe extends JFrame {
         loginController = new LoginController();
         this.cardLayout = new CardLayout();
 
-
+        UIManager.put("OptionPane.background", Color.WHITE);
         this.setLayout(this.cardLayout);
         this.setTitle("Operate On Peasants Login Page");
         this.setPreferredSize(new Dimension(1920, 1080));

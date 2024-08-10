@@ -190,7 +190,7 @@ public class LoginScreen extends JPanel {
                 badLoginWarnLabel.setText("");
             }
             else {
-                badLoginWarnLabel.setText("Invalid username, password or domain");
+                badLoginWarnLabel.setText("Invalid username or password");
                 usernameField.setText("");
                 passwordField.setText("");
             }
