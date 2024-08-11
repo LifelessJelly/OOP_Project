@@ -381,6 +381,7 @@ public class ApplicantListPage extends JPanel{
                 //file processing
                 if (r == JFileChooser.APPROVE_OPTION) {
                    main.getController().addApplicantModel(applicantToBeWritten);
+                   updateModel();
                    main.getContentPane().validate();
                    main.getContentPane().repaint();
                 }
@@ -397,6 +398,7 @@ public class ApplicantListPage extends JPanel{
             removeApplicantButton.addActionListener(e -> {
                 int selectedRow = table.convertRowIndexToModel(table.getSelectedRow());
                 main.getController().removeApplicant(selectedRow);
+                updateModel();
                 main.getContentPane().validate();
                 main.getContentPane().repaint();
             });

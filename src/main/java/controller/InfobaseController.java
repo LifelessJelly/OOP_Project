@@ -20,7 +20,6 @@ public class InfobaseController {
 
     public InfobaseController(Staff loggedInStaffInstance) {
         this.loggedInStaffInstance = loggedInStaffInstance;
-        refreshIndices();
     }
 
     /**
@@ -53,8 +52,11 @@ public class InfobaseController {
             if (file.getName().endsWith(".json")) {
                 String json = DataIO.readFile(file.getAbsolutePath());
                 Applicant applicant = JsonReaderWriter.jsonToModel(json, Applicant.class);
-                if (!applicant.getName().isEmpty()){
+                if (!applicant.isObjectNull()){
                     applicantDataStorage.addApplicant(applicant);
+                }
+                else {
+                    System.out.println("null applicant detected, skipping");
                 }
             }
         }
@@ -101,6 +103,9 @@ public class InfobaseController {
      */
     public void addApplicantModel(Applicant applicant){
         File applicantDirectory = new File(System.getProperty("user.dir") + "\\" + "applicants");
+        if (applicant.getName().isEmpty() || applicant.getBirthdate().isEmpty() || applicant.getStatus() == 0 || applicant.getGender() == null){
+            return;
+        }
         applicantDataStorage.addApplicant(applicant);
         DataIO.writeFile(applicantDirectory + "\\" + new String(SHA256.getHasherHex().hashString(String.valueOf(System.nanoTime()))) + "_Applicant.json", JsonReaderWriter.modelToJson(applicant));
         System.out.println("applicant added via object");

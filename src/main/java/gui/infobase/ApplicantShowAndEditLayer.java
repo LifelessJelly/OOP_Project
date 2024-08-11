@@ -1,7 +1,6 @@
 package gui.infobase;
 
 import controller.InfobaseMainframe;
-import data.Applicant;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,8 +8,6 @@ import java.awt.*;
 public class ApplicantShowAndEditLayer extends JLayeredPane {
     final ApplicantListPage applicantListPage;
     EditApplicant editApplicant;
-    AddApplicant AddApplicant;
-    JPanel exitingPanel;
     final InfobaseMainframe main;
     public ApplicantShowAndEditLayer(InfobaseMainframe main) {
         super();

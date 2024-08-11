@@ -9,8 +9,7 @@ public class JsonReaderWriter {
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     /**
-     * Constructs an instance of a class model from the given input JSON string. If an invalid JSON string is given,
-     * a default object of the passed in class will be created.
+     * Constructs an instance of a class model from the given input JSON string. If an invalid JSON string is given, a base class with null objects is created
      * @param json The string in JSON format
      * @param classType the class type of the Java object to be created
      * @return an instance of the specified class type populated with data from the JSON string

@@ -96,7 +96,9 @@ public class Applicant{
         applicantDetails.pdfBase64 = oldApplicant.getPdfBase64();
     }
 
-
+    public boolean isObjectNull(){
+        return applicantDetails == null || applicantMetadata == null;
+    }
 
     public BufferedImage getImage(){
         return ImageBase64.base64ToImage(applicantDetails.imageBase64);
