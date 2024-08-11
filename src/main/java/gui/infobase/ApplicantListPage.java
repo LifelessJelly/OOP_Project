@@ -416,8 +416,7 @@ public class ApplicantListPage extends JPanel{
             acceptApplicantButton.addActionListener(e -> {
                 int selectedRow = table.convertRowIndexToModel(table.getSelectedRow());
                 main.getController().acceptApplicant(selectedRow);
-                updateModel();
-                acceptApplicantButton.setEnabled(false);
+                main.showApplicantListPage();
             });
 
             addApplicantButton.addMouseListener(getGraphicalUpdaters());
