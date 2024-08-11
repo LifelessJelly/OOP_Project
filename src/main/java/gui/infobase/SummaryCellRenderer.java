@@ -50,7 +50,7 @@ public class SummaryCellRenderer extends JTextArea implements TableCellRenderer 
         String nameText = main.getLocale("ApplicantListPage.JTable.applicantName");
         String ageText = main.getLocale("ApplicantListPage.JTable.applicantAge");
         String emailText = main.getLocale("ApplicantListPage.JTable.applicantEmail");
-        String jobText = "Job role: ";//main.getLocale("ApplicantListPage.JTable.applicantJob");
+        String jobText = main.getLocale("ApplicantListPage.JTable.applicantJobRole");
 
 
         return  nameText + applicant.getName() + '\n' +
