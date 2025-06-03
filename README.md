@@ -3,7 +3,6 @@ Authors: Chiu Joseph, Kwek Wei Ming Jonathan
 
 ## The project - IT Employment Infobase
 Here at Operating On Peasants LLC, we are looking for the employees that are the best among the best. With hundreds of applications every day, a more productive solution is to be made.
-### Enter Project Jigglypuff (completely unrelated to the Pokemon we're just bad at making names)
 Main features
 - Add, Delete, Edit applicant all the basic shit
 
