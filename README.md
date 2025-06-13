@@ -18,6 +18,6 @@ Extra features
 ## How to build
 Project is built using IntelliJ IDEA, but since many of you are using Eclipse, steps are below, just pray it works 🙏
 
--Download and unzip the project, then open the folder as project in Eclipse.
--Right click on the project, select properties
--Navigate to Java Build Path, and select add JARs with the src/main/resources folder in the libraries tab
+- Download and unzip the project, then open the folder as project in Eclipse.
+- Right click on the project, select properties
+- Navigate to Java Build Path, and select add JARs with the src/main/resources folder in the libraries tab
